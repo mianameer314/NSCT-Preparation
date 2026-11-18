@@ -1334,16 +1334,18 @@
     <!-- SIDEBAR: SUBTOPICS & FILTERS -->
     <aside class="app-sidebar">
 
-      <!-- Current Subject Switcher Card -->
-      <div class="sidebar-subject-card" onclick="openSubjectModal()" title="Switch Subject">
+      <!-- Current Subject Switcher Card with Instant Dropdown -->
+      <div class="sidebar-subject-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted);">Active Subject</span>
           <span style="font-size:10.5px; font-weight:800; background:var(--forest-main); color:#fff; padding:2px 7px; border-radius:6px;" id="sidebar-weight-badge">20%</span>
         </div>
-        <div style="font-size:14px; font-weight:800; color:var(--forest-dark); line-height:1.3;" id="sidebar-subject-name">01. Problem Solving</div>
-        <div style="font-size:11.5px; color:var(--text-dim); display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+        <select id="sidebar-subject-select" onchange="switchSubject(parseInt(this.value))" style="width:100%; margin-top:6px; padding:9px 10px; border-radius:8px; border:1px solid var(--forest-border); background:var(--white); color:var(--forest-dark); font-weight:800; font-size:13px; outline:none; cursor:pointer; box-shadow:var(--neu-inset);">
+          <!-- Dynamically populated with all 10 subjects -->
+        </select>
+        <div style="font-size:11.5px; color:var(--text-dim); display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
           <span id="sidebar-subject-qcount">317 MCQs</span>
-          <span style="color:var(--forest-main); font-weight:700;">Change (10) ▾</span>
+          <button onclick="openSubjectModal()" style="border:none; background:none; color:var(--forest-main); font-weight:800; font-size:11.5px; cursor:pointer; text-decoration:underline;">Grid View (10) ⊞</button>
         </div>
       </div>
       
@@ -1622,7 +1624,7 @@
   </div>
 
   <!-- DATA SCRIPT -->
-  <script src="data.js"></script>
+  <script src="data.js?v=20261118_all10_v3"></script>
 
   <!-- APP ENGINE -->
   <script>
@@ -1754,10 +1756,25 @@
       }
     };
 
-    // Global Dataset & Multi-Subject Architecture
-    const allSubjects = window.NSCT_ALL_SUBJECTS || [
-      { id: 1, code: "01", title: "Problem Solving & Analytical Skills", weight: 20, icon: "🧩", subtopics: window.NSCT_SUBJECT_01 || [] }
-    ];
+    // Global Dataset & Multi-Subject Architecture (10 Official Subjects)
+    function getLiveAllSubjects() {
+      if (window.NSCT_ALL_SUBJECTS && Array.isArray(window.NSCT_ALL_SUBJECTS) && window.NSCT_ALL_SUBJECTS.length > 1) {
+        return window.NSCT_ALL_SUBJECTS;
+      }
+      return [
+        { id: 1, code: "01", title: "Problem Solving & Analytical Skills", weight: 20, icon: "🧩", subtopics: window.NSCT_SUBJECT_01 || [] },
+        { id: 2, code: "02", title: "Programming (C++ / Java / Python)", weight: 10, icon: "💻", subtopics: [] },
+        { id: 3, code: "03", title: "Data Structures & Algorithms", weight: 10, icon: "⚡", subtopics: [] },
+        { id: 4, code: "04", title: "Databases (SQL & NoSQL)", weight: 10, icon: "🗄️", subtopics: [] },
+        { id: 5, code: "05", title: "Software Engineering & Architecture", weight: 10, icon: "📐", subtopics: [] },
+        { id: 6, code: "06", title: "Web Development (Frontend & Backend)", weight: 10, icon: "🌐", subtopics: [] },
+        { id: 7, code: "07", title: "Computer Networks & Cloud Computing", weight: 10, icon: "☁️", subtopics: [] },
+        { id: 8, code: "08", title: "AI / ML & Data Analytics", weight: 10, icon: "🤖", subtopics: [] },
+        { id: 9, code: "09", title: "Operating Systems", weight: 5, icon: "⚙️", subtopics: [] },
+        { id: 10, code: "10", title: "Cyber Security & Information Assurance", weight: 5, icon: "🛡️", subtopics: [] }
+      ];
+    }
+    let allSubjects = getLiveAllSubjects();
 
     let currentSubjectId = parseInt(localStorage.getItem('nsct_active_subject') || '1');
     let currentSubject = allSubjects.find(s => s.id === currentSubjectId) || allSubjects[0];
@@ -1802,12 +1819,30 @@
     // On Load Initializer
     window.onload = function() {
       ConfettiEngine.init();
+      allSubjects = getLiveAllSubjects();
+      currentSubject = allSubjects.find(s => s.id === currentSubjectId) || allSubjects[0];
+      subtopics = currentSubject.subtopics || [];
+      reloadSubjectQuestions();
+      populateSidebarSelect();
       updateHeaderUI();
       buildSidebarTopics();
       filterBy('all');
       renderTheoryContent(selectedTopicId);
       updateStreakUI();
     };
+
+    function populateSidebarSelect() {
+      const sel = document.getElementById('sidebar-subject-select');
+      if (!sel) return;
+      sel.innerHTML = '';
+      allSubjects.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.selected = (s.id === currentSubject.id);
+        opt.textContent = `${s.icon || '📚'} Subj ${s.code}: ${s.title} (${s.weight}%)`;
+        sel.appendChild(opt);
+      });
+    }
 
     function toggleSoundFx() {
       AudioEngine.enabled = !AudioEngine.enabled;
@@ -1829,6 +1864,8 @@
     // ==========================================================================
     function openSubjectModal() {
       AudioEngine.playTap();
+      allSubjects = getLiveAllSubjects();
+      populateSidebarSelect();
       const modal = document.getElementById('subject-modal');
       const grid = document.getElementById('subject-modal-grid');
       grid.innerHTML = '';
@@ -1924,10 +1961,10 @@
       // Sidebar Widget
       const wBadge = document.getElementById('sidebar-weight-badge');
       if (wBadge) wBadge.textContent = `${currentSubject.weight}%`;
-      const sName = document.getElementById('sidebar-subject-name');
-      if (sName) sName.textContent = `${currentSubject.code}. ${currentSubject.title}`;
       const sQc = document.getElementById('sidebar-subject-qcount');
       if (sQc) sQc.textContent = `${allQuestions.length} MCQs`;
+      const sel = document.getElementById('sidebar-subject-select');
+      if (sel) sel.value = currentSubject.id;
     }
 
     // Tab Switcher
