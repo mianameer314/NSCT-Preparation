@@ -1,6 +1,10 @@
-# 📚 NSCT Preparation - Complete MCQ Bank
+# 📚 NSCT Preparation - Complete MCQ Bank & Interactive Master Trainer
 
-> **A comprehensive, community-built MCQ preparation bank for the National Skill Competency Test (NSCT) - covering all 10 official subjects with 2170+ questions, quick notes, deep dives, and curated resources.**
+> **A comprehensive, community-built preparation platform for the National Skill Competency Test (NSCT) - covering all 10 official subjects with 2,170+ questions, interactive drill modes, diagnostic recovery advice, formatted deep dives, and timed mock exams.**
+
+### 🌟 Live Interactive Web Trainer
+👉 **Launch the App:** [https://mianameer314.github.io/NSCT-Preparation/](https://mianameer314.github.io/NSCT-Preparation/)
+*Features: Neumorphic Dark Forest Green & White Soft UI • Real-time Diagnostic Improvement Advisor • Web Audio Feedback • Confetti FX • Spotlight Search Modal (`/`) • Timed 30-min Mock Exam • Zero Dependencies*
 
 ---
 

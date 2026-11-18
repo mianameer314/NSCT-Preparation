@@ -6,7 +6,7 @@
   <title>NSCT Prep — Subject 01: Problem Solving & Analytical Skills</title>
   <style>
     /* ==========================================================================
-       NEUMORPHIC FOREST GREEN & WHITE DESIGN SYSTEM
+       NEUMORPHIC FOREST GREEN & WHITE ULTRA-FAST DESIGN SYSTEM
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -15,7 +15,7 @@
     }
 
     :root {
-      /* Neumorphic Base Palette */
+      /* Neumorphic Palette */
       --bg-base: #EFF3EF;
       --bg-surface: #F2F6F2;
       --bg-card: #F5F8F5;
@@ -35,7 +35,7 @@
       --text-muted: #41614F;
       --text-dim: #6B8877;
 
-      /* Status Colors */
+      /* Feedback Colors */
       --correct-bg: #E8F5E9;
       --correct-border: #1E6B45;
       --correct-text: #0A3D22;
@@ -48,7 +48,7 @@
       --advice-border: #D97706;
       --advice-text: #78350F;
 
-      /* Neumorphic Shadows (Tactile Soft UI) */
+      /* Tactile Neumorphic Dual Shadows */
       --neu-raised: 7px 7px 16px rgba(15, 53, 32, 0.08), -7px -7px 16px rgba(255, 255, 255, 0.95);
       --neu-raised-sm: 4px 4px 10px rgba(15, 53, 32, 0.07), -4px -4px 10px rgba(255, 255, 255, 0.95);
       --neu-raised-hover: 8px 8px 20px rgba(15, 53, 32, 0.12), -8px -8px 20px rgba(255, 255, 255, 1);
@@ -73,6 +73,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      user-select: none;
     }
 
     /* Scrollbars */
@@ -81,8 +82,19 @@
     ::-webkit-scrollbar-thumb { background: #CBD8CE; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #A4B8A9; }
 
+    /* Canvas Confetti */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
     /* ==========================================================================
-       TOP GLOBAL HEADER (NEUMORPHIC WHITE & FOREST GREEN)
+       TOP GLOBAL HEADER
        ========================================================================== */
     .app-header {
       height: 72px;
@@ -111,8 +123,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
+      font-weight: 900;
+      font-size: 19px;
       box-shadow: 3px 3px 8px rgba(15, 53, 32, 0.25);
     }
     .brand-title {
@@ -175,11 +187,11 @@
       height: 17px;
     }
 
-    /* HEADER RIGHT STATS */
+    /* HEADER RIGHT STATS & CONTROLS */
     .header-stats {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .stat-pill {
       background: var(--bg-surface);
@@ -188,7 +200,7 @@
       padding: 6px 14px;
       border-radius: 12px;
       font-size: 12.5px;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -197,6 +209,41 @@
       font-family: var(--font-mono);
       font-weight: 800;
       color: var(--forest-main);
+    }
+    .streak-badge {
+      background: linear-gradient(135deg, #FFF7ED, #FFEDD5);
+      border: 1.5px solid #F97316;
+      color: #C2410C;
+      box-shadow: var(--neu-raised-sm);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .icon-btn-header {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .icon-btn-header:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+    }
+    .icon-btn-header:active {
+      box-shadow: var(--neu-inset);
     }
 
     /* ==========================================================================
@@ -218,8 +265,8 @@
       flex-direction: column;
       height: 100%;
       overflow-y: auto;
-      padding: 22px 18px;
-      gap: 20px;
+      padding: 20px 16px;
+      gap: 18px;
     }
 
     .section-label {
@@ -229,6 +276,38 @@
       letter-spacing: 0.8px;
       color: var(--text-dim);
       padding: 0 6px 6px;
+    }
+
+    /* SEARCH INPUT BOX */
+    .search-bar-neu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .search-bar-neu:hover {
+      background: #E1E8E1;
+      color: var(--forest-main);
+    }
+    .search-bar-text {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .search-kbd {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--bg-surface);
+      padding: 2px 6px;
+      border-radius: 6px;
+      box-shadow: var(--neu-raised-sm);
+      color: var(--text-dim);
     }
 
     /* NEUMORPHIC TOPIC LIST */
@@ -241,7 +320,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: var(--radius-md);
       background: var(--bg-surface);
       box-shadow: var(--neu-raised-sm);
@@ -303,13 +382,13 @@
     /* FILTERS PILLS */
     .filter-group {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
     .filter-btn {
       flex: 1;
-      padding: 9px 8px;
+      padding: 9px 6px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       background: var(--bg-surface);
       box-shadow: var(--neu-raised-sm);
@@ -319,7 +398,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.15s;
     }
     .filter-btn:hover {
@@ -337,19 +416,19 @@
       flex: 1;
       height: 100%;
       overflow-y: auto;
-      padding: 36px 44px;
+      padding: 34px 44px;
       background: radial-gradient(circle at 90% 10%, rgba(20, 69, 42, 0.03), transparent 60%), var(--bg-base);
     }
 
     /* ==========================================================================
-       VIEW 1: PRACTICE DRILL (MCQ INTERFACE)
+       VIEW 1: PRACTICE DRILL
        ========================================================================== */
     .practice-box {
       max-width: 900px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
     }
 
     /* NEUMORPHIC QUESTION CARD */
@@ -358,10 +437,10 @@
       box-shadow: var(--neu-raised);
       border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 38px 42px;
+      padding: 36px 40px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 26px;
     }
 
     .q-meta-bar {
@@ -369,7 +448,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(20, 69, 42, 0.1);
-      padding-bottom: 18px;
+      padding-bottom: 16px;
     }
     .q-subtopic-tag {
       font-size: 13px;
@@ -388,7 +467,7 @@
     }
 
     .q-statement-text {
-      font-size: 21px;
+      font-size: 20.5px;
       font-weight: 700;
       color: var(--text-title);
       line-height: 1.55;
@@ -398,7 +477,7 @@
     .options-stack {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .opt-card-btn {
       width: 100%;
@@ -416,12 +495,12 @@
       line-height: 1.5;
       text-align: left;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
       outline: none;
     }
     .opt-card-btn:hover:not(:disabled) {
       box-shadow: var(--neu-raised-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
       color: var(--forest-main);
     }
     .opt-card-btn:active:not(:disabled) {
@@ -441,7 +520,7 @@
       font-size: 14px;
       color: var(--text-muted);
       flex-shrink: 0;
-      transition: all 0.15s;
+      transition: all 0.12s;
     }
     .opt-card-btn:hover:not(:disabled) .opt-badge-letter {
       background: var(--forest-main);
@@ -474,7 +553,7 @@
     }
 
     .opt-card-btn.state-dimmed {
-      opacity: 0.45;
+      opacity: 0.4;
     }
 
     /* EXPLANATION PANEL */
@@ -482,13 +561,13 @@
       border-radius: var(--radius-lg);
       padding: 22px 26px;
       display: flex;
-      gap: 18px;
+      gap: 16px;
       align-items: flex-start;
-      animation: fadeIn 0.2s ease-out;
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
     }
     .explanation-panel.is-correct {
       background: var(--correct-bg);
@@ -506,13 +585,11 @@
       margin-bottom: 6px;
     }
     .expl-body-copy {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.65;
     }
 
-    /* ==========================================================================
-       SPECIAL: TARGETED IMPROVEMENT & ADVICE CALLOUT
-       ========================================================================== */
+    /* TARGETED IMPROVEMENT ADVICE */
     .improvement-box {
       background: var(--advice-bg);
       border: 1.5px solid var(--advice-border);
@@ -522,8 +599,8 @@
       flex-direction: column;
       gap: 12px;
       box-shadow: var(--neu-raised-sm);
-      animation: fadeIn 0.25s ease-out;
-      margin-top: 14px;
+      animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 6px;
     }
     .improvement-header {
       display: flex;
@@ -532,34 +609,30 @@
       color: var(--advice-text);
       font-size: 15px;
       font-weight: 800;
-      letter-spacing: -0.2px;
     }
     .improvement-content {
       font-size: 14px;
       color: #78350F;
       line-height: 1.6;
     }
-    .improvement-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
     .btn-improvement-jump {
       background: var(--forest-main);
       color: var(--white);
       border: none;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: var(--radius-sm);
       font-size: 12.5px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 2px 2px 6px rgba(15, 53, 32, 0.2);
+      box-shadow: 2px 2px 6px rgba(15, 53, 32, 0.25);
+      transition: all 0.12s;
     }
     .btn-improvement-jump:hover {
       background: var(--forest-light);
+      transform: translateY(-1px);
     }
 
     /* NAV CONTROLS */
@@ -587,7 +660,7 @@
     .neu-btn-action:hover:not(:disabled) {
       box-shadow: var(--neu-raised-hover);
       color: var(--forest-main);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
     .neu-btn-action:active:not(:disabled) {
       box-shadow: var(--neu-inset);
@@ -604,7 +677,7 @@
       color: var(--white);
     }
     .neu-btn-action:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
@@ -666,14 +739,14 @@
     }
 
     /* ==========================================================================
-       VIEW 2: THEORY & NOTES (HIGH READABILITY STUDY GUIDE)
+       VIEW 2: THEORY & NOTES
        ========================================================================== */
     .theory-box {
       max-width: 1000px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 28px;
     }
 
     .theory-hero-card {
@@ -699,7 +772,6 @@
       margin-top: 4px;
     }
 
-    /* CONCEPT CARDS */
     .concepts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
@@ -729,7 +801,6 @@
       line-height: 1.65;
     }
 
-    /* TRAPS SECTION */
     .traps-container-card {
       background: var(--bg-surface);
       box-shadow: var(--neu-raised);
@@ -769,7 +840,6 @@
       line-height: 1.6;
     }
 
-    /* DEEP DIVE SECTION */
     .deepdive-container-card {
       background: var(--bg-surface);
       box-shadow: var(--neu-raised);
@@ -802,15 +872,106 @@
       margin-bottom: 12px;
     }
 
+    /* Neumorphic Tables & Callout Cards inside Deep Dive */
+    .neu-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 24px 0;
+      border-radius: var(--radius-md);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid var(--forest-border);
+      background: var(--white);
+    }
+    .neu-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    .neu-table th {
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 0.3px;
+      border: none;
+    }
+    .neu-table td {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(20, 69, 42, 0.08);
+      color: var(--text-body);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .neu-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .neu-table tbody tr:nth-child(even) {
+      background: #F9FCF9;
+    }
+    .neu-table code {
+      background: var(--forest-mint);
+      color: var(--forest-dark);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid rgba(20, 69, 42, 0.12);
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+    .tag-true {
+      background: #E8F5E9;
+      color: #1E6B45;
+      border: 1px solid #A5D6A7;
+    }
+    .tag-false {
+      background: #FEECEB;
+      color: #D32F2F;
+      border: 1px solid #FFCDD2;
+    }
+
+    .neu-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 16px 0 22px 0;
+    }
+    .neu-mini-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: var(--neu-raised-sm);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+    .neu-mini-title {
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
     /* ==========================================================================
-       VIEW 3: ADVISOR & IMPROVEMENT DASHBOARD
+       VIEW 3: IMPROVEMENT ADVISOR & DIAGNOSTICS HUB
        ========================================================================== */
     .advisor-box {
       max-width: 900px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 26px;
     }
 
     .advisor-hero-card {
@@ -824,8 +985,8 @@
       justify-content: space-between;
     }
     .advisor-readiness-gauge {
-      width: 100px;
-      height: 100px;
+      width: 104px;
+      height: 104px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
       border: 4px solid var(--white);
@@ -865,10 +1026,93 @@
       gap: 24px;
     }
 
+    /* ==========================================================================
+       SPOTLIGHT SEARCH MODAL (PRESS / OR CTRL+K)
+       ========================================================================== */
+    .search-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 38, 22, 0.45);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10vh;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .search-modal-card {
+      width: 100%;
+      max-width: 640px;
+      background: var(--bg-surface);
+      box-shadow: 0 20px 40px rgba(15, 53, 32, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .search-input-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--forest-border);
+      background: var(--bg-card);
+    }
+    .search-input-field {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-title);
+      outline: none;
+    }
+    .search-results-list {
+      max-height: 380px;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .search-result-item {
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.12s;
+    }
+    .search-result-item:hover {
+      background: var(--bg-inset);
+      color: var(--forest-main);
+    }
+    .search-res-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--forest-dark);
+    }
+    .search-res-snippet {
+      font-size: 13px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
 
   <!-- ==========================================================================
        TOP APP HEADER
@@ -907,6 +1151,11 @@
 
     <!-- Header Stats -->
     <div class="header-stats">
+      <!-- Streak Badge -->
+      <div class="streak-badge" id="streak-indicator" title="Current streak of correct answers">
+        <span>🔥</span> <span id="streak-count">0</span>
+      </div>
+
       <div class="stat-pill">
         <span style="color:var(--text-muted);">Answered:</span>
         <span class="stat-pill-val" id="top-answered-count">0/317</span>
@@ -915,8 +1164,15 @@
         <span style="color:var(--text-muted);">Accuracy:</span>
         <span class="stat-pill-val" id="top-accuracy-pct" style="color:var(--forest-main);">0%</span>
       </div>
-      <button onclick="toggleBookmarkActive()" id="btn-bm-header" class="stat-pill" style="cursor:pointer;" title="Bookmark current question">
-        <svg style="width:17px; height:17px; color:var(--text-dim);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+
+      <!-- Sound Toggle -->
+      <button onclick="toggleSoundFx()" id="btn-sound-toggle" class="icon-btn-header" title="Toggle audio feedback">
+        <svg id="icon-sound-on" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+      </button>
+
+      <!-- Bookmark Toggle -->
+      <button onclick="toggleBookmarkActive()" id="btn-bm-header" class="icon-btn-header" title="Bookmark current question">
+        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
       </button>
     </div>
   </header>
@@ -928,6 +1184,14 @@
 
     <!-- SIDEBAR: SUBTOPICS & FILTERS -->
     <aside class="app-sidebar">
+      
+      <!-- Instant Search Trigger -->
+      <div class="search-bar-neu" onclick="openSearchModal()">
+        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="search-bar-text">Search questions...</span>
+        <span class="search-kbd">/</span>
+      </div>
+
       <div>
         <div class="section-label">Filter Questions</div>
         <div class="filter-group">
@@ -983,7 +1247,7 @@
           </button>
 
           <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono); font-weight:700;">
-            Keyboard: [1-4] or [A-D] • Arrows [← →]
+            Shortcuts: [1-4] or [A-D] • [Enter] Next • [← →]
           </span>
 
           <button class="neu-btn-action neu-btn-primary" id="btn-next-q" onclick="navigateQuestion(1)">
@@ -1061,7 +1325,7 @@
           </div>
         </div>
 
-        <!-- Personalized Recommendations Card -->
+        <!-- Priority Recovery Plan -->
         <div class="q-card">
           <h3 style="font-size:18px; font-weight:900; color:var(--text-title); display:flex; align-items:center; gap:8px;">
             <span>🧠 Priority Improvement Action Plan</span>
@@ -1159,11 +1423,156 @@
     </main>
   </div>
 
+  <!-- ==========================================================================
+       SPOTLIGHT SEARCH MODAL (PRESS / OR CLICK SEARCH)
+       ========================================================================== -->
+  <div id="search-modal" class="search-modal-backdrop hidden" onclick="closeSearchModal(event)">
+    <div class="search-modal-card" onclick="event.stopPropagation()">
+      <div class="search-input-header">
+        <svg style="width:20px; height:20px; color:var(--forest-main);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="spotlight-input" class="search-input-field" placeholder="Search across all 317 questions (e.g. Heuristic, Big-O, Decomposition)..." oninput="runSpotlightSearch()">
+        <span class="search-kbd" onclick="closeSearchModalDirect()">ESC</span>
+      </div>
+      <div class="search-results-list" id="search-results-box">
+        <div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type to search any question or concept...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- DATA SCRIPT -->
   <script src="data.js"></script>
 
-  <!-- APP CONTROLLER SCRIPT -->
+  <!-- APP ENGINE -->
   <script>
+    // Audio FX Synthesizer
+    const AudioEngine = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+      },
+      playCorrect() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.28);
+        });
+      },
+      playWrong() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.22);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      },
+      playTap() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        gain.gain.setValueAtTime(0.03, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      }
+    };
+
+    // Confetti Engine
+    const ConfettiEngine = {
+      canvas: null,
+      ctx: null,
+      particles: [],
+      init() {
+        this.canvas = document.getElementById('confetti-canvas');
+        if (this.canvas) {
+          this.ctx = this.canvas.getContext('2d');
+          this.resize();
+          window.addEventListener('resize', () => this.resize());
+        }
+      },
+      resize() {
+        if (this.canvas) {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+        }
+      },
+      burst(x = window.innerWidth / 2, y = window.innerHeight / 2) {
+        if (!this.ctx) this.init();
+        const colors = ['#14452A', '#1E633D', '#22C55E', '#F59E0B', '#10B981', '#3B82F6'];
+        for (let i = 0; i < 40; i++) {
+          this.particles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 12,
+            vy: (Math.random() - 0.5) * 12 - 3,
+            size: Math.random() * 7 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            decay: Math.random() * 0.025 + 0.015
+          });
+        }
+        if (this.particles.length <= 40) {
+          requestAnimationFrame(() => this.loop());
+        }
+      },
+      loop() {
+        if (!this.ctx) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25; // gravity
+          p.alpha -= p.decay;
+          if (p.alpha <= 0) {
+            this.particles.splice(i, 1);
+          } else {
+            this.ctx.globalAlpha = p.alpha;
+            this.ctx.fillStyle = p.color;
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+        }
+        if (this.particles.length > 0) {
+          requestAnimationFrame(() => this.loop());
+        } else {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
+    };
+
+    // Global Dataset
     const subtopics = window.NSCT_SUBJECT_01 || [];
     let allQuestions = [];
     subtopics.forEach(st => {
@@ -1181,19 +1590,38 @@
     let activeQuestions = [...allQuestions];
     let activeIndex = 0;
     let selectedTopicId = 1;
+    let currentStreak = parseInt(localStorage.getItem('nsct_streak') || '0');
 
-    // Persistent storage
+    // Storage
     let userAnswers = JSON.parse(localStorage.getItem('nsct_app_answers') || '{}');
     let userBookmarks = JSON.parse(localStorage.getItem('nsct_app_bookmarks') || '{}');
 
     window.onload = function() {
+      ConfettiEngine.init();
       buildSidebarTopics();
       filterBy('all');
       renderTheoryContent(1);
+      updateStreakUI();
     };
+
+    function toggleSoundFx() {
+      AudioEngine.enabled = !AudioEngine.enabled;
+      const btn = document.getElementById('btn-sound-toggle');
+      if (AudioEngine.enabled) {
+        btn.style.color = 'var(--forest-main)';
+        AudioEngine.playTap();
+      } else {
+        btn.style.color = 'var(--text-dim)';
+      }
+    }
+
+    function updateStreakUI() {
+      document.getElementById('streak-count').textContent = currentStreak;
+    }
 
     // Tab Switcher
     function switchAppTab(tabId) {
+      AudioEngine.playTap();
       currentTab = tabId;
       document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById('btn-tab-' + tabId).classList.add('active');
@@ -1213,7 +1641,7 @@
       }
     }
 
-    // Populate Sidebar Topics
+    // Sidebar Topics
     function buildSidebarTopics() {
       const box = document.getElementById('sidebar-topics-box');
       box.innerHTML = '';
@@ -1236,6 +1664,7 @@
     }
 
     function onSelectTopic(stId) {
+      AudioEngine.playTap();
       selectedTopicId = stId;
       document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('active'));
       const activeC = document.getElementById('st-btn-' + stId);
@@ -1249,6 +1678,7 @@
     }
 
     function filterBy(filterVal) {
+      AudioEngine.playTap();
       currentFilter = filterVal;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
 
@@ -1294,7 +1724,7 @@
       document.getElementById('q-index-display').textContent = `Question ${activeIndex + 1} of ${activeQuestions.length} (ID: Q${q.q_num})`;
       document.getElementById('palette-ratio-text').textContent = `${activeIndex + 1} / ${activeQuestions.length}`;
 
-      // Bookmark Button Highlight
+      // Bookmark State
       const bmBtn = document.getElementById('btn-bm-header');
       if (userBookmarks[qKey]) {
         bmBtn.style.background = 'var(--forest-mint)';
@@ -1304,7 +1734,7 @@
         bmBtn.style.color = 'var(--text-dim)';
       }
 
-      // Question Statement
+      // Statement
       document.getElementById('q-statement-text').textContent = q.question;
 
       // Options
@@ -1341,7 +1771,7 @@
         stack.appendChild(btn);
       });
 
-      // Explanation Box
+      // Explanation & Advice
       const explPanel = document.getElementById('q-explanation-panel');
       const imprvPanel = document.getElementById('q-improvement-panel');
 
@@ -1359,7 +1789,6 @@
           </div>
         `;
 
-        // TARGETED IMPROVEMENT ADVISOR IF WRONG
         if (!isRight) {
           imprvPanel.classList.remove('hidden');
           const adviceInfo = getTargetedImprovementAdvice(q);
@@ -1373,7 +1802,7 @@
               <strong>Conceptual Gap:</strong> ${adviceInfo.gap}<br>
               <strong>Mental Model:</strong> ${adviceInfo.mentalModel}
             </div>
-            <div class="improvement-actions">
+            <div style="margin-top:4px;">
               <button class="btn-improvement-jump" onclick="jumpToStudyGuideTopic(${q.subtopic_id})">
                 <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                 <span>Revise Subtopic ${q.subtopic_id} in Study Guide</span>
@@ -1394,7 +1823,6 @@
       updatePaletteSelection();
     }
 
-    // Generate Targeted Improvement Advice for any Question
     function getTargetedImprovementAdvice(q) {
       const title = q.subtopic_title.toLowerCase();
       if (title.includes('understanding') || title.includes('analysis')) {
@@ -1438,6 +1866,19 @@
     function selectOption(letter) {
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
+      const isCorrect = (letter === q.correct);
+
+      if (isCorrect) {
+        AudioEngine.playCorrect();
+        currentStreak++;
+        ConfettiEngine.burst();
+      } else {
+        AudioEngine.playWrong();
+        currentStreak = 0;
+      }
+      localStorage.setItem('nsct_streak', currentStreak);
+      updateStreakUI();
+
       userAnswers[qKey] = {
         selected: letter,
         time: Date.now()
@@ -1449,6 +1890,7 @@
     }
 
     function navigateQuestion(delta) {
+      AudioEngine.playTap();
       const nextIdx = activeIndex + delta;
       if (nextIdx >= 0 && nextIdx < activeQuestions.length) {
         activeIndex = nextIdx;
@@ -1457,6 +1899,7 @@
     }
 
     function toggleBookmarkActive() {
+      AudioEngine.playTap();
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       if (userBookmarks[qKey]) {
@@ -1493,6 +1936,7 @@
 
         btn.textContent = idx + 1;
         btn.onclick = () => {
+          AudioEngine.playTap();
           activeIndex = idx;
           renderCurrentQuestion();
         };
@@ -1530,11 +1974,22 @@
       document.getElementById('saved-count').textContent = Object.keys(userBookmarks).length;
     }
 
-    // Keyboard bindings
+    // Keyboard Shortcuts
     window.addEventListener('keydown', e => {
+      // Spotlight search modal trigger
+      if (e.key === '/' && currentTab === 'practice' && document.getElementById('search-modal').classList.contains('hidden')) {
+        e.preventDefault();
+        openSearchModal();
+        return;
+      }
+      if (e.key === 'Escape') {
+        closeSearchModalDirect();
+        return;
+      }
+
       if (currentTab !== 'practice') return;
       if (e.key === 'ArrowLeft') navigateQuestion(-1);
-      if (e.key === 'ArrowRight') navigateQuestion(1);
+      if (e.key === 'ArrowRight' || e.key === 'Enter') navigateQuestion(1);
 
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
@@ -1545,6 +2000,69 @@
         if (e.key === '4' || e.key.toLowerCase() === 'd') selectOption('D');
       }
     });
+
+    // ==========================================================================
+    // SPOTLIGHT SEARCH ENGINE
+    // ==========================================================================
+    function openSearchModal() {
+      AudioEngine.playTap();
+      document.getElementById('search-modal').classList.remove('hidden');
+      const input = document.getElementById('spotlight-input');
+      input.value = '';
+      input.focus();
+      runSpotlightSearch();
+    }
+
+    function closeSearchModal(e) {
+      document.getElementById('search-modal').classList.add('hidden');
+    }
+
+    function closeSearchModalDirect() {
+      document.getElementById('search-modal').classList.add('hidden');
+    }
+
+    function runSpotlightSearch() {
+      const term = document.getElementById('spotlight-input').value.toLowerCase().trim();
+      const box = document.getElementById('search-results-box');
+      box.innerHTML = '';
+
+      if (!term) {
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type to search any question or concept...</div>';
+        return;
+      }
+
+      const matches = allQuestions.filter(q => 
+        q.question.toLowerCase().includes(term) || 
+        q.explanation.toLowerCase().includes(term) ||
+        q.subtopic_title.toLowerCase().includes(term)
+      ).slice(0, 15);
+
+      if (matches.length === 0) {
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">No matching questions found.</div>';
+        return;
+      }
+
+      matches.forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
+        item.onclick = () => {
+          closeSearchModalDirect();
+          // Jump to question
+          filterBy('all');
+          const idx = allQuestions.findIndex(q => q.subtopic_id === m.subtopic_id && q.q_num === m.q_num);
+          if (idx !== -1) {
+            activeIndex = idx;
+            renderCurrentQuestion();
+          }
+        };
+
+        item.innerHTML = `
+          <div class="search-res-title">Subtopic ${m.subtopic_id}: ${m.subtopic_title} • Q${m.q_num}</div>
+          <div class="search-res-snippet">${m.question}</div>
+        `;
+        box.appendChild(item);
+      });
+    }
 
     // ==========================================================================
     // RENDER THEORY & NOTES VIEW
@@ -1605,7 +2123,6 @@
       const totalAnswered = answeredKeys.length;
       let totalCorrect = 0;
 
-      // Group by subtopic
       const subtopicStats = {};
       subtopics.forEach(st => {
         subtopicStats[st.id] = { title: st.title, total: st.questions.length, answered: 0, correct: 0 };
@@ -1628,7 +2145,6 @@
 
       document.getElementById('advisor-gauge-val').textContent = `${readinessScore}%`;
 
-      // Priority Action List
       const actionBox = document.getElementById('advisor-action-list');
       actionBox.innerHTML = '';
 
@@ -1673,7 +2189,6 @@
         });
       }
 
-      // Subtopic Diagnostic List
       const diagBox = document.getElementById('advisor-subtopic-diagnostic');
       diagBox.innerHTML = '';
 
@@ -1712,6 +2227,7 @@
     let mockTimeRemaining = 1800;
 
     function launchMockExamNow() {
+      AudioEngine.playTap();
       const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
       mockList = shuffled.slice(0, 30);
       mockCurr = 0;
@@ -1766,6 +2282,7 @@
         `;
 
         btn.onclick = () => {
+          AudioEngine.playTap();
           mockUserPicks[mockCurr] = letter;
           renderMockQuestionCard();
         };
@@ -1775,6 +2292,7 @@
     }
 
     function moveMockStep(delta) {
+      AudioEngine.playTap();
       const next = mockCurr + delta;
       if (next >= 0 && next < mockList.length) {
         mockCurr = next;
@@ -1794,6 +2312,13 @@
 
       const pct = Math.round((score / mockList.length) * 100);
       const passed = (pct >= 75);
+
+      if (passed) {
+        AudioEngine.playCorrect();
+        ConfettiEngine.burst();
+      } else {
+        AudioEngine.playWrong();
+      }
 
       const icon = document.getElementById('mock-badge-icon');
       if (passed) {

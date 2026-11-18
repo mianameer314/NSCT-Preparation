@@ -2,13 +2,2348 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=interactive-trainer/index.html">
-  <title>NSCT Preparation — Interactive Master Trainer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSCT Prep — Subject 01: Problem Solving & Analytical Skills</title>
+  <style>
+    /* ==========================================================================
+       NEUMORPHIC FOREST GREEN & WHITE ULTRA-FAST DESIGN SYSTEM
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Neumorphic Palette */
+      --bg-base: #EFF3EF;
+      --bg-surface: #F2F6F2;
+      --bg-card: #F5F8F5;
+      --bg-inset: #E7EEE7;
+      
+      /* Dark Forest Green Accents */
+      --forest-dark: #0F3520;
+      --forest-main: #14452A;
+      --forest-light: #1E633D;
+      --forest-mint: #E2ECE5;
+      --forest-border: rgba(20, 69, 42, 0.15);
+
+      /* Accent Highlights */
+      --white: #FFFFFF;
+      --text-title: #0A2616;
+      --text-body: #112A1B;
+      --text-muted: #41614F;
+      --text-dim: #6B8877;
+
+      /* Feedback Colors */
+      --correct-bg: #E8F5E9;
+      --correct-border: #1E6B45;
+      --correct-text: #0A3D22;
+      
+      --wrong-bg: #FEECEB;
+      --wrong-border: #D32F2F;
+      --wrong-text: #7F1D1D;
+
+      --advice-bg: #FEF7E6;
+      --advice-border: #D97706;
+      --advice-text: #78350F;
+
+      /* Tactile Neumorphic Dual Shadows */
+      --neu-raised: 7px 7px 16px rgba(15, 53, 32, 0.08), -7px -7px 16px rgba(255, 255, 255, 0.95);
+      --neu-raised-sm: 4px 4px 10px rgba(15, 53, 32, 0.07), -4px -4px 10px rgba(255, 255, 255, 0.95);
+      --neu-raised-hover: 8px 8px 20px rgba(15, 53, 32, 0.12), -8px -8px 20px rgba(255, 255, 255, 1);
+      --neu-inset: inset 3px 3px 7px rgba(15, 53, 32, 0.08), inset -3px -3px 7px rgba(255, 255, 255, 0.95);
+      --neu-inset-deep: inset 4px 4px 10px rgba(15, 53, 32, 0.12), inset -4px -4px 10px rgba(255, 255, 255, 0.9);
+
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 26px;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: #CBD8CE; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A4B8A9; }
+
+    /* Canvas Confetti */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ==========================================================================
+       TOP GLOBAL HEADER
+       ========================================================================== */
+    .app-header {
+      height: 72px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--forest-border);
+      box-shadow: 0 4px 14px rgba(15, 53, 32, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-light));
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 19px;
+      box-shadow: 3px 3px 8px rgba(15, 53, 32, 0.25);
+    }
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-title);
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-pill {
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* SEGMENTED TAB SWITCHER */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      padding: 5px;
+      border-radius: 16px;
+      gap: 4px;
+    }
+    .nav-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-tab-btn:hover {
+      color: var(--text-title);
+    }
+    .nav-tab-btn.active {
+      background: var(--forest-main);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(15, 53, 32, 0.3);
+    }
+    .nav-tab-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    /* HEADER RIGHT STATS & CONTROLS */
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stat-pill {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-pill-val {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--forest-main);
+    }
+    .streak-badge {
+      background: linear-gradient(135deg, #FFF7ED, #FFEDD5);
+      border: 1.5px solid #F97316;
+      color: #C2410C;
+      box-shadow: var(--neu-raised-sm);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .icon-btn-header {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .icon-btn-header:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+    }
+    .icon-btn-header:active {
+      box-shadow: var(--neu-inset);
+    }
+
+    /* ==========================================================================
+       APP WORKSPACE (SIDEBAR + MAIN CANVAS)
+       ========================================================================== */
+    .app-workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* LEFT SIDEBAR */
+    .app-sidebar {
+      width: 320px;
+      min-width: 300px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--forest-border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px 16px;
+      gap: 18px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      padding: 0 6px 6px;
+    }
+
+    /* SEARCH INPUT BOX */
+    .search-bar-neu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .search-bar-neu:hover {
+      background: #E1E8E1;
+      color: var(--forest-main);
+    }
+    .search-bar-text {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .search-kbd {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--bg-surface);
+      padding: 2px 6px;
+      border-radius: 6px;
+      box-shadow: var(--neu-raised-sm);
+      color: var(--text-dim);
+    }
+
+    /* NEUMORPHIC TOPIC LIST */
+    .topic-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .topic-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: var(--text-body);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+    .topic-card:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+    }
+    .topic-card.active {
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      border-color: rgba(20, 69, 42, 0.15);
+      color: var(--forest-main);
+      font-weight: 800;
+    }
+    .topic-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .topic-badge-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--forest-mint);
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .topic-card.active .topic-badge-num {
+      background: var(--forest-main);
+      color: var(--white);
+    }
+    .topic-card-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .topic-count {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    /* FILTERS PILLS */
+    .filter-group {
+      display: flex;
+      gap: 6px;
+    }
+    .filter-btn {
+      flex: 1;
+      padding: 9px 6px;
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover {
+      color: var(--text-title);
+    }
+    .filter-btn.active {
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      color: var(--forest-main);
+      font-weight: 800;
+    }
+
+    /* MAIN VIEWPORT CANVAS */
+    .main-viewport {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;
+      padding: 34px 44px;
+      background: radial-gradient(circle at 90% 10%, rgba(20, 69, 42, 0.03), transparent 60%), var(--bg-base);
+    }
+
+    /* ==========================================================================
+       VIEW 1: PRACTICE DRILL
+       ========================================================================== */
+    .practice-box {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* NEUMORPHIC QUESTION CARD */
+    .q-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .q-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(20, 69, 42, 0.1);
+      padding-bottom: 16px;
+    }
+    .q-subtopic-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--forest-main);
+      background: var(--forest-mint);
+      padding: 5px 14px;
+      border-radius: 20px;
+      box-shadow: var(--neu-raised-sm);
+    }
+    .q-index-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .q-statement-text {
+      font-size: 20.5px;
+      font-weight: 700;
+      color: var(--text-title);
+      line-height: 1.55;
+    }
+
+    /* OPTIONS */
+    .options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .opt-card-btn {
+      width: 100%;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      color: var(--text-body);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      outline: none;
+    }
+    .opt-card-btn:hover:not(:disabled) {
+      box-shadow: var(--neu-raised-hover);
+      transform: translateY(-2px);
+      color: var(--forest-main);
+    }
+    .opt-card-btn:active:not(:disabled) {
+      box-shadow: var(--neu-inset);
+      transform: translateY(1px);
+    }
+    .opt-badge-letter {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: all 0.12s;
+    }
+    .opt-card-btn:hover:not(:disabled) .opt-badge-letter {
+      background: var(--forest-main);
+      color: var(--white);
+    }
+
+    /* CORRECT / WRONG STATES */
+    .opt-card-btn.state-correct {
+      background: var(--correct-bg) !important;
+      border: 2px solid var(--correct-border) !important;
+      color: var(--correct-text) !important;
+      box-shadow: var(--neu-inset) !important;
+    }
+    .opt-card-btn.state-correct .opt-badge-letter {
+      background: var(--correct-border) !important;
+      color: var(--white) !important;
+      box-shadow: none !important;
+    }
+
+    .opt-card-btn.state-wrong {
+      background: var(--wrong-bg) !important;
+      border: 2px solid var(--wrong-border) !important;
+      color: var(--wrong-text) !important;
+      box-shadow: var(--neu-inset) !important;
+    }
+    .opt-card-btn.state-wrong .opt-badge-letter {
+      background: var(--wrong-border) !important;
+      color: var(--white) !important;
+      box-shadow: none !important;
+    }
+
+    .opt-card-btn.state-dimmed {
+      opacity: 0.4;
+    }
+
+    /* EXPLANATION PANEL */
+    .explanation-panel {
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .explanation-panel.is-correct {
+      background: var(--correct-bg);
+      border: 1px solid rgba(30, 107, 69, 0.3);
+      color: var(--correct-text);
+    }
+    .explanation-panel.is-wrong {
+      background: var(--wrong-bg);
+      border: 1px solid rgba(211, 47, 47, 0.3);
+      color: var(--wrong-text);
+    }
+    .expl-headline {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .expl-body-copy {
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    /* TARGETED IMPROVEMENT ADVICE */
+    .improvement-box {
+      background: var(--advice-bg);
+      border: 1.5px solid var(--advice-border);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--neu-raised-sm);
+      animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 6px;
+    }
+    .improvement-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--advice-text);
+      font-size: 15px;
+      font-weight: 800;
+    }
+    .improvement-content {
+      font-size: 14px;
+      color: #78350F;
+      line-height: 1.6;
+    }
+    .btn-improvement-jump {
+      background: var(--forest-main);
+      color: var(--white);
+      border: none;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 2px 2px 6px rgba(15, 53, 32, 0.25);
+      transition: all 0.12s;
+    }
+    .btn-improvement-jump:hover {
+      background: var(--forest-light);
+      transform: translateY(-1px);
+    }
+
+    /* NAV CONTROLS */
+    .q-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+    }
+    .neu-btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      color: var(--text-body);
+    }
+    .neu-btn-action:hover:not(:disabled) {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+      transform: translateY(-2px);
+    }
+    .neu-btn-action:active:not(:disabled) {
+      box-shadow: var(--neu-inset);
+      transform: translateY(1px);
+    }
+    .neu-btn-primary {
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-light));
+      color: var(--white);
+      box-shadow: 4px 4px 14px rgba(15, 53, 32, 0.3);
+      border: 1px solid var(--forest-main);
+    }
+    .neu-btn-primary:hover:not(:disabled) {
+      box-shadow: 5px 5px 18px rgba(15, 53, 32, 0.4);
+      color: var(--white);
+    }
+    .neu-btn-action:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* PALETTE DRAWER */
+    .palette-drawer {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+      gap: 7px;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .palette-btn {
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .palette-btn:hover {
+      color: var(--forest-main);
+      box-shadow: var(--neu-raised-hover);
+    }
+    .palette-btn.current {
+      background: var(--bg-inset) !important;
+      box-shadow: var(--neu-inset) !important;
+      color: var(--forest-main) !important;
+      border-color: var(--forest-main) !important;
+      font-weight: 900;
+    }
+    .palette-btn.ans-correct {
+      background: var(--correct-border) !important;
+      color: var(--white) !important;
+      border-color: var(--correct-border) !important;
+    }
+    .palette-btn.ans-wrong {
+      background: var(--wrong-border) !important;
+      color: var(--white) !important;
+      border-color: var(--wrong-border) !important;
+    }
+
+    /* ==========================================================================
+       VIEW 2: THEORY & NOTES
+       ========================================================================== */
+    .theory-box {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .theory-hero-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 34px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theory-hero-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-title);
+      letter-spacing: -0.4px;
+    }
+    .theory-hero-sub {
+      color: var(--forest-main);
+      font-size: 14.5px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 18px;
+    }
+    .concept-neu-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .concept-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .concept-desc {
+      font-size: 14.5px;
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    .traps-container-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .traps-title-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #B45309;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .trap-neu-item {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-inset);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .trap-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #92400E;
+    }
+    .trap-text {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .deepdive-container-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 34px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .deepdive-header-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--forest-main);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .deep-dive-heading {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    .deep-dive-text {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    /* Neumorphic Tables & Callout Cards inside Deep Dive */
+    .neu-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 24px 0;
+      border-radius: var(--radius-md);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid var(--forest-border);
+      background: var(--white);
+    }
+    .neu-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    .neu-table th {
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 0.3px;
+      border: none;
+    }
+    .neu-table td {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(20, 69, 42, 0.08);
+      color: var(--text-body);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .neu-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .neu-table tbody tr:nth-child(even) {
+      background: #F9FCF9;
+    }
+    .neu-table code {
+      background: var(--forest-mint);
+      color: var(--forest-dark);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid rgba(20, 69, 42, 0.12);
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 12px;
+      font-family: var(--font-mono);
+    }
+    .tag-true {
+      background: #E8F5E9;
+      color: #1E6B45;
+      border: 1px solid #A5D6A7;
+    }
+    .tag-false {
+      background: #FEECEB;
+      color: #D32F2F;
+      border: 1px solid #FFCDD2;
+    }
+
+    .neu-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 16px 0 22px 0;
+    }
+    .neu-mini-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: var(--neu-raised-sm);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+    .neu-mini-title {
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    /* ==========================================================================
+       VIEW 3: IMPROVEMENT ADVISOR & DIAGNOSTICS HUB
+       ========================================================================== */
+    .advisor-box {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .advisor-hero-card {
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-dark));
+      color: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 34px 40px;
+      box-shadow: 6px 6px 20px rgba(15, 53, 32, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .advisor-readiness-gauge {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 4px solid var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 900;
+    }
+
+    .advisor-subtopic-row {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    /* MOCK EXAM */
+    .mock-start-neu {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 44px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* ==========================================================================
+       SPOTLIGHT SEARCH MODAL (PRESS / OR CTRL+K)
+       ========================================================================== */
+    .search-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 38, 22, 0.45);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10vh;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .search-modal-card {
+      width: 100%;
+      max-width: 640px;
+      background: var(--bg-surface);
+      box-shadow: 0 20px 40px rgba(15, 53, 32, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .search-input-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--forest-border);
+      background: var(--bg-card);
+    }
+    .search-input-field {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-title);
+      outline: none;
+    }
+    .search-results-list {
+      max-height: 380px;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .search-result-item {
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.12s;
+    }
+    .search-result-item:hover {
+      background: var(--bg-inset);
+      color: var(--forest-main);
+    }
+    .search-res-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--forest-dark);
+    }
+    .search-res-snippet {
+      font-size: 13px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hidden { display: none !important; }
+  </style>
 </head>
-<body style="background:#0A0E17; color:#F8FAFC; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
-  <div style="text-align:center;">
-    <h2>Launching NSCT Master Trainer...</h2>
-    <p style="color:#94A3B8;">If you are not redirected automatically, <a href="interactive-trainer/index.html" style="color:#6366F1; font-weight:bold;">click here</a>.</p>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ==========================================================================
+       TOP APP HEADER
+       ========================================================================== -->
+  <header class="app-header">
+    <div class="brand-group">
+      <div class="brand-icon">01</div>
+      <div>
+        <div class="brand-title">
+          <span>NSCT Master Prep</span>
+          <span class="brand-pill">20% Weight</span>
+        </div>
+        <div class="brand-sub">Subject 01: Problem Solving & Analytical Skills</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" id="btn-tab-practice" onclick="switchAppTab('practice')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>Practice Drill (317)</span>
+      </button>
+      <button class="nav-tab-btn" id="btn-tab-theory" onclick="switchAppTab('theory')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>Study Guide & Notes</span>
+      </button>
+      <button class="nav-tab-btn" id="btn-tab-advisor" onclick="switchAppTab('advisor')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span>Improvement Advisor</span>
+      </button>
+      <button class="nav-tab-btn" id="btn-tab-mock" onclick="switchAppTab('mock')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Mock Exam (30m)</span>
+      </button>
+    </div>
+
+    <!-- Header Stats -->
+    <div class="header-stats">
+      <!-- Streak Badge -->
+      <div class="streak-badge" id="streak-indicator" title="Current streak of correct answers">
+        <span>🔥</span> <span id="streak-count">0</span>
+      </div>
+
+      <div class="stat-pill">
+        <span style="color:var(--text-muted);">Answered:</span>
+        <span class="stat-pill-val" id="top-answered-count">0/317</span>
+      </div>
+      <div class="stat-pill">
+        <span style="color:var(--text-muted);">Accuracy:</span>
+        <span class="stat-pill-val" id="top-accuracy-pct" style="color:var(--forest-main);">0%</span>
+      </div>
+
+      <!-- Sound Toggle -->
+      <button onclick="toggleSoundFx()" id="btn-sound-toggle" class="icon-btn-header" title="Toggle audio feedback">
+        <svg id="icon-sound-on" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+      </button>
+
+      <!-- Bookmark Toggle -->
+      <button onclick="toggleBookmarkActive()" id="btn-bm-header" class="icon-btn-header" title="Bookmark current question">
+        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       APP WORKSPACE (SIDEBAR + MAIN CANVAS)
+       ========================================================================== -->
+  <div class="app-workspace">
+
+    <!-- SIDEBAR: SUBTOPICS & FILTERS -->
+    <aside class="app-sidebar">
+      
+      <!-- Instant Search Trigger -->
+      <div class="search-bar-neu" onclick="openSearchModal()">
+        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="search-bar-text">Search questions...</span>
+        <span class="search-kbd">/</span>
+      </div>
+
+      <div>
+        <div class="section-label">Filter Questions</div>
+        <div class="filter-group">
+          <button class="filter-btn active" id="f-all" onclick="filterBy('all')">All</button>
+          <button class="filter-btn" id="f-wrong" onclick="filterBy('wrong')">Missed (<span id="missed-count">0</span>)</button>
+          <button class="filter-btn" id="f-saved" onclick="filterBy('saved')">Saved (<span id="saved-count">0</span>)</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">All 16 Subtopics</div>
+        <div class="topic-list" id="sidebar-topics-box">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEWPORT CANVAS -->
+    <main class="main-viewport">
+
+      <!-- ==========================================================================
+           TAB 1: PRACTICE DRILL VIEW
+           ========================================================================== -->
+      <div id="view-practice" class="practice-box">
+
+        <!-- Elevated Neumorphic Question Card -->
+        <div class="q-card">
+          <div class="q-meta-bar">
+            <span class="q-subtopic-tag" id="q-subtopic-display">Subtopic 01</span>
+            <span class="q-index-tag" id="q-index-display">Question 1 of 317</span>
+          </div>
+
+          <div class="q-statement-text" id="q-statement-text">
+            Loading question...
+          </div>
+
+          <div class="options-stack" id="q-options-stack">
+            <!-- Dynamically populated options A, B, C, D -->
+          </div>
+
+          <!-- Explanation Panel -->
+          <div id="q-explanation-panel" class="hidden"></div>
+
+          <!-- Targeted Improvement Advice (Shown on Mistakes) -->
+          <div id="q-improvement-panel" class="hidden"></div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="q-nav-bar">
+          <button class="neu-btn-action" id="btn-prev-q" onclick="navigateQuestion(-1)">
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            <span>Previous</span>
+          </button>
+
+          <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono); font-weight:700;">
+            Shortcuts: [1-4] or [A-D] • [Enter] Next • [← →]
+          </span>
+
+          <button class="neu-btn-action neu-btn-primary" id="btn-next-q" onclick="navigateQuestion(1)">
+            <span>Next</span>
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Palette Drawer -->
+        <div class="palette-drawer">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800; color:var(--text-title);">
+            <span>Question Quick-Palette</span>
+            <span style="font-family:var(--font-mono); color:var(--text-dim);" id="palette-ratio-text">1/317</span>
+          </div>
+          <div class="palette-grid" id="palette-buttons-grid"></div>
+        </div>
+
+      </div>
+
+      <!-- ==========================================================================
+           TAB 2: THEORY & NOTES (ELEGANT STUDY GUIDE)
+           ========================================================================== -->
+      <div id="view-theory" class="theory-box hidden">
+
+        <!-- Hero Header -->
+        <div class="theory-hero-card">
+          <div>
+            <h2 class="theory-hero-title" id="theory-hero-title">Subtopic 01: Introduction to Problem Solving</h2>
+            <p class="theory-hero-sub">Official P@SHA / HEC Syllabus Study Guide & High-Yield Concepts</p>
+          </div>
+        </div>
+
+        <!-- Section 1: Core Concepts -->
+        <div>
+          <h3 style="font-size:18px; font-weight:900; color:var(--forest-dark); margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+            <span>💡 Core Concepts & Definitions</span>
+          </h3>
+          <div class="concepts-grid" id="theory-concepts-container"></div>
+        </div>
+
+        <!-- Section 2: Common Traps -->
+        <div class="traps-container-card">
+          <div class="traps-title-bar">
+            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>⚠️ Common Traps & Confusions (What Examiners Test to Trick You)</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;" id="theory-traps-container"></div>
+        </div>
+
+        <!-- Section 3: Deep Dive -->
+        <div class="deepdive-container-card">
+          <div class="deepdive-header-bar">
+            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            <span>🔬 Deep Dive Reference Tables & Practical Examples</span>
+          </div>
+          <div id="theory-deepdive-container"></div>
+        </div>
+
+      </div>
+
+      <!-- ==========================================================================
+           TAB 3: IMPROVEMENT ADVISOR & DIAGNOSTICS HUB
+           ========================================================================== -->
+      <div id="view-advisor" class="advisor-box hidden">
+
+        <!-- Readiness Banner -->
+        <div class="advisor-hero-card">
+          <div>
+            <h2 style="font-size:24px; font-weight:900;">Your NSCT Readiness Advisor</h2>
+            <p style="opacity:0.9; font-size:14px; margin-top:4px;">Diagnostic breakdown of your performance across all 16 subtopics with custom recovery steps.</p>
+          </div>
+          <div class="advisor-readiness-gauge">
+            <span id="advisor-gauge-val" style="font-size:24px;">0%</span>
+            <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">Ready</span>
+          </div>
+        </div>
+
+        <!-- Priority Recovery Plan -->
+        <div class="q-card">
+          <h3 style="font-size:18px; font-weight:900; color:var(--text-title); display:flex; align-items:center; gap:8px;">
+            <span>🧠 Priority Improvement Action Plan</span>
+          </h3>
+          <div id="advisor-action-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+
+        <!-- Subtopic Mastery Progress List -->
+        <div>
+          <h3 style="font-size:17px; font-weight:900; color:var(--forest-dark); margin-bottom:12px;">
+            Subtopic-by-Subtopic Mastery Diagnostic
+          </h3>
+          <div id="advisor-subtopic-diagnostic" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+
+      </div>
+
+      <!-- ==========================================================================
+           TAB 4: TIMED MOCK EXAM VIEW
+           ========================================================================== -->
+      <div id="view-mock" class="practice-box hidden">
+
+        <div class="mock-start-neu" id="mock-intro-card">
+          <div style="width:68px; height:68px; border-radius:20px; background:var(--forest-mint); color:var(--forest-dark); display:flex; align-items:center; justify-content:center;">
+            <svg style="width:36px; height:36px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h2 style="font-size:24px; font-weight:900; color:var(--text-title);">Timed Mock Simulator (Subject 01)</h2>
+            <p style="color:var(--text-muted); font-size:14px; margin-top:4px;">Experience real exam conditions. Answers are hidden until final submission.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; width:100%;">
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Questions</div>
+              <div style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);">30 MCQs</div>
+            </div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Time Limit</div>
+              <div style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);">30 Mins</div>
+            </div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Passing Grade</div>
+              <div style="font-size:22px; font-weight:900; color:var(--forest-light); font-family:var(--font-mono);">75%</div>
+            </div>
+          </div>
+          <button class="neu-btn-action neu-btn-primary" onclick="launchMockExamNow()" style="width:100%; justify-content:center; padding:16px; font-size:16px;">
+            Start Timed Mock Exam
+          </button>
+        </div>
+
+        <!-- Live Mock Arena -->
+        <div id="mock-live-arena" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
+          <div style="background:var(--bg-surface); box-shadow:var(--neu-raised-sm); padding:18px 26px; border-radius:var(--radius-lg); display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; color:var(--forest-dark);" id="mock-step-label">Question 1 of 30</span>
+            <div style="background:var(--bg-inset); box-shadow:var(--neu-inset); color:var(--forest-dark); padding:8px 18px; border-radius:12px; font-family:var(--font-mono); font-weight:900; font-size:17px;" id="mock-timer-clock">30:00</div>
+            <button onclick="finishMockNow()" style="background:#D32F2F; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:800; cursor:pointer;">Submit Exam</button>
+          </div>
+
+          <div class="q-card">
+            <div class="q-statement-text" id="mock-prompt-text" style="font-size:19px;"></div>
+            <div class="options-stack" id="mock-options-stack"></div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between;">
+            <button class="neu-btn-action" onclick="moveMockStep(-1)">Previous</button>
+            <button class="neu-btn-action neu-btn-primary" onclick="moveMockStep(1)">Next</button>
+          </div>
+        </div>
+
+        <!-- Mock Score Report -->
+        <div id="mock-report-card" class="mock-start-neu hidden">
+          <div id="mock-badge-icon" style="width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px;"></div>
+          <h2 id="mock-report-headline" style="font-size:28px; font-weight:900;"></h2>
+          <p id="mock-report-summary" style="color:var(--text-muted); font-size:15px;"></p>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; width:100%;">
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Score</div>
+              <div id="mock-res-score" style="font-size:24px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);"></div>
+            </div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Accuracy</div>
+              <div id="mock-res-accuracy" style="font-size:24px; font-weight:900; color:var(--forest-main); font-family:var(--font-mono);"></div>
+            </div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Time Taken</div>
+              <div id="mock-res-time" style="font-size:24px; font-weight:900; color:var(--forest-light); font-family:var(--font-mono);"></div>
+            </div>
+          </div>
+          <button class="neu-btn-action neu-btn-primary" onclick="launchMockExamNow()" style="width:100%; justify-content:center; padding:15px; font-size:15px;">
+            Retake Timed Mock Exam
+          </button>
+        </div>
+
+      </div>
+
+    </main>
   </div>
+
+  <!-- ==========================================================================
+       SPOTLIGHT SEARCH MODAL (PRESS / OR CLICK SEARCH)
+       ========================================================================== -->
+  <div id="search-modal" class="search-modal-backdrop hidden" onclick="closeSearchModal(event)">
+    <div class="search-modal-card" onclick="event.stopPropagation()">
+      <div class="search-input-header">
+        <svg style="width:20px; height:20px; color:var(--forest-main);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="spotlight-input" class="search-input-field" placeholder="Search across all 317 questions (e.g. Heuristic, Big-O, Decomposition)..." oninput="runSpotlightSearch()">
+        <span class="search-kbd" onclick="closeSearchModalDirect()">ESC</span>
+      </div>
+      <div class="search-results-list" id="search-results-box">
+        <div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type to search any question or concept...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA SCRIPT -->
+  <script src="data.js"></script>
+
+  <!-- APP ENGINE -->
+  <script>
+    // Audio FX Synthesizer
+    const AudioEngine = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+      },
+      playCorrect() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.28);
+        });
+      },
+      playWrong() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.22);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      },
+      playTap() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        gain.gain.setValueAtTime(0.03, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      }
+    };
+
+    // Confetti Engine
+    const ConfettiEngine = {
+      canvas: null,
+      ctx: null,
+      particles: [],
+      init() {
+        this.canvas = document.getElementById('confetti-canvas');
+        if (this.canvas) {
+          this.ctx = this.canvas.getContext('2d');
+          this.resize();
+          window.addEventListener('resize', () => this.resize());
+        }
+      },
+      resize() {
+        if (this.canvas) {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+        }
+      },
+      burst(x = window.innerWidth / 2, y = window.innerHeight / 2) {
+        if (!this.ctx) this.init();
+        const colors = ['#14452A', '#1E633D', '#22C55E', '#F59E0B', '#10B981', '#3B82F6'];
+        for (let i = 0; i < 40; i++) {
+          this.particles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 12,
+            vy: (Math.random() - 0.5) * 12 - 3,
+            size: Math.random() * 7 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            decay: Math.random() * 0.025 + 0.015
+          });
+        }
+        if (this.particles.length <= 40) {
+          requestAnimationFrame(() => this.loop());
+        }
+      },
+      loop() {
+        if (!this.ctx) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25; // gravity
+          p.alpha -= p.decay;
+          if (p.alpha <= 0) {
+            this.particles.splice(i, 1);
+          } else {
+            this.ctx.globalAlpha = p.alpha;
+            this.ctx.fillStyle = p.color;
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+        }
+        if (this.particles.length > 0) {
+          requestAnimationFrame(() => this.loop());
+        } else {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
+    };
+
+    // Global Dataset
+    const subtopics = window.NSCT_SUBJECT_01 || [];
+    let allQuestions = [];
+    subtopics.forEach(st => {
+      st.questions.forEach(q => {
+        allQuestions.push({
+          ...q,
+          subtopic_id: st.id,
+          subtopic_title: st.title
+        });
+      });
+    });
+
+    let currentTab = 'practice';
+    let currentFilter = 'all';
+    let activeQuestions = [...allQuestions];
+    let activeIndex = 0;
+    let selectedTopicId = 1;
+    let currentStreak = parseInt(localStorage.getItem('nsct_streak') || '0');
+
+    // Storage
+    let userAnswers = JSON.parse(localStorage.getItem('nsct_app_answers') || '{}');
+    let userBookmarks = JSON.parse(localStorage.getItem('nsct_app_bookmarks') || '{}');
+
+    window.onload = function() {
+      ConfettiEngine.init();
+      buildSidebarTopics();
+      filterBy('all');
+      renderTheoryContent(1);
+      updateStreakUI();
+    };
+
+    function toggleSoundFx() {
+      AudioEngine.enabled = !AudioEngine.enabled;
+      const btn = document.getElementById('btn-sound-toggle');
+      if (AudioEngine.enabled) {
+        btn.style.color = 'var(--forest-main)';
+        AudioEngine.playTap();
+      } else {
+        btn.style.color = 'var(--text-dim)';
+      }
+    }
+
+    function updateStreakUI() {
+      document.getElementById('streak-count').textContent = currentStreak;
+    }
+
+    // Tab Switcher
+    function switchAppTab(tabId) {
+      AudioEngine.playTap();
+      currentTab = tabId;
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn-tab-' + tabId).classList.add('active');
+
+      ['practice', 'theory', 'advisor', 'mock'].forEach(t => {
+        const el = document.getElementById('view-' + t);
+        if (el) el.classList.add('hidden');
+      });
+
+      const activeView = document.getElementById('view-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
+
+      if (tabId === 'theory') {
+        renderTheoryContent(selectedTopicId);
+      } else if (tabId === 'advisor') {
+        renderAdvisorView();
+      }
+    }
+
+    // Sidebar Topics
+    function buildSidebarTopics() {
+      const box = document.getElementById('sidebar-topics-box');
+      box.innerHTML = '';
+
+      subtopics.forEach(st => {
+        const btn = document.createElement('button');
+        btn.className = 'topic-card' + (st.id === selectedTopicId ? ' active' : '');
+        btn.id = 'st-btn-' + st.id;
+        btn.onclick = () => onSelectTopic(st.id);
+
+        btn.innerHTML = `
+          <div class="topic-card-left">
+            <span class="topic-badge-num">${String(st.id).padStart(2,'0')}</span>
+            <span class="topic-card-name">${st.title}</span>
+          </div>
+          <span class="topic-count">${st.questions.length}</span>
+        `;
+        box.appendChild(btn);
+      });
+    }
+
+    function onSelectTopic(stId) {
+      AudioEngine.playTap();
+      selectedTopicId = stId;
+      document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('active'));
+      const activeC = document.getElementById('st-btn-' + stId);
+      if (activeC) activeC.classList.add('active');
+
+      if (currentTab === 'theory') {
+        renderTheoryContent(stId);
+      } else {
+        filterBy(stId);
+      }
+    }
+
+    function filterBy(filterVal) {
+      AudioEngine.playTap();
+      currentFilter = filterVal;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+      if (filterVal === 'all') {
+        document.getElementById('f-all').classList.add('active');
+        activeQuestions = [...allQuestions];
+      } else if (filterVal === 'wrong') {
+        document.getElementById('f-wrong').classList.add('active');
+        activeQuestions = allQuestions.filter(q => {
+          const key = `${q.subtopic_id}_${q.q_num}`;
+          return userAnswers[key] && userAnswers[key].selected !== q.correct;
+        });
+      } else if (filterVal === 'saved') {
+        document.getElementById('f-saved').classList.add('active');
+        activeQuestions = allQuestions.filter(q => {
+          const key = `${q.subtopic_id}_${q.q_num}`;
+          return userBookmarks[key];
+        });
+      } else {
+        const sid = parseInt(filterVal);
+        activeQuestions = allQuestions.filter(q => q.subtopic_id === sid);
+      }
+
+      if (activeQuestions.length === 0) {
+        alert("No questions found under this filter!");
+        filterBy('all');
+        return;
+      }
+
+      activeIndex = 0;
+      renderCurrentQuestion();
+      buildPalette();
+      refreshTopStats();
+    }
+
+    // Render Question & Options
+    function renderCurrentQuestion() {
+      const q = activeQuestions[activeIndex];
+      const qKey = `${q.subtopic_id}_${q.q_num}`;
+      const saved = userAnswers[qKey];
+
+      document.getElementById('q-subtopic-display').textContent = `Subtopic ${String(q.subtopic_id).padStart(2, '0')}: ${q.subtopic_title}`;
+      document.getElementById('q-index-display').textContent = `Question ${activeIndex + 1} of ${activeQuestions.length} (ID: Q${q.q_num})`;
+      document.getElementById('palette-ratio-text').textContent = `${activeIndex + 1} / ${activeQuestions.length}`;
+
+      // Bookmark State
+      const bmBtn = document.getElementById('btn-bm-header');
+      if (userBookmarks[qKey]) {
+        bmBtn.style.background = 'var(--forest-mint)';
+        bmBtn.style.color = 'var(--forest-dark)';
+      } else {
+        bmBtn.style.background = 'var(--bg-surface)';
+        bmBtn.style.color = 'var(--text-dim)';
+      }
+
+      // Statement
+      document.getElementById('q-statement-text').textContent = q.question;
+
+      // Options
+      const stack = document.getElementById('q-options-stack');
+      stack.innerHTML = '';
+
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const text = q.options[letter];
+        if (!text) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'opt-card-btn';
+
+        if (saved) {
+          btn.disabled = true;
+          if (letter === q.correct) {
+            btn.classList.add('state-correct');
+          } else if (saved.selected === letter) {
+            btn.classList.add('state-wrong');
+          } else {
+            btn.classList.add('state-dimmed');
+          }
+        } else {
+          btn.onclick = () => selectOption(letter);
+        }
+
+        btn.innerHTML = `
+          <div class="opt-badge-letter">${letter}</div>
+          <div style="flex:1;">${text}</div>
+          ${saved && letter === q.correct ? '<svg style="width:22px; height:22px; color:var(--correct-border); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+          ${saved && saved.selected === letter && letter !== q.correct ? '<svg style="width:22px; height:22px; color:var(--wrong-border); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>' : ''}
+        `;
+
+        stack.appendChild(btn);
+      });
+
+      // Explanation & Advice
+      const explPanel = document.getElementById('q-explanation-panel');
+      const imprvPanel = document.getElementById('q-improvement-panel');
+
+      if (saved) {
+        explPanel.classList.remove('hidden');
+        const isRight = (saved.selected === q.correct);
+        explPanel.className = `explanation-panel ${isRight ? 'is-correct' : 'is-wrong'}`;
+        explPanel.innerHTML = `
+          <svg style="width:28px; height:28px; flex-shrink:0; color:${isRight ? 'var(--correct-border)' : 'var(--wrong-border)'};" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            ${isRight ? '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' : '<path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+          </svg>
+          <div>
+            <div class="expl-headline">${isRight ? 'Correct! (Option ' + q.correct + ')' : 'Incorrect! Correct answer is Option ' + q.correct}</div>
+            <div class="expl-body-copy">${q.explanation || 'No detailed explanation found.'}</div>
+          </div>
+        `;
+
+        if (!isRight) {
+          imprvPanel.classList.remove('hidden');
+          const adviceInfo = getTargetedImprovementAdvice(q);
+          imprvPanel.className = 'improvement-box';
+          imprvPanel.innerHTML = `
+            <div class="improvement-header">
+              <svg style="width:20px; height:20px; color:var(--advice-border);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Targeted Improvement Advice: How to Never Miss This Again</span>
+            </div>
+            <div class="improvement-content">
+              <strong>Conceptual Gap:</strong> ${adviceInfo.gap}<br>
+              <strong>Mental Model:</strong> ${adviceInfo.mentalModel}
+            </div>
+            <div style="margin-top:4px;">
+              <button class="btn-improvement-jump" onclick="jumpToStudyGuideTopic(${q.subtopic_id})">
+                <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>Revise Subtopic ${q.subtopic_id} in Study Guide</span>
+              </button>
+            </div>
+          `;
+        } else {
+          imprvPanel.classList.add('hidden');
+        }
+      } else {
+        explPanel.classList.add('hidden');
+        imprvPanel.classList.add('hidden');
+      }
+
+      document.getElementById('btn-prev-q').disabled = (activeIndex === 0);
+      document.getElementById('btn-next-q').disabled = (activeIndex === activeQuestions.length - 1);
+
+      updatePaletteSelection();
+    }
+
+    function getTargetedImprovementAdvice(q) {
+      const title = q.subtopic_title.toLowerCase();
+      if (title.includes('understanding') || title.includes('analysis')) {
+        return {
+          gap: "Distinguishing between implicit/explicit requirements and understanding boundary edge cases (e.g. negative values, empty inputs, or off-by-one bounds).",
+          mentalModel: "Always ask: 'What is the absolute extreme value this function could receive?' and verify if requirements specify handling it."
+        };
+      } else if (title.includes('logical') || title.includes('flow')) {
+        return {
+          gap: "Applying Contrapositive laws (P → Q ⟺ ¬Q → ¬P) or tracing nested boolean conditionals without getting trapped by inverse/converse fallacies.",
+          mentalModel: "Write down truth values for each conditional clause independently before evaluating the full expression."
+        };
+      } else if (title.includes('abstraction') || title.includes('representation')) {
+        return {
+          gap: "Conflating Decomposition (breaking into chunks) with Abstraction (hiding details to reduce complexity).",
+          mentalModel: "Decomposition asks: 'What are the pieces?' Abstraction asks: 'What details can I safely ignore?'"
+        };
+      } else if (title.includes('algorithmic') || title.includes('complexity')) {
+        return {
+          gap: "Confusing worst-case asymptotic upper bounds O(N) with heuristic trade-offs or memory cache effects.",
+          mentalModel: "Drop all constant multipliers and lower-order terms. Remember: Contiguous arrays often beat trees in wall-clock time due to CPU cache lines."
+        };
+      } else if (title.includes('debugging') || title.includes('error')) {
+        return {
+          gap: "Treating superficial symptoms (e.g. server timeout) rather than isolating the root cause (e.g. DB connection leak).",
+          mentalModel: "Apply the '5 Whys' rule. Never patch a symptom by increasing memory or CPU without fixing the leak first."
+        };
+      } else {
+        return {
+          gap: "Standard misconception on foundational CS definitions or trap distractors designed to look mathematically plausible.",
+          mentalModel: "Eliminate extreme absolute words ('always', 'never') and look for the option that describes trade-offs and constraints."
+        };
+      }
+    }
+
+    function jumpToStudyGuideTopic(stId) {
+      onSelectTopic(stId);
+      switchAppTab('theory');
+    }
+
+    function selectOption(letter) {
+      const q = activeQuestions[activeIndex];
+      const qKey = `${q.subtopic_id}_${q.q_num}`;
+      const isCorrect = (letter === q.correct);
+
+      if (isCorrect) {
+        AudioEngine.playCorrect();
+        currentStreak++;
+        ConfettiEngine.burst();
+      } else {
+        AudioEngine.playWrong();
+        currentStreak = 0;
+      }
+      localStorage.setItem('nsct_streak', currentStreak);
+      updateStreakUI();
+
+      userAnswers[qKey] = {
+        selected: letter,
+        time: Date.now()
+      };
+      localStorage.setItem('nsct_app_answers', JSON.stringify(userAnswers));
+      renderCurrentQuestion();
+      buildPalette();
+      refreshTopStats();
+    }
+
+    function navigateQuestion(delta) {
+      AudioEngine.playTap();
+      const nextIdx = activeIndex + delta;
+      if (nextIdx >= 0 && nextIdx < activeQuestions.length) {
+        activeIndex = nextIdx;
+        renderCurrentQuestion();
+      }
+    }
+
+    function toggleBookmarkActive() {
+      AudioEngine.playTap();
+      const q = activeQuestions[activeIndex];
+      const qKey = `${q.subtopic_id}_${q.q_num}`;
+      if (userBookmarks[qKey]) {
+        delete userBookmarks[qKey];
+      } else {
+        userBookmarks[qKey] = true;
+      }
+      localStorage.setItem('nsct_app_bookmarks', JSON.stringify(userBookmarks));
+      renderCurrentQuestion();
+      refreshTopStats();
+    }
+
+    // Palette Grid
+    function buildPalette() {
+      const box = document.getElementById('palette-buttons-grid');
+      box.innerHTML = '';
+
+      activeQuestions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        const qKey = `${q.subtopic_id}_${q.q_num}`;
+        const ans = userAnswers[qKey];
+
+        if (ans) {
+          if (ans.selected === q.correct) {
+            btn.classList.add('ans-correct');
+          } else {
+            btn.classList.add('ans-wrong');
+          }
+        }
+        if (idx === activeIndex) {
+          btn.classList.add('current');
+        }
+
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
+          AudioEngine.playTap();
+          activeIndex = idx;
+          renderCurrentQuestion();
+        };
+        box.appendChild(btn);
+      });
+    }
+
+    function updatePaletteSelection() {
+      const btns = document.querySelectorAll('.palette-btn');
+      btns.forEach((b, i) => {
+        if (i === activeIndex) {
+          b.classList.add('current');
+        } else {
+          b.classList.remove('current');
+        }
+      });
+    }
+
+    function refreshTopStats() {
+      const totalAnswered = Object.keys(userAnswers).length;
+      let totalCorrect = 0;
+
+      allQuestions.forEach(q => {
+        const key = `${q.subtopic_id}_${q.q_num}`;
+        if (userAnswers[key] && userAnswers[key].selected === q.correct) {
+          totalCorrect++;
+        }
+      });
+
+      const acc = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+      document.getElementById('top-answered-count').textContent = `${totalAnswered}/${allQuestions.length}`;
+      document.getElementById('top-accuracy-pct').textContent = `${acc}%`;
+
+      document.getElementById('missed-count').textContent = totalAnswered - totalCorrect;
+      document.getElementById('saved-count').textContent = Object.keys(userBookmarks).length;
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', e => {
+      // Spotlight search modal trigger
+      if (e.key === '/' && currentTab === 'practice' && document.getElementById('search-modal').classList.contains('hidden')) {
+        e.preventDefault();
+        openSearchModal();
+        return;
+      }
+      if (e.key === 'Escape') {
+        closeSearchModalDirect();
+        return;
+      }
+
+      if (currentTab !== 'practice') return;
+      if (e.key === 'ArrowLeft') navigateQuestion(-1);
+      if (e.key === 'ArrowRight' || e.key === 'Enter') navigateQuestion(1);
+
+      const q = activeQuestions[activeIndex];
+      const qKey = `${q.subtopic_id}_${q.q_num}`;
+      if (!userAnswers[qKey]) {
+        if (e.key === '1' || e.key.toLowerCase() === 'a') selectOption('A');
+        if (e.key === '2' || e.key.toLowerCase() === 'b') selectOption('B');
+        if (e.key === '3' || e.key.toLowerCase() === 'c') selectOption('C');
+        if (e.key === '4' || e.key.toLowerCase() === 'd') selectOption('D');
+      }
+    });
+
+    // ==========================================================================
+    // SPOTLIGHT SEARCH ENGINE
+    // ==========================================================================
+    function openSearchModal() {
+      AudioEngine.playTap();
+      document.getElementById('search-modal').classList.remove('hidden');
+      const input = document.getElementById('spotlight-input');
+      input.value = '';
+      input.focus();
+      runSpotlightSearch();
+    }
+
+    function closeSearchModal(e) {
+      document.getElementById('search-modal').classList.add('hidden');
+    }
+
+    function closeSearchModalDirect() {
+      document.getElementById('search-modal').classList.add('hidden');
+    }
+
+    function runSpotlightSearch() {
+      const term = document.getElementById('spotlight-input').value.toLowerCase().trim();
+      const box = document.getElementById('search-results-box');
+      box.innerHTML = '';
+
+      if (!term) {
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type to search any question or concept...</div>';
+        return;
+      }
+
+      const matches = allQuestions.filter(q => 
+        q.question.toLowerCase().includes(term) || 
+        q.explanation.toLowerCase().includes(term) ||
+        q.subtopic_title.toLowerCase().includes(term)
+      ).slice(0, 15);
+
+      if (matches.length === 0) {
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">No matching questions found.</div>';
+        return;
+      }
+
+      matches.forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
+        item.onclick = () => {
+          closeSearchModalDirect();
+          // Jump to question
+          filterBy('all');
+          const idx = allQuestions.findIndex(q => q.subtopic_id === m.subtopic_id && q.q_num === m.q_num);
+          if (idx !== -1) {
+            activeIndex = idx;
+            renderCurrentQuestion();
+          }
+        };
+
+        item.innerHTML = `
+          <div class="search-res-title">Subtopic ${m.subtopic_id}: ${m.subtopic_title} • Q${m.q_num}</div>
+          <div class="search-res-snippet">${m.question}</div>
+        `;
+        box.appendChild(item);
+      });
+    }
+
+    // ==========================================================================
+    // RENDER THEORY & NOTES VIEW
+    // ==========================================================================
+    function renderTheoryContent(stId) {
+      const st = subtopics.find(s => s.id === stId) || subtopics[0];
+      document.getElementById('theory-hero-title').textContent = `Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}`;
+
+      // Section 1: Concept Cards
+      const cBox = document.getElementById('theory-concepts-container');
+      cBox.innerHTML = '';
+      const qnList = st.formatted_quick_notes || [];
+      if (qnList.length > 0) {
+        qnList.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'concept-neu-card';
+          card.innerHTML = `
+            <div class="concept-title">
+              <svg style="width:16px; height:16px; color:var(--forest-main);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>${item.title}</span>
+            </div>
+            <div class="concept-desc">${item.desc}</div>
+          `;
+          cBox.appendChild(card);
+        });
+      } else {
+        cBox.innerHTML = '<div style="color:var(--text-dim); font-size:14px;">No quick notes found.</div>';
+      }
+
+      // Section 2: Traps
+      const tBox = document.getElementById('theory-traps-container');
+      tBox.innerHTML = '';
+      const tList = st.formatted_traps || [];
+      if (tList.length > 0) {
+        tList.forEach(t => {
+          const item = document.createElement('div');
+          item.className = 'trap-neu-item';
+          item.innerHTML = `
+            <div class="trap-name">${t.title}</div>
+            <div class="trap-text">${t.explanation}</div>
+          `;
+          tBox.appendChild(item);
+        });
+      } else {
+        tBox.innerHTML = '<div style="color:var(--text-dim); font-size:14px;">No traps listed for this subtopic.</div>';
+      }
+
+      // Section 3: Deep Dive
+      const ddBox = document.getElementById('theory-deepdive-container');
+      ddBox.innerHTML = st.formatted_deep_dive || '<div style="color:var(--text-dim); font-size:14px;">No deep dive analysis for this subtopic.</div>';
+    }
+
+    // ==========================================================================
+    // RENDER ADVISOR & DIAGNOSTICS VIEW
+    // ==========================================================================
+    function renderAdvisorView() {
+      const answeredKeys = Object.keys(userAnswers);
+      const totalAnswered = answeredKeys.length;
+      let totalCorrect = 0;
+
+      const subtopicStats = {};
+      subtopics.forEach(st => {
+        subtopicStats[st.id] = { title: st.title, total: st.questions.length, answered: 0, correct: 0 };
+      });
+
+      allQuestions.forEach(q => {
+        const key = `${q.subtopic_id}_${q.q_num}`;
+        if (userAnswers[key]) {
+          subtopicStats[q.subtopic_id].answered++;
+          if (userAnswers[key].selected === q.correct) {
+            totalCorrect++;
+            subtopicStats[q.subtopic_id].correct++;
+          }
+        }
+      });
+
+      const overallAccuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+      const coveragePct = Math.round((totalAnswered / allQuestions.length) * 100);
+      const readinessScore = Math.round((overallAccuracy * 0.7) + (coveragePct * 0.3));
+
+      document.getElementById('advisor-gauge-val').textContent = `${readinessScore}%`;
+
+      const actionBox = document.getElementById('advisor-action-list');
+      actionBox.innerHTML = '';
+
+      const weakSubtopics = [];
+      Object.keys(subtopicStats).forEach(sid => {
+        const s = subtopicStats[sid];
+        const acc = s.answered > 0 ? Math.round((s.correct / s.answered) * 100) : 0;
+        if (s.answered >= 2 && acc < 75) {
+          weakSubtopics.push({ id: parseInt(sid), title: s.title, acc, missed: (s.answered - s.correct) });
+        }
+      });
+
+      if (weakSubtopics.length === 0) {
+        if (totalAnswered < 10) {
+          actionBox.innerHTML = `
+            <div style="background:var(--forest-mint); padding:16px; border-radius:12px; color:var(--forest-dark); font-size:14px; line-height:1.6;">
+              <strong>Keep Practicing:</strong> Solve at least 20 questions in the Practice Drill to unlock personalized diagnostic recommendations.
+            </div>
+          `;
+        } else {
+          actionBox.innerHTML = `
+            <div style="background:var(--correct-bg); border:1px solid var(--correct-border); padding:16px; border-radius:12px; color:var(--correct-text); font-size:14px; line-height:1.6;">
+              <strong>Outstanding Performance:</strong> All your active subtopics have $\ge 75\%$ accuracy! You are on track for top-tier national accreditation. Try the Timed Mock Exam to test your speed under pressure.
+            </div>
+          `;
+        }
+      } else {
+        weakSubtopics.sort((a, b) => a.acc - b.acc);
+        weakSubtopics.forEach(w => {
+          const item = document.createElement('div');
+          item.style.cssText = "background:var(--wrong-bg); border:1px solid var(--wrong-border); padding:16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;";
+          item.innerHTML = `
+            <div>
+              <div style="font-weight:800; color:var(--wrong-text); font-size:14.5px;">Subtopic ${w.id}: ${w.title}</div>
+              <div style="font-size:13px; color:#7F1D1D; margin-top:2px;">Accuracy: ${w.acc}% • ${w.missed} questions missed</div>
+            </div>
+            <button class="btn-improvement-jump" onclick="jumpToStudyGuideTopic(${w.id})">
+              Revise Notes & Retry
+            </button>
+          `;
+          actionBox.appendChild(item);
+        });
+      }
+
+      const diagBox = document.getElementById('advisor-subtopic-diagnostic');
+      diagBox.innerHTML = '';
+
+      subtopics.forEach(st => {
+        const s = subtopicStats[st.id];
+        const acc = s.answered > 0 ? Math.round((s.correct / s.answered) * 100) : 0;
+        let badgeColor = '#6B8877';
+        let badgeText = 'Untested';
+
+        if (s.answered > 0) {
+          if (acc >= 85) { badgeColor = '#1E6B45'; badgeText = 'Mastered (' + acc + '%)'; }
+          else if (acc >= 70) { badgeColor = '#D97706'; badgeText = 'Good (' + acc + '%)'; }
+          else { badgeColor = '#D32F2F'; badgeText = 'Needs Work (' + acc + '%)'; }
+        }
+
+        const row = document.createElement('div');
+        row.className = 'advisor-subtopic-row';
+        row.innerHTML = `
+          <div>
+            <div style="font-weight:800; font-size:14px; color:var(--text-title);">Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}</div>
+            <div style="font-size:12.5px; color:var(--text-dim); margin-top:2px;">${s.answered}/${s.total} questions attempted • ${s.correct} correct</div>
+          </div>
+          <span style="background:${badgeColor}15; color:${badgeColor}; font-weight:800; font-size:12px; padding:4px 10px; border-radius:8px; border:1px solid ${badgeColor}30;">${badgeText}</span>
+        `;
+        diagBox.appendChild(row);
+      });
+    }
+
+    // ==========================================================================
+    // TIMED MOCK EXAM ENGINE
+    // ==========================================================================
+    let mockList = [];
+    let mockCurr = 0;
+    let mockUserPicks = {};
+    let mockTimerId = null;
+    let mockTimeRemaining = 1800;
+
+    function launchMockExamNow() {
+      AudioEngine.playTap();
+      const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+      mockList = shuffled.slice(0, 30);
+      mockCurr = 0;
+      mockUserPicks = {};
+      mockTimeRemaining = 30 * 60;
+
+      document.getElementById('mock-intro-card').classList.add('hidden');
+      document.getElementById('mock-report-card').classList.add('hidden');
+      document.getElementById('mock-live-arena').classList.remove('hidden');
+
+      renderMockQuestionCard();
+      clearInterval(mockTimerId);
+      mockTimerId = setInterval(tickMockClockTimer, 1000);
+    }
+
+    function tickMockClockTimer() {
+      mockTimeRemaining--;
+      const m = Math.floor(mockTimeRemaining / 60);
+      const s = mockTimeRemaining % 60;
+      document.getElementById('mock-timer-clock').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+
+      if (mockTimeRemaining <= 0) {
+        clearInterval(mockTimerId);
+        finishMockNow();
+      }
+    }
+
+    function renderMockQuestionCard() {
+      const q = mockList[mockCurr];
+      document.getElementById('mock-step-label').textContent = `Question ${mockCurr + 1} of ${mockList.length}`;
+      document.getElementById('mock-prompt-text').textContent = q.question;
+
+      const stack = document.getElementById('mock-options-stack');
+      stack.innerHTML = '';
+
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const text = q.options[letter];
+        if (!text) return;
+
+        const isChosen = (mockUserPicks[mockCurr] === letter);
+        const btn = document.createElement('button');
+        btn.className = 'opt-card-btn';
+        if (isChosen) {
+          btn.style.background = 'var(--forest-mint)';
+          btn.style.borderColor = 'var(--forest-main)';
+          btn.style.color = 'var(--forest-dark)';
+        }
+
+        btn.innerHTML = `
+          <div class="opt-badge-letter" style="${isChosen ? 'background:var(--forest-main); color:#fff;' : ''}">${letter}</div>
+          <div style="flex:1;">${text}</div>
+        `;
+
+        btn.onclick = () => {
+          AudioEngine.playTap();
+          mockUserPicks[mockCurr] = letter;
+          renderMockQuestionCard();
+        };
+
+        stack.appendChild(btn);
+      });
+    }
+
+    function moveMockStep(delta) {
+      AudioEngine.playTap();
+      const next = mockCurr + delta;
+      if (next >= 0 && next < mockList.length) {
+        mockCurr = next;
+        renderMockQuestionCard();
+      }
+    }
+
+    function finishMockNow() {
+      clearInterval(mockTimerId);
+      document.getElementById('mock-live-arena').classList.add('hidden');
+      document.getElementById('mock-report-card').classList.remove('hidden');
+
+      let score = 0;
+      mockList.forEach((q, idx) => {
+        if (mockUserPicks[idx] === q.correct) score++;
+      });
+
+      const pct = Math.round((score / mockList.length) * 100);
+      const passed = (pct >= 75);
+
+      if (passed) {
+        AudioEngine.playCorrect();
+        ConfettiEngine.burst();
+      } else {
+        AudioEngine.playWrong();
+      }
+
+      const icon = document.getElementById('mock-badge-icon');
+      if (passed) {
+        icon.style.background = 'var(--correct-bg)';
+        icon.style.color = 'var(--correct-border)';
+        icon.innerHTML = '🏆';
+        document.getElementById('mock-report-headline').textContent = "Passed! Top Tier Performance";
+        document.getElementById('mock-report-headline').style.color = "var(--forest-dark)";
+        document.getElementById('mock-report-summary').textContent = "You met the target threshold for high-percentile NSCT accreditation.";
+      } else {
+        icon.style.background = 'var(--wrong-bg)';
+        icon.style.color = 'var(--wrong-border)';
+        icon.innerHTML = '⚠️';
+        document.getElementById('mock-report-headline').textContent = "Needs More Practice";
+        document.getElementById('mock-report-headline').style.color = "var(--wrong-border)";
+        document.getElementById('mock-report-summary').textContent = "Score under 75%. Review missed questions in the Practice Drill or Improvement Advisor.";
+      }
+
+      document.getElementById('mock-res-score').textContent = `${score} / ${mockList.length}`;
+      document.getElementById('mock-res-accuracy').textContent = `${pct}%`;
+      const usedSec = 1800 - mockTimeRemaining;
+      const uM = Math.floor(usedSec / 60);
+      const uS = usedSec % 60;
+      document.getElementById('mock-res-time').textContent = `${uM}m ${uS}s`;
+    }
+  </script>
 </body>
 </html>
