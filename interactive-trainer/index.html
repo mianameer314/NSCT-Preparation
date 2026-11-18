@@ -1754,6 +1754,158 @@
       border-radius: 6px;
     }
 
+  
+    /* ==========================================================================
+       CUSTOM ON-SCREEN NEUMORPHIC DIALOG (REPLACES BROWSER CONFIRM / ALERT)
+       ========================================================================== */
+    .custom-dialog-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10, 38, 22, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 3500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .custom-dialog-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-surface);
+      box-shadow: 0 24px 60px rgba(15, 53, 32, 0.35), var(--neu-raised-card);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 26px 26px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      animation: dialogScaleUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes dialogScaleUp {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .dialog-header-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .dialog-icon-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: var(--bg-card);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .dialog-icon-circle.danger {
+      background: #FEECEB;
+      color: #D32F2F;
+      border-color: rgba(211, 47, 47, 0.25);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.15);
+    }
+    .dialog-icon-circle.success {
+      background: #E8F5E9;
+      color: #1E6B45;
+      border-color: rgba(30, 107, 69, 0.25);
+    }
+    .dialog-title {
+      font-size: 18.5px;
+      font-weight: 800;
+      color: var(--text-title);
+      line-height: 1.3;
+    }
+    .dialog-message {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+    .dialog-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .dialog-btn-cancel {
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .dialog-btn-cancel:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--text-title);
+    }
+    .dialog-btn-cancel:active {
+      box-shadow: var(--neu-inset);
+    }
+    .dialog-btn-confirm {
+      padding: 11px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-dark));
+      box-shadow: 0 4px 14px rgba(15, 53, 32, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .dialog-btn-confirm:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(15, 53, 32, 0.38);
+    }
+    .dialog-btn-confirm:active {
+      transform: translateY(0);
+    }
+    .dialog-btn-confirm.danger {
+      background: linear-gradient(135deg, #DC2626, #991B1B);
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+    }
+    .dialog-btn-confirm.danger:hover {
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
+    }
+
+    /* Notification Toast */
+    .toast-notification {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: var(--white);
+      box-shadow: 0 10px 30px rgba(15, 53, 32, 0.25), var(--neu-raised-sm);
+      border: 1px solid var(--forest-border);
+      border-radius: var(--radius-md);
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 4000;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--forest-dark);
+      animation: slideInRight 0.22s ease-out;
+    }
+
   </style>
 </head>
 <body>
@@ -2151,7 +2303,7 @@
   </div>
 
   <!-- DATA SCRIPT -->
-  <script src="data.js?v=20261118_all10_v3"></script>
+  <script src="data.js?v=20261118_dialog_v4"></script>
 
   <!-- APP ENGINE -->
   <script>
@@ -2608,9 +2760,9 @@
       }
 
       if (activeQuestions.length === 0) {
-        if (filterVal === 'wrong') alert("No missed questions yet in this subject! Keep it up.");
-        else if (filterVal === 'saved') alert("No bookmarked questions in this subject yet.");
-        else alert("No questions found for this topic.");
+        if (filterVal === 'wrong') showToast("🎉 No missed questions yet in this subject! Keep it up.");
+        else if (filterVal === 'saved') showToast("📌 No bookmarked questions in this subject yet.");
+        else showToast("No questions found for this topic.");
         filterBy('all');
         return;
       }
@@ -2777,6 +2929,100 @@
     // ==========================================================================
     // SCORECARD & PROGRESS RESET ENGINE
     // ==========================================================================
+    
+    // ==========================================================================
+    // CUSTOM ON-SCREEN DIALOG & TOAST SYSTEM (REPLACES BROWSER CONFIRM / ALERT)
+    // ==========================================================================
+    let customDialogConfirmCallback = null;
+
+    function showCustomConfirm({ title, message, icon = '🔄', confirmText = 'Confirm', cancelText = 'Cancel', isDanger = false, onConfirm }) {
+      AudioEngine.playTap();
+      const modal = document.getElementById('custom-dialog-modal');
+      const badge = document.getElementById('dialog-icon-badge');
+      const titleEl = document.getElementById('dialog-title');
+      const msgEl = document.getElementById('dialog-message');
+      const cancelBtn = document.getElementById('dialog-btn-cancel');
+      const confirmBtn = document.getElementById('dialog-btn-confirm');
+
+      badge.textContent = icon;
+      if (isDanger) {
+        badge.className = 'dialog-icon-circle danger';
+        confirmBtn.className = 'dialog-btn-confirm danger';
+      } else {
+        badge.className = 'dialog-icon-circle';
+        confirmBtn.className = 'dialog-btn-confirm';
+      }
+
+      titleEl.textContent = title;
+      msgEl.innerHTML = message;
+      cancelBtn.textContent = cancelText;
+      cancelBtn.style.display = 'block';
+      confirmBtn.textContent = confirmText;
+
+      customDialogConfirmCallback = onConfirm;
+      confirmBtn.onclick = () => {
+        closeCustomDialog();
+        if (customDialogConfirmCallback) customDialogConfirmCallback();
+      };
+
+      modal.classList.remove('hidden');
+    }
+
+    function showCustomAlert({ title, message, icon = 'ℹ️', okText = 'Got It' }) {
+      AudioEngine.playTap();
+      const modal = document.getElementById('custom-dialog-modal');
+      const badge = document.getElementById('dialog-icon-badge');
+      const titleEl = document.getElementById('dialog-title');
+      const msgEl = document.getElementById('dialog-message');
+      const cancelBtn = document.getElementById('dialog-btn-cancel');
+      const confirmBtn = document.getElementById('dialog-btn-confirm');
+
+      badge.textContent = icon;
+      badge.className = 'dialog-icon-circle';
+      confirmBtn.className = 'dialog-btn-confirm';
+
+      titleEl.textContent = title;
+      msgEl.innerHTML = message;
+      cancelBtn.style.display = 'none';
+      confirmBtn.textContent = okText;
+
+      confirmBtn.onclick = () => {
+        closeCustomDialog();
+      };
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeCustomDialog() {
+      const modal = document.getElementById('custom-dialog-modal');
+      if (modal) modal.classList.add('hidden');
+      customDialogConfirmCallback = null;
+    }
+
+    function showToast(msg) {
+      const old = document.querySelector('.toast-notification');
+      if (old) old.remove();
+      const t = document.createElement('div');
+      t.className = 'toast-notification';
+      t.innerHTML = `<span style="color:var(--forest-main); font-size:16px;">✓</span> <span>${msg}</span>`;
+      document.body.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => t.remove(), 300);
+      }, 2600);
+    }
+
+    // Escape key listener for dialog dismissal
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('custom-dialog-modal');
+        if (modal && !modal.classList.contains('hidden')) {
+          closeCustomDialog();
+        }
+      }
+    });
+
     function openDetailedScorecard() {
       AudioEngine.playTap();
       closeMobileSidebar();
@@ -2933,31 +3179,41 @@
       const subjTitle = currentSubject.title;
       const count = Object.keys(userAnswers).length;
       if (count === 0) {
-        alert(`You haven't answered any questions in Subject ${currentSubject.code} yet.`);
+        showCustomAlert({
+          icon: 'ℹ️',
+          title: 'No Answers to Reset',
+          message: `You haven't answered any questions in <strong>Subject ${currentSubject.code}: ${subjTitle}</strong> yet. You can start practicing right away!`
+        });
         return;
       }
 
-      const confirmed = confirm(
-        `Are you sure you want to reset your practice progress for "Subject ${currentSubject.code}: ${subjTitle}"?\n\n` +
-        `This will clear all ${count} answered questions and reset your score for this subject so you can practice again fresh.\n\n` +
-        `Saved bookmarks will remain intact.`
-      );
-
-      if (confirmed) {
-        AudioEngine.playTap();
-        localStorage.removeItem(getAnswersKey(currentSubject.id));
-        userAnswers = {};
-        currentStreak = 0;
-        localStorage.setItem('nsct_streak', '0');
-        updateStreakUI();
-        filterBy('all');
-        refreshTopStats();
-        buildPalette();
-        renderCurrentQuestion();
-        if (currentTab === 'advisor') renderAdvisorView();
-        closeDetailedScorecard();
-        alert(`Progress for Subject ${currentSubject.code} has been reset! You can now start the drill again.`);
-      }
+      showCustomConfirm({
+        icon: '⚠️',
+        isDanger: true,
+        title: 'Reset Subject Practice Progress?',
+        message: `
+          Are you sure you want to reset your practice progress for <strong>Subject ${currentSubject.code}: ${subjTitle}</strong>?<br><br>
+          This will clear all <strong>${count} answered questions</strong> and reset your score for this subject so you can practice again fresh.<br><br>
+          <span style="font-size:12.5px; color:var(--text-dim);">✨ Saved bookmarks will remain intact.</span>
+        `,
+        confirmText: 'Yes, Reset Progress',
+        cancelText: 'Keep My Progress',
+        onConfirm: () => {
+          AudioEngine.playTap();
+          localStorage.removeItem(getAnswersKey(currentSubject.id));
+          userAnswers = {};
+          currentStreak = 0;
+          localStorage.setItem('nsct_streak', '0');
+          updateStreakUI();
+          filterBy('all');
+          refreshTopStats();
+          buildPalette();
+          renderCurrentQuestion();
+          if (currentTab === 'advisor') renderAdvisorView();
+          closeDetailedScorecard();
+          showToast(`Progress for Subject ${currentSubject.code} has been reset!`);
+        }
+      });
     }
 
     function jumpToStudyGuideTopic(stId) {
@@ -3617,6 +3873,26 @@
             <span>Done</span>
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       CUSTOM ON-SCREEN NEUMORPHIC DIALOG BOX
+       ========================================================================== -->
+  <div id="custom-dialog-modal" class="custom-dialog-backdrop hidden" onclick="if(event.target === this) closeCustomDialog()">
+    <div class="custom-dialog-card">
+      <div class="dialog-header-group">
+        <div class="dialog-icon-circle" id="dialog-icon-badge">🔄</div>
+        <div style="flex:1;">
+          <h3 id="dialog-title" class="dialog-title">Reset Practice Progress?</h3>
+          <div id="dialog-message" class="dialog-message"></div>
+        </div>
+      </div>
+      <div class="dialog-actions-row" id="dialog-actions-row">
+        <button class="dialog-btn-cancel" id="dialog-btn-cancel" onclick="closeCustomDialog()">Cancel</button>
+        <button class="dialog-btn-confirm" id="dialog-btn-confirm">Confirm</button>
       </div>
     </div>
   </div>
