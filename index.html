@@ -1539,6 +1539,162 @@
       }
     }
 
+  
+    /* ==========================================================================
+       DETAILED SCORECARD & RESET ACTIONS
+       ========================================================================== */
+    .sidebar-actions-card {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--forest-border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sidebar-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--forest-border);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .sidebar-action-btn:hover {
+      box-shadow: var(--neu-raised-hover);
+      transform: translateY(-1px);
+    }
+    .sidebar-action-btn:active {
+      box-shadow: var(--neu-inset);
+    }
+    .sidebar-action-btn.primary {
+      color: var(--forest-main);
+      background: var(--bg-card);
+    }
+    .sidebar-action-btn.danger {
+      color: var(--wrong-border);
+      background: #FFF5F5;
+      border-color: rgba(211, 47, 47, 0.2);
+    }
+
+    /* Scorecard Modal */
+    .scorecard-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10, 38, 22, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .scorecard-modal-card {
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      background: var(--bg-surface);
+      box-shadow: 0 24px 60px rgba(15, 53, 32, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .scorecard-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--forest-border);
+      background: linear-gradient(135deg, var(--bg-card), var(--forest-mint));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .scorecard-body {
+      padding: 24px 28px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .scorecard-hero {
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-dark));
+      color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 4px 4px 16px rgba(15, 53, 32, 0.25);
+    }
+    .scorecard-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .scorecard-kpi-card {
+      background: var(--white);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid var(--forest-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .scorecard-table-wrap {
+      border: 1px solid var(--forest-border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      background: var(--white);
+      box-shadow: var(--neu-raised-sm);
+    }
+    .scorecard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+    .scorecard-table th {
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 12px 16px;
+      font-weight: 700;
+    }
+    .scorecard-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(20, 69, 42, 0.08);
+      color: var(--text-body);
+    }
+    .scorecard-table tr:nth-child(even) td {
+      background: #F9FCF9;
+    }
+    .scorecard-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--forest-border);
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #scorecard-modal, #scorecard-modal * { visibility: visible; }
+      #scorecard-modal { position: absolute; left: 0; top: 0; width: 100%; height: auto; background: none; }
+      .scorecard-modal-card { box-shadow: none; border: none; max-height: none; width: 100%; max-width: 100%; }
+      .scorecard-footer button:not(.btn-print) { display: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -1594,11 +1750,11 @@
         <span>🔥</span> <span id="streak-count">0</span>
       </div>
 
-      <div class="stat-pill">
+      <div class="stat-pill" onclick="openDetailedScorecard()" style="cursor:pointer;" title="Click to view full detailed scorecard">
         <span style="color:var(--text-muted);">Answered:</span>
         <span class="stat-pill-val" id="top-answered-count">0/317</span>
       </div>
-      <div class="stat-pill">
+      <div class="stat-pill" onclick="openDetailedScorecard()" style="cursor:pointer;" title="Click to view full detailed scorecard">
         <span style="color:var(--text-muted);">Accuracy:</span>
         <span class="stat-pill-val" id="top-accuracy-pct" style="color:var(--forest-main);">0%</span>
       </div>
@@ -1655,6 +1811,18 @@
         <div class="topic-list" id="sidebar-topics-box">
           <!-- Dynamically populated -->
         </div>
+      </div>
+
+      <!-- Scorecard & Reset Action Center -->
+      <div class="sidebar-actions-card">
+        <button class="sidebar-action-btn primary" onclick="openDetailedScorecard()">
+          <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Detailed Scorecard</span>
+        </button>
+        <button class="sidebar-action-btn danger" onclick="resetSubjectProgress()">
+          <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Reset Subject Progress</span>
+        </button>
       </div>
     </aside>
 
@@ -2526,6 +2694,193 @@
       }
     }
 
+    
+    // ==========================================================================
+    // SCORECARD & PROGRESS RESET ENGINE
+    // ==========================================================================
+    function openDetailedScorecard() {
+      AudioEngine.playTap();
+      closeMobileSidebar();
+      const modal = document.getElementById('scorecard-modal');
+      const body = document.getElementById('scorecard-content-body');
+      document.getElementById('sc-modal-title').textContent = `Subject ${currentSubject.code}: ${currentSubject.title} (${currentSubject.weight}% Weight)`;
+
+      const totalQ = allQuestions.length;
+      let answeredCount = 0;
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      const subtopicBreakdown = {};
+      subtopics.forEach(st => {
+        subtopicBreakdown[st.id] = { id: st.id, title: st.title, total: (st.questions || []).length, answered: 0, correct: 0 };
+      });
+
+      allQuestions.forEach(q => {
+        const k = `${q.subtopic_id}_${q.q_num}`;
+        if (userAnswers[k]) {
+          answeredCount++;
+          subtopicBreakdown[q.subtopic_id].answered++;
+          if (userAnswers[k].selected === q.correct) {
+            correctCount++;
+            subtopicBreakdown[q.subtopic_id].correct++;
+          } else {
+            wrongCount++;
+          }
+        }
+      });
+
+      const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+      const coverage = totalQ > 0 ? Math.round((answeredCount / totalQ) * 100) : 0;
+      document.getElementById('sc-missed-btn-count').textContent = wrongCount;
+
+      let standingTitle = "In Progress";
+      let standingDesc = "Complete all questions to establish your certified diagnostic percentile.";
+      let badgeEmoji = "📝";
+
+      if (coverage >= 95) {
+        if (accuracy >= 85) {
+          standingTitle = "High Distinction (Top 5% National)";
+          standingDesc = "Exceptional performance! You have mastered the curriculum and are fully prepared for high-percentile national accreditation.";
+          badgeEmoji = "🏆";
+        } else if (accuracy >= 70) {
+          standingTitle = "Accredited Passing Standard";
+          standingDesc = "Solid passing performance. Use 'Practice Missed' to resolve remaining gaps before test day.";
+          badgeEmoji = "🥈";
+        } else {
+          standingTitle = "Targeted Revision Needed";
+          standingDesc = "Score below 70%. Focus on reading the Study Guide & Notes for weak subtopics, then re-drill missed questions.";
+          badgeEmoji = "⚠️";
+        }
+      }
+
+      let subtopicsRows = '';
+      subtopics.forEach(st => {
+        const b = subtopicBreakdown[st.id];
+        const stAcc = b.answered > 0 ? Math.round((b.correct / b.answered) * 100) : 0;
+        let stBadgeColor = '#6B8877';
+        let stStatus = 'Untested';
+        if (b.answered > 0) {
+          if (stAcc >= 85) { stBadgeColor = '#1E6B45'; stStatus = 'Mastered'; }
+          else if (stAcc >= 70) { stBadgeColor = '#D97706'; stStatus = 'Good'; }
+          else { stBadgeColor = '#D32F2F'; stStatus = 'Needs Work'; }
+        }
+
+        subtopicsRows += `
+          <tr>
+            <td style="font-weight:700;">Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}</td>
+            <td>${b.answered}/${b.total}</td>
+            <td style="font-weight:700;">${b.correct}/${b.answered}</td>
+            <td style="font-weight:800; font-family:var(--font-mono); color:${stAcc >= 75 ? 'var(--forest-main)' : (b.answered > 0 ? 'var(--wrong-border)' : 'var(--text-dim)')};">${b.answered > 0 ? stAcc + '%' : '—'}</td>
+            <td><span style="background:${stBadgeColor}15; color:${stBadgeColor}; font-weight:800; font-size:11px; padding:3px 8px; border-radius:6px; border:1px solid ${stBadgeColor}30;">${stStatus}</span></td>
+          </tr>
+        `;
+      });
+
+      body.innerHTML = `
+        <div class="scorecard-hero">
+          <div>
+            <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; opacity:0.85;">Certified Diagnostic Assessment</div>
+            <div style="font-size:22px; font-weight:900; margin:4px 0 6px 0; display:flex; align-items:center; gap:8px;">
+              <span>${badgeEmoji}</span> <span>${standingTitle}</span>
+            </div>
+            <div style="font-size:13.5px; opacity:0.9; max-width:550px; line-height:1.5;">${standingDesc}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:38px; font-weight:900; font-family:var(--font-mono); line-height:1;">${accuracy}%</div>
+            <div style="font-size:12px; opacity:0.8; font-weight:700; margin-top:4px;">Accuracy Rating</div>
+          </div>
+        </div>
+
+        <div class="scorecard-kpi-grid">
+          <div class="scorecard-kpi-card">
+            <span style="font-size:12px; color:var(--text-muted); font-weight:700;">Total Questions</span>
+            <span style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);">${totalQ}</span>
+            <span style="font-size:11.5px; color:var(--text-dim);">${currentSubject.weight}% of Exam</span>
+          </div>
+          <div class="scorecard-kpi-card">
+            <span style="font-size:12px; color:var(--text-muted); font-weight:700;">Completed</span>
+            <span style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-main);">${answeredCount} <span style="font-size:14px; color:var(--text-dim);">(${coverage}%)</span></span>
+            <span style="font-size:11.5px; color:var(--text-dim);">${totalQ - answeredCount} Remaining</span>
+          </div>
+          <div class="scorecard-kpi-card">
+            <span style="font-size:12px; color:var(--text-muted); font-weight:700;">Correct Answers</span>
+            <span style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:#1E6B45;">${correctCount}</span>
+            <span style="font-size:11.5px; color:var(--text-dim);">Passing: &ge; 70%</span>
+          </div>
+          <div class="scorecard-kpi-card">
+            <span style="font-size:12px; color:var(--text-muted); font-weight:700;">Missed / Review</span>
+            <span style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--wrong-border);">${wrongCount}</span>
+            <span style="font-size:11.5px; color:var(--text-dim);">Resolvable with retry</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:15px; font-weight:800; color:var(--forest-dark); margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+            <span>📋</span> <span>Subtopic-by-Subtopic Diagnostic Breakdown</span>
+          </div>
+          <div class="scorecard-table-wrap">
+            <table class="scorecard-table">
+              <thead>
+                <tr>
+                  <th>Subtopic Name</th>
+                  <th>Attempted</th>
+                  <th>Score</th>
+                  <th>Accuracy</th>
+                  <th>Mastery Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${subtopicsRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeDetailedScorecard() {
+      document.getElementById('scorecard-modal').classList.add('hidden');
+    }
+
+    function retryMissedFromScorecard() {
+      closeDetailedScorecard();
+      switchAppTab('practice');
+      filterBy('wrong');
+    }
+
+    function resetSubjectProgress() {
+      const subjTitle = currentSubject.title;
+      const count = Object.keys(userAnswers).length;
+      if (count === 0) {
+        alert(`You haven't answered any questions in Subject ${currentSubject.code} yet.`);
+        return;
+      }
+
+      const confirmed = confirm(
+        `Are you sure you want to reset your practice progress for "Subject ${currentSubject.code}: ${subjTitle}"?\n\n` +
+        `This will clear all ${count} answered questions and reset your score for this subject so you can practice again fresh.\n\n` +
+        `Saved bookmarks will remain intact.`
+      );
+
+      if (confirmed) {
+        AudioEngine.playTap();
+        localStorage.removeItem(getAnswersKey(currentSubject.id));
+        userAnswers = {};
+        currentStreak = 0;
+        localStorage.setItem('nsct_streak', '0');
+        updateStreakUI();
+        filterBy('all');
+        refreshTopStats();
+        buildPalette();
+        renderCurrentQuestion();
+        if (currentTab === 'advisor') renderAdvisorView();
+        closeDetailedScorecard();
+        alert(`Progress for Subject ${currentSubject.code} has been reset! You can now start the drill again.`);
+      }
+    }
+
     function jumpToStudyGuideTopic(stId) {
       onSelectTopic(stId);
       switchAppTab('theory');
@@ -3127,5 +3482,42 @@
       document.getElementById('mock-res-time').textContent = `${uM}m ${uS}s`;
     }
 </script>
+
+  <!-- ==========================================================================
+       DETAILED PERFORMANCE SCORECARD MODAL
+       ========================================================================== -->
+  <div id="scorecard-modal" class="scorecard-modal-backdrop hidden" onclick="if(event.target === this) closeDetailedScorecard()">
+    <div class="scorecard-modal-card">
+      <div class="scorecard-header">
+        <div>
+          <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:var(--forest-main);">Official Evaluation Report</div>
+          <h3 id="sc-modal-title" style="font-size:18px; font-weight:800; color:var(--text-title); margin-top:2px;">Subject 01: Problem Solving Scorecard</h3>
+        </div>
+        <button class="icon-btn-header" onclick="closeDetailedScorecard()">✕</button>
+      </div>
+      <div class="scorecard-body" id="scorecard-content-body">
+        <!-- Dynamically rendered detailed performance report -->
+      </div>
+      <div class="scorecard-footer">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="neu-btn-action" style="padding:10px 18px; font-size:13px; font-weight:700; color:var(--wrong-border); border-color:rgba(211,47,47,0.3);" onclick="resetSubjectProgress()">
+            <span>🔄 Reset Progress</span>
+          </button>
+          <button class="neu-btn-action" style="padding:10px 18px; font-size:13px; font-weight:700; color:var(--forest-main);" onclick="retryMissedFromScorecard()">
+            <span>🔁 Practice Missed (<span id="sc-missed-btn-count">0</span>)</span>
+          </button>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="neu-btn-action" style="padding:10px 18px; font-size:13px; font-weight:700;" onclick="window.print()">
+            <span>🖨️ Print / Save PDF</span>
+          </button>
+          <button class="neu-btn-action" style="padding:10px 22px; font-size:13px; font-weight:800; background:var(--forest-main); color:#fff;" onclick="closeDetailedScorecard()">
+            <span>Done</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
