@@ -1695,6 +1695,65 @@
       .scorecard-footer button:not(.btn-print) { display: none; }
     }
 
+  
+    /* ==========================================================================
+       STUDY GUIDE 10-SUBJECT NAVIGATION BAR
+       ========================================================================== */
+    .theory-subject-nav-wrap {
+      margin-bottom: 16px;
+    }
+    .theory-subject-nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 2px 14px 2px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .theory-subject-nav::-webkit-scrollbar {
+      display: none;
+    }
+    .theory-subj-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-body);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .theory-subj-pill:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+      transform: translateY(-2px);
+    }
+    .theory-subj-pill.active {
+      background: var(--forest-main);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(15, 53, 32, 0.35);
+      border-color: var(--forest-dark);
+    }
+    .theory-subj-pill.active .pill-weight {
+      background: rgba(255, 255, 255, 0.22);
+      color: var(--white);
+    }
+    .pill-weight {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--forest-mint);
+      color: var(--forest-dark);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
   </style>
 </head>
 <body>
@@ -1807,7 +1866,7 @@
       </div>
 
       <div>
-        <div class="section-label">All 16 Subtopics</div>
+        <div class="section-label" id="sidebar-subtopics-header">Subtopics: Subject 01 (16)</div>
         <div class="topic-list" id="sidebar-topics-box">
           <!-- Dynamically populated -->
         </div>
@@ -1888,7 +1947,21 @@
       <!-- ==========================================================================
            TAB 2: THEORY & NOTES (ELEGANT STUDY GUIDE)
            ========================================================================== -->
+            <!-- ==========================================================================
+           TAB 2: THEORY & NOTES (ELEGANT STUDY GUIDE)
+           ========================================================================== -->
       <div id="view-theory" class="theory-box hidden">
+
+        <!-- 10 Subjects Study Guide Carousel / Pill Bar -->
+        <div class="theory-subject-nav-wrap">
+          <div style="font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-muted); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span>📚 Browse Notes by Subject (All 10 Subjects)</span>
+            <span style="font-size:11px; color:var(--text-dim); font-weight:600;">Click any subject pill to switch study guide</span>
+          </div>
+          <div class="theory-subject-nav" id="theory-subject-nav-pills">
+            <!-- Dynamically populated with all 10 subjects -->
+          </div>
+        </div>
 
         <!-- Hero Header -->
         <div class="theory-hero-card">
@@ -2280,6 +2353,9 @@
       populateSidebarSelect();
       updateHeaderUI();
       buildSidebarTopics();
+      const sHead = document.getElementById("sidebar-subtopics-header");
+      if (sHead) sHead.textContent = `Subtopics: Subject ${currentSubject.code} (${subtopics.length})`;
+      buildTheorySubjectNav();
       filterBy('all');
       renderTheoryContent(selectedTopicId);
       updateStreakUI();
@@ -2391,6 +2467,9 @@
 
       updateHeaderUI();
       buildSidebarTopics();
+      const sHead = document.getElementById("sidebar-subtopics-header");
+      if (sHead) sHead.textContent = `Subtopics: Subject ${currentSubject.code} (${subtopics.length})`;
+      buildTheorySubjectNav();
       filterBy('all');
 
       if (currentTab === 'theory') {
@@ -3114,7 +3193,30 @@
     // ==========================================================================
     // RENDER THEORY & NOTES VIEW
     // ==========================================================================
+    
+    function buildTheorySubjectNav() {
+      const nav = document.getElementById('theory-subject-nav-pills');
+      if (!nav) return;
+      nav.innerHTML = '';
+      allSubjects.forEach(s => {
+        const pill = document.createElement('button');
+        pill.className = 'theory-subj-pill' + (s.id === currentSubject.id ? ' active' : '');
+        pill.onclick = () => {
+          AudioEngine.playTap();
+          switchSubject(s.id);
+          switchAppTab('theory');
+        };
+        pill.innerHTML = `
+          <span>${s.icon || '📚'}</span>
+          <span>${s.code}. ${s.title}</span>
+          <span class="pill-weight">${s.weight}%</span>
+        `;
+        nav.appendChild(pill);
+      });
+    }
+
     function renderTheoryContent(stId) {
+      buildTheorySubjectNav();
       const st = (subtopics || []).find(s => s.id === stId) || subtopics[0];
       if (!st) return;
       document.getElementById('theory-hero-title').textContent = `Subject ${currentSubject.code}: Subtopic ${String(st.id).padStart(2,'0')} — ${st.title}`;
