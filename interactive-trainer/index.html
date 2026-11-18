@@ -1106,6 +1106,154 @@
       white-space: nowrap;
     }
 
+    
+    /* ==========================================================================
+       SUBJECT PICKER MODAL & SIDEBAR SWITCHER (10 SUBJECTS)
+       ========================================================================== */
+    .subject-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10, 38, 22, 0.55);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .subject-modal-card {
+      width: 100%;
+      max-width: 860px;
+      max-height: 85vh;
+      background: var(--bg-surface);
+      box-shadow: 0 24px 50px rgba(15, 53, 32, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .subject-modal-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--forest-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+    }
+    .subject-modal-grid {
+      padding: 22px 28px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 16px;
+    }
+    .subject-pick-card {
+      background: var(--bg-surface);
+      border: 2px solid transparent;
+      box-shadow: var(--neu-raised-sm);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+    .subject-pick-card:hover {
+      box-shadow: var(--neu-raised-hover);
+      transform: translateY(-2px);
+      border-color: var(--forest-light);
+    }
+    .subject-pick-card.active {
+      border-color: var(--forest-main);
+      background: #E8F2EC;
+    }
+    .subj-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .subj-card-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 14.5px;
+      color: var(--forest-dark);
+    }
+    .subj-card-weight {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .subj-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-title);
+      line-height: 1.4;
+    }
+    .subj-card-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-inset);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .subj-card-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--forest-light), var(--forest-main));
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .subj-card-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .sidebar-subject-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-subject-card:hover {
+      box-shadow: var(--neu-raised-hover);
+      border-color: var(--forest-light);
+    }
+
+    .advisor-all-subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .advisor-subj-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
     .hidden { display: none !important; }
   </style>
 </head>
@@ -1118,14 +1266,15 @@
        TOP APP HEADER
        ========================================================================== -->
   <header class="app-header">
-    <div class="brand-group">
-      <div class="brand-icon">01</div>
+    <div class="brand-group" onclick="openSubjectModal()" style="cursor: pointer;" title="Click to Switch Exam Subject">
+      <div class="brand-icon" id="header-subject-icon">01</div>
       <div>
         <div class="brand-title">
-          <span>NSCT Master Prep</span>
-          <span class="brand-pill">20% Weight</span>
+          <span id="header-app-title">NSCT Master Prep</span>
+          <span class="brand-pill" id="header-subject-weight">20% Weight</span>
+          <span style="font-size:11px; background:var(--forest-mint); color:var(--forest-dark); padding:2px 8px; border-radius:10px; font-weight:700;">All 10 Subjects ▾</span>
         </div>
-        <div class="brand-sub">Subject 01: Problem Solving & Analytical Skills</div>
+        <div class="brand-sub" id="header-subject-title">Subject 01: Problem Solving & Analytical Skills</div>
       </div>
     </div>
 
@@ -1184,6 +1333,19 @@
 
     <!-- SIDEBAR: SUBTOPICS & FILTERS -->
     <aside class="app-sidebar">
+
+      <!-- Current Subject Switcher Card -->
+      <div class="sidebar-subject-card" onclick="openSubjectModal()" title="Switch Subject">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted);">Active Subject</span>
+          <span style="font-size:10.5px; font-weight:800; background:var(--forest-main); color:#fff; padding:2px 7px; border-radius:6px;" id="sidebar-weight-badge">20%</span>
+        </div>
+        <div style="font-size:14px; font-weight:800; color:var(--forest-dark); line-height:1.3;" id="sidebar-subject-name">01. Problem Solving</div>
+        <div style="font-size:11.5px; color:var(--text-dim); display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+          <span id="sidebar-subject-qcount">317 MCQs</span>
+          <span style="color:var(--forest-main); font-weight:700;">Change (10) ▾</span>
+        </div>
+      </div>
       
       <!-- Instant Search Trigger -->
       <div class="search-bar-neu" onclick="openSearchModal()">
@@ -1424,6 +1586,26 @@
   </div>
 
   <!-- ==========================================================================
+       SUBJECT PICKER MODAL (ALL 10 SUBJECTS)
+       ========================================================================== -->
+  <div id="subject-modal" class="subject-modal-backdrop hidden" onclick="if(event.target === this) closeSubjectModal()">
+    <div class="subject-modal-card">
+      <div class="subject-modal-header">
+        <div>
+          <h3 style="font-size:18px; font-weight:800; color:var(--text-title); display:flex; align-items:center; gap:8px;">
+            <span>📚</span> <span>Select NSCT Exam Subject</span>
+          </h3>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">Official 10-Subject National Curriculum • 100% Weightage • 2,148 Total Questions</p>
+        </div>
+        <button class="icon-btn-header" onclick="closeSubjectModal()">✕</button>
+      </div>
+      <div class="subject-modal-grid" id="subject-modal-grid">
+        <!-- Dynamically rendered 10 subject cards -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        SPOTLIGHT SEARCH MODAL (PRESS / OR CLICK SEARCH)
        ========================================================================== -->
   <div id="search-modal" class="search-modal-backdrop hidden" onclick="closeSearchModal(event)">
@@ -1572,35 +1754,58 @@
       }
     };
 
-    // Global Dataset
-    const subtopics = window.NSCT_SUBJECT_01 || [];
+    // Global Dataset & Multi-Subject Architecture
+    const allSubjects = window.NSCT_ALL_SUBJECTS || [
+      { id: 1, code: "01", title: "Problem Solving & Analytical Skills", weight: 20, icon: "🧩", subtopics: window.NSCT_SUBJECT_01 || [] }
+    ];
+
+    let currentSubjectId = parseInt(localStorage.getItem('nsct_active_subject') || '1');
+    let currentSubject = allSubjects.find(s => s.id === currentSubjectId) || allSubjects[0];
+    let subtopics = currentSubject.subtopics || [];
     let allQuestions = [];
-    subtopics.forEach(st => {
-      st.questions.forEach(q => {
-        allQuestions.push({
-          ...q,
-          subtopic_id: st.id,
-          subtopic_title: st.title
+
+    function reloadSubjectQuestions() {
+      allQuestions = [];
+      (subtopics || []).forEach(st => {
+        (st.questions || []).forEach(q => {
+          allQuestions.push({
+            ...q,
+            subtopic_id: st.id,
+            subtopic_title: st.title,
+            subject_id: currentSubject.id,
+            subject_code: currentSubject.code,
+            subject_title: currentSubject.title
+          });
         });
       });
-    });
+    }
+    reloadSubjectQuestions();
 
     let currentTab = 'practice';
     let currentFilter = 'all';
     let activeQuestions = [...allQuestions];
     let activeIndex = 0;
-    let selectedTopicId = 1;
+    let selectedTopicId = subtopics[0] ? subtopics[0].id : 1;
     let currentStreak = parseInt(localStorage.getItem('nsct_streak') || '0');
 
-    // Storage
-    let userAnswers = JSON.parse(localStorage.getItem('nsct_app_answers') || '{}');
-    let userBookmarks = JSON.parse(localStorage.getItem('nsct_app_bookmarks') || '{}');
+    // Subject-Specific LocalStorage Keys
+    function getAnswersKey(subjId = currentSubject.id) {
+      return 'nsct_app_answers_s' + subjId;
+    }
+    function getBookmarksKey(subjId = currentSubject.id) {
+      return 'nsct_app_bookmarks_s' + subjId;
+    }
 
+    let userAnswers = JSON.parse(localStorage.getItem(getAnswersKey()) || '{}');
+    let userBookmarks = JSON.parse(localStorage.getItem(getBookmarksKey()) || '{}');
+
+    // On Load Initializer
     window.onload = function() {
       ConfettiEngine.init();
+      updateHeaderUI();
       buildSidebarTopics();
       filterBy('all');
-      renderTheoryContent(1);
+      renderTheoryContent(selectedTopicId);
       updateStreakUI();
     };
 
@@ -1617,6 +1822,112 @@
 
     function updateStreakUI() {
       document.getElementById('streak-count').textContent = currentStreak;
+    }
+
+    // ==========================================================================
+    // SUBJECT SWITCHER MODAL & CONTROLS
+    // ==========================================================================
+    function openSubjectModal() {
+      AudioEngine.playTap();
+      const modal = document.getElementById('subject-modal');
+      const grid = document.getElementById('subject-modal-grid');
+      grid.innerHTML = '';
+
+      allSubjects.forEach(s => {
+        const sAns = JSON.parse(localStorage.getItem(getAnswersKey(s.id)) || '{}');
+        const ansCount = Object.keys(sAns).length;
+        
+        let totalQ = 0;
+        let correctCount = 0;
+        (s.subtopics || []).forEach(st => {
+          (st.questions || []).forEach(q => {
+            totalQ++;
+            const k = `${st.id}_${q.q_num}`;
+            if (sAns[k] && sAns[k].selected === q.correct) {
+              correctCount++;
+            }
+          });
+        });
+
+        const pctAnswered = totalQ > 0 ? Math.round((ansCount / totalQ) * 100) : 0;
+        const accuracy = ansCount > 0 ? Math.round((correctCount / ansCount) * 100) : 0;
+        const isActive = (s.id === currentSubject.id);
+
+        const card = document.createElement('div');
+        card.className = 'subject-pick-card' + (isActive ? ' active' : '');
+        card.onclick = () => switchSubject(s.id);
+
+        card.innerHTML = `
+          <div class="subj-card-top">
+            <div class="subj-card-badge">
+              <span>${s.icon || '📚'}</span>
+              <span>Subject ${s.code}</span>
+            </div>
+            <span class="subj-card-weight">${s.weight}% Weight</span>
+          </div>
+          <div class="subj-card-name">${s.title}</div>
+          <div class="subj-card-bar-wrap">
+            <div class="subj-card-bar-fill" style="width: ${pctAnswered}%;"></div>
+          </div>
+          <div class="subj-card-stats">
+            <span>${ansCount}/${totalQ} Answered (${pctAnswered}%)</span>
+            <span style="color:${accuracy >= 75 ? 'var(--forest-main)' : 'var(--advice-border)'}; font-weight:700;">Acc: ${accuracy}%</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSubjectModal() {
+      document.getElementById('subject-modal').classList.add('hidden');
+    }
+
+    function switchSubject(newId) {
+      AudioEngine.playTap();
+      currentSubjectId = newId;
+      localStorage.setItem('nsct_active_subject', currentSubjectId);
+      currentSubject = allSubjects.find(s => s.id === currentSubjectId) || allSubjects[0];
+      subtopics = currentSubject.subtopics || [];
+      reloadSubjectQuestions();
+
+      userAnswers = JSON.parse(localStorage.getItem(getAnswersKey()) || '{}');
+      userBookmarks = JSON.parse(localStorage.getItem(getBookmarksKey()) || '{}');
+
+      selectedTopicId = subtopics[0] ? subtopics[0].id : 1;
+      currentFilter = 'all';
+
+      updateHeaderUI();
+      buildSidebarTopics();
+      filterBy('all');
+
+      if (currentTab === 'theory') {
+        renderTheoryContent(selectedTopicId);
+      } else if (currentTab === 'advisor') {
+        renderAdvisorView();
+      }
+
+      closeSubjectModal();
+    }
+
+    function updateHeaderUI() {
+      document.getElementById('header-subject-icon').textContent = currentSubject.code;
+      document.getElementById('header-subject-weight').textContent = `${currentSubject.weight}% Weight`;
+      document.getElementById('header-subject-title').textContent = `Subject ${currentSubject.code}: ${currentSubject.title}`;
+      
+      const pTabBtn = document.getElementById('btn-tab-practice');
+      if (pTabBtn) {
+        pTabBtn.querySelector('span').textContent = `Practice Drill (${allQuestions.length})`;
+      }
+
+      // Sidebar Widget
+      const wBadge = document.getElementById('sidebar-weight-badge');
+      if (wBadge) wBadge.textContent = `${currentSubject.weight}%`;
+      const sName = document.getElementById('sidebar-subject-name');
+      if (sName) sName.textContent = `${currentSubject.code}. ${currentSubject.title}`;
+      const sQc = document.getElementById('sidebar-subject-qcount');
+      if (sQc) sQc.textContent = `${allQuestions.length} MCQs`;
     }
 
     // Tab Switcher
@@ -1646,7 +1957,7 @@
       const box = document.getElementById('sidebar-topics-box');
       box.innerHTML = '';
 
-      subtopics.forEach(st => {
+      (subtopics || []).forEach(st => {
         const btn = document.createElement('button');
         btn.className = 'topic-card' + (st.id === selectedTopicId ? ' active' : '');
         btn.id = 'st-btn-' + st.id;
@@ -1657,7 +1968,7 @@
             <span class="topic-badge-num">${String(st.id).padStart(2,'0')}</span>
             <span class="topic-card-name">${st.title}</span>
           </div>
-          <span class="topic-count">${st.questions.length}</span>
+          <span class="topic-count">${(st.questions || []).length}</span>
         `;
         box.appendChild(btn);
       });
@@ -1703,7 +2014,9 @@
       }
 
       if (activeQuestions.length === 0) {
-        alert("No questions found under this filter!");
+        if (filterVal === 'wrong') alert("No missed questions yet in this subject! Keep it up.");
+        else if (filterVal === 'saved') alert("No bookmarked questions in this subject yet.");
+        else alert("No questions found for this topic.");
         filterBy('all');
         return;
       }
@@ -1716,6 +2029,7 @@
 
     // Render Question & Options
     function renderCurrentQuestion() {
+      if (!activeQuestions || activeQuestions.length === 0) return;
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       const saved = userAnswers[qKey];
@@ -1742,7 +2056,7 @@
       stack.innerHTML = '';
 
       ['A', 'B', 'C', 'D'].forEach(letter => {
-        const text = q.options[letter];
+        const text = q.options ? q.options[letter] : '';
         if (!text) return;
 
         const btn = document.createElement('button');
@@ -1785,7 +2099,7 @@
           </svg>
           <div>
             <div class="expl-headline">${isRight ? 'Correct! (Option ' + q.correct + ')' : 'Incorrect! Correct answer is Option ' + q.correct}</div>
-            <div class="expl-body-copy">${q.explanation || 'No detailed explanation found.'}</div>
+            <div class="expl-body-copy">${q.explanation || 'Refer to the study guide notes for the underlying theoretical proof.'}</div>
           </div>
         `;
 
@@ -1796,7 +2110,7 @@
           imprvPanel.innerHTML = `
             <div class="improvement-header">
               <svg style="width:20px; height:20px; color:var(--advice-border);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span>Targeted Improvement Advice: How to Never Miss This Again</span>
+              <span>Targeted Improvement Advice: How to Master This Concept</span>
             </div>
             <div class="improvement-content">
               <strong>Conceptual Gap:</strong> ${adviceInfo.gap}<br>
@@ -1824,36 +2138,43 @@
     }
 
     function getTargetedImprovementAdvice(q) {
-      const title = q.subtopic_title.toLowerCase();
-      if (title.includes('understanding') || title.includes('analysis')) {
+      const sTitle = (q.subject_title || '').toLowerCase();
+      const stTitle = (q.subtopic_title || '').toLowerCase();
+
+      if (sTitle.includes('programming')) {
         return {
-          gap: "Distinguishing between implicit/explicit requirements and understanding boundary edge cases (e.g. negative values, empty inputs, or off-by-one bounds).",
-          mentalModel: "Always ask: 'What is the absolute extreme value this function could receive?' and verify if requirements specify handling it."
+          gap: "Syntax nuance or memory execution model (e.g. stack vs heap, pointer dereferencing, pass-by-value vs pass-by-reference).",
+          mentalModel: "Trace the exact line of execution and memory address mutations on scratch paper before evaluating return values."
         };
-      } else if (title.includes('logical') || title.includes('flow')) {
+      } else if (sTitle.includes('data structures') || sTitle.includes('dsa')) {
         return {
-          gap: "Applying Contrapositive laws (P → Q ⟺ ¬Q → ¬P) or tracing nested boolean conditionals without getting trapped by inverse/converse fallacies.",
-          mentalModel: "Write down truth values for each conditional clause independently before evaluating the full expression."
+          gap: "Asymptotic time/space trade-offs or pointer traversal boundary conditions (e.g. off-by-one, null parent pointers, cycle detection).",
+          mentalModel: "Draw out 3 nodes visually: Head, Middle, and Tail, and test with edge cases N=0 and N=1."
         };
-      } else if (title.includes('abstraction') || title.includes('representation')) {
+      } else if (sTitle.includes('database')) {
         return {
-          gap: "Conflating Decomposition (breaking into chunks) with Abstraction (hiding details to reduce complexity).",
-          mentalModel: "Decomposition asks: 'What are the pieces?' Abstraction asks: 'What details can I safely ignore?'"
+          gap: "ACID transaction guarantees, index data structures (B+ Tree vs Hash), or SQL JOIN execution order.",
+          mentalModel: "Remember: Indexes speed up SELECT lookups at the expense of slower INSERT/UPDATE writes."
         };
-      } else if (title.includes('algorithmic') || title.includes('complexity')) {
+      } else if (sTitle.includes('network') || sTitle.includes('cloud')) {
         return {
-          gap: "Confusing worst-case asymptotic upper bounds O(N) with heuristic trade-offs or memory cache effects.",
-          mentalModel: "Drop all constant multipliers and lower-order terms. Remember: Contiguous arrays often beat trees in wall-clock time due to CPU cache lines."
+          gap: "OSI layer boundaries (Layer 4 TCP/UDP vs Layer 7 HTTP) or subnetting and handshake protocols.",
+          mentalModel: "Follow the packet headers from application data payload down to physical Ethernet frames."
         };
-      } else if (title.includes('debugging') || title.includes('error')) {
+      } else if (sTitle.includes('operating')) {
         return {
-          gap: "Treating superficial symptoms (e.g. server timeout) rather than isolating the root cause (e.g. DB connection leak).",
-          mentalModel: "Apply the '5 Whys' rule. Never patch a symptom by increasing memory or CPU without fixing the leak first."
+          gap: "Process scheduling algorithms, synchronization primitives (mutex vs semaphore), or virtual memory page faults.",
+          mentalModel: "Distinguish between user space and kernel space context switches."
+        };
+      } else if (sTitle.includes('security')) {
+        return {
+          gap: "OWASP Top 10 vulnerabilities (SQLi, XSS, CSRF) or symmetric vs asymmetric encryption trade-offs.",
+          mentalModel: "Never trust client-side input; always validate, sanitize, and enforce least privilege."
         };
       } else {
         return {
-          gap: "Standard misconception on foundational CS definitions or trap distractors designed to look mathematically plausible.",
-          mentalModel: "Eliminate extreme absolute words ('always', 'never') and look for the option that describes trade-offs and constraints."
+          gap: "Core definition confusion or falling for distractor options containing absolute words ('always', 'never').",
+          mentalModel: "Eliminate extreme distractors and seek the answer describing systemic engineering constraints and trade-offs."
         };
       }
     }
@@ -1883,7 +2204,7 @@
         selected: letter,
         time: Date.now()
       };
-      localStorage.setItem('nsct_app_answers', JSON.stringify(userAnswers));
+      localStorage.setItem(getAnswersKey(), JSON.stringify(userAnswers));
       renderCurrentQuestion();
       buildPalette();
       refreshTopStats();
@@ -1907,7 +2228,7 @@
       } else {
         userBookmarks[qKey] = true;
       }
-      localStorage.setItem('nsct_app_bookmarks', JSON.stringify(userBookmarks));
+      localStorage.setItem(getBookmarksKey(), JSON.stringify(userBookmarks));
       renderCurrentQuestion();
       refreshTopStats();
     }
@@ -1976,7 +2297,6 @@
 
     // Keyboard Shortcuts
     window.addEventListener('keydown', e => {
-      // Spotlight search modal trigger
       if (e.key === '/' && currentTab === 'practice' && document.getElementById('search-modal').classList.contains('hidden')) {
         e.preventDefault();
         openSearchModal();
@@ -1984,6 +2304,7 @@
       }
       if (e.key === 'Escape') {
         closeSearchModalDirect();
+        closeSubjectModal();
         return;
       }
 
@@ -1992,6 +2313,7 @@
       if (e.key === 'ArrowRight' || e.key === 'Enter') navigateQuestion(1);
 
       const q = activeQuestions[activeIndex];
+      if (!q) return;
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       if (!userAnswers[qKey]) {
         if (e.key === '1' || e.key.toLowerCase() === 'a') selectOption('A');
@@ -2002,7 +2324,7 @@
     });
 
     // ==========================================================================
-    // SPOTLIGHT SEARCH ENGINE
+    // SPOTLIGHT SEARCH (SEARCHES ALL 10 SUBJECTS)
     // ==========================================================================
     function openSearchModal() {
       AudioEngine.playTap();
@@ -2027,18 +2349,35 @@
       box.innerHTML = '';
 
       if (!term) {
-        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type to search any question or concept...</div>';
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">Type any term to search all 2,148 questions across all 10 subjects...</div>';
         return;
       }
 
-      const matches = allQuestions.filter(q => 
-        q.question.toLowerCase().includes(term) || 
-        q.explanation.toLowerCase().includes(term) ||
-        q.subtopic_title.toLowerCase().includes(term)
-      ).slice(0, 15);
+      let matches = [];
+      for (const subj of allSubjects) {
+        for (const st of (subj.subtopics || [])) {
+          for (const q of (st.questions || [])) {
+            if ((q.question && q.question.toLowerCase().includes(term)) ||
+                (q.explanation && q.explanation.toLowerCase().includes(term)) ||
+                (st.title && st.title.toLowerCase().includes(term))) {
+              matches.push({
+                ...q,
+                subject_id: subj.id,
+                subject_code: subj.code,
+                subject_title: subj.title,
+                subtopic_id: st.id,
+                subtopic_title: st.title
+              });
+              if (matches.length >= 25) break;
+            }
+          }
+          if (matches.length >= 25) break;
+        }
+        if (matches.length >= 25) break;
+      }
 
       if (matches.length === 0) {
-        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">No matching questions found.</div>';
+        box.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding:20px; font-size:14px;">No matching questions found in any subject.</div>';
         return;
       }
 
@@ -2047,7 +2386,10 @@
         item.className = 'search-result-item';
         item.onclick = () => {
           closeSearchModalDirect();
-          // Jump to question
+          if (currentSubjectId !== m.subject_id) {
+            switchSubject(m.subject_id);
+          }
+          switchAppTab('practice');
           filterBy('all');
           const idx = allQuestions.findIndex(q => q.subtopic_id === m.subtopic_id && q.q_num === m.q_num);
           if (idx !== -1) {
@@ -2057,7 +2399,10 @@
         };
 
         item.innerHTML = `
-          <div class="search-res-title">Subtopic ${m.subtopic_id}: ${m.subtopic_title} • Q${m.q_num}</div>
+          <div class="search-res-title">
+            <span style="background:var(--forest-mint); color:var(--forest-dark); padding:1px 6px; border-radius:4px; font-size:11px;">Subj ${m.subject_code}</span>
+            <span>Subtopic ${m.subtopic_id}: ${m.subtopic_title} • Q${m.q_num}</span>
+          </div>
           <div class="search-res-snippet">${m.question}</div>
         `;
         box.appendChild(item);
@@ -2068,8 +2413,9 @@
     // RENDER THEORY & NOTES VIEW
     // ==========================================================================
     function renderTheoryContent(stId) {
-      const st = subtopics.find(s => s.id === stId) || subtopics[0];
-      document.getElementById('theory-hero-title').textContent = `Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}`;
+      const st = (subtopics || []).find(s => s.id === stId) || subtopics[0];
+      if (!st) return;
+      document.getElementById('theory-hero-title').textContent = `Subject ${currentSubject.code}: Subtopic ${String(st.id).padStart(2,'0')} — ${st.title}`;
 
       // Section 1: Concept Cards
       const cBox = document.getElementById('theory-concepts-container');
@@ -2112,20 +2458,103 @@
 
       // Section 3: Deep Dive
       const ddBox = document.getElementById('theory-deepdive-container');
-      ddBox.innerHTML = st.formatted_deep_dive || '<div style="color:var(--text-dim); font-size:14px;">No deep dive analysis for this subtopic.</div>';
+      ddBox.innerHTML = st.formatted_deep_dive || '<div style="color:var(--text-dim); font-size:14px;">Detailed technical reference available in the official PDF.</div>';
     }
 
     // ==========================================================================
-    // RENDER ADVISOR & DIAGNOSTICS VIEW
+    // RENDER ALL-10-SUBJECTS ADVISOR VIEW
     // ==========================================================================
     function renderAdvisorView() {
-      const answeredKeys = Object.keys(userAnswers);
-      const totalAnswered = answeredKeys.length;
-      let totalCorrect = 0;
+      // 1. Calculate Grand Overall NSCT Readiness (Weighted across all 10 subjects)
+      let grandWeightedReadiness = 0;
+      let totalAssignedWeight = 0;
 
+      const subjectsStats = allSubjects.map(s => {
+        const sAns = JSON.parse(localStorage.getItem(getAnswersKey(s.id)) || '{}');
+        const ansCount = Object.keys(sAns).length;
+        
+        let sTotalQ = 0;
+        let sCorrect = 0;
+        (s.subtopics || []).forEach(st => {
+          (st.questions || []).forEach(q => {
+            sTotalQ++;
+            const k = `${st.id}_${q.q_num}`;
+            if (sAns[k] && sAns[k].selected === q.correct) sCorrect++;
+          });
+        });
+
+        const sAcc = ansCount > 0 ? Math.round((sCorrect / ansCount) * 100) : 0;
+        const sCov = sTotalQ > 0 ? Math.round((ansCount / sTotalQ) * 100) : 0;
+        const sReadiness = Math.round((sAcc * 0.7) + (sCov * 0.3));
+
+        grandWeightedReadiness += (sReadiness * (s.weight / 100));
+        totalAssignedWeight += s.weight;
+
+        return {
+          id: s.id,
+          code: s.code,
+          title: s.title,
+          weight: s.weight,
+          icon: s.icon,
+          totalQ: sTotalQ,
+          answered: ansCount,
+          correct: sCorrect,
+          accuracy: sAcc,
+          coverage: sCov,
+          readiness: sReadiness
+        };
+      });
+
+      const grandReadinessScore = Math.round(grandWeightedReadiness);
+      document.getElementById('advisor-gauge-val').textContent = `${grandReadinessScore}%`;
+
+      // 2. Render All-10-Subjects Overview Matrix
+      let matrixContainer = document.getElementById('advisor-subjects-matrix');
+      if (!matrixContainer) {
+        // Insert above action list if not present
+        const hero = document.querySelector('.advisor-hero-card');
+        matrixContainer = document.createElement('div');
+        matrixContainer.id = 'advisor-subjects-matrix';
+        matrixContainer.className = 'advisor-all-subjects-grid';
+        hero.parentNode.insertBefore(matrixContainer, hero.nextSibling);
+      }
+
+      matrixContainer.innerHTML = '';
+      subjectsStats.forEach(s => {
+        let badgeColor = '#6B8877';
+        let statusText = 'Untested';
+        if (s.answered > 0) {
+          if (s.accuracy >= 80 && s.coverage >= 30) { badgeColor = '#1E6B45'; statusText = 'Mastered'; }
+          else if (s.accuracy >= 70) { badgeColor = '#D97706'; statusText = 'On Track'; }
+          else { badgeColor = '#D32F2F'; statusText = 'Needs Work'; }
+        }
+
+        const card = document.createElement('div');
+        card.className = 'advisor-subj-card';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; font-size:13.5px; color:var(--forest-dark);">${s.icon || '📚'} Subj ${s.code} (${s.weight}%)</span>
+            <span style="background:${badgeColor}15; color:${badgeColor}; font-weight:800; font-size:11px; padding:2px 8px; border-radius:6px; border:1px solid ${badgeColor}30;">${statusText}</span>
+          </div>
+          <div style="font-size:13px; font-weight:700; color:var(--text-title);">${s.title}</div>
+          <div style="font-size:12px; color:var(--text-muted); display:flex; justify-content:space-between;">
+            <span>${s.answered}/${s.totalQ} done</span>
+            <span style="font-weight:700; color:var(--forest-main);">Acc: ${s.accuracy}%</span>
+          </div>
+          <div class="subj-card-bar-wrap">
+            <div class="subj-card-bar-fill" style="width: ${s.coverage}%;"></div>
+          </div>
+          <button class="btn-improvement-jump" style="margin-top:6px; font-size:12px; padding:6px 10px; justify-content:center;" onclick="switchSubject(${s.id})">
+            ${s.id === currentSubject.id ? 'Currently Drilling' : 'Switch to This Subject'}
+          </button>
+        `;
+        matrixContainer.appendChild(card);
+      });
+
+      // 3. Active Subject Subtopic Diagnostics
       const subtopicStats = {};
       subtopics.forEach(st => {
-        subtopicStats[st.id] = { title: st.title, total: st.questions.length, answered: 0, correct: 0 };
+        subtopicStats[st.id] = { title: st.title, total: (st.questions || []).length, answered: 0, correct: 0 };
       });
 
       allQuestions.forEach(q => {
@@ -2133,17 +2562,10 @@
         if (userAnswers[key]) {
           subtopicStats[q.subtopic_id].answered++;
           if (userAnswers[key].selected === q.correct) {
-            totalCorrect++;
             subtopicStats[q.subtopic_id].correct++;
           }
         }
       });
-
-      const overallAccuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
-      const coveragePct = Math.round((totalAnswered / allQuestions.length) * 100);
-      const readinessScore = Math.round((overallAccuracy * 0.7) + (coveragePct * 0.3));
-
-      document.getElementById('advisor-gauge-val').textContent = `${readinessScore}%`;
 
       const actionBox = document.getElementById('advisor-action-list');
       actionBox.innerHTML = '';
@@ -2158,19 +2580,11 @@
       });
 
       if (weakSubtopics.length === 0) {
-        if (totalAnswered < 10) {
-          actionBox.innerHTML = `
-            <div style="background:var(--forest-mint); padding:16px; border-radius:12px; color:var(--forest-dark); font-size:14px; line-height:1.6;">
-              <strong>Keep Practicing:</strong> Solve at least 20 questions in the Practice Drill to unlock personalized diagnostic recommendations.
-            </div>
-          `;
-        } else {
-          actionBox.innerHTML = `
-            <div style="background:var(--correct-bg); border:1px solid var(--correct-border); padding:16px; border-radius:12px; color:var(--correct-text); font-size:14px; line-height:1.6;">
-              <strong>Outstanding Performance:</strong> All your active subtopics have $\ge 75\%$ accuracy! You are on track for top-tier national accreditation. Try the Timed Mock Exam to test your speed under pressure.
-            </div>
-          `;
-        }
+        actionBox.innerHTML = `
+          <div style="background:var(--correct-bg); border:1px solid var(--correct-border); padding:16px; border-radius:12px; color:var(--correct-text); font-size:14px; line-height:1.6;">
+            <strong>Subject ${currentSubject.code} Strong:</strong> No critical performance gaps detected under this subject! Switch to other subjects using the Subject Picker to achieve full 100% exam readiness.
+          </div>
+        `;
       } else {
         weakSubtopics.sort((a, b) => a.acc - b.acc);
         weakSubtopics.forEach(w => {
@@ -2218,7 +2632,7 @@
     }
 
     // ==========================================================================
-    // TIMED MOCK EXAM ENGINE
+    // TIMED MOCK EXAM ENGINE (SUBJECT MOCK + GRAND MASTER EXAM)
     // ==========================================================================
     let mockList = [];
     let mockCurr = 0;
@@ -2226,13 +2640,33 @@
     let mockTimerId = null;
     let mockTimeRemaining = 1800;
 
-    function launchMockExamNow() {
+    function launchMockExamNow(mode = 'subject') {
       AudioEngine.playTap();
-      const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
-      mockList = shuffled.slice(0, 30);
+      if (mode === 'grand') {
+        // Sample proportionately across ALL 10 subjects (90 questions total, 90 mins)
+        let sampled = [];
+        allSubjects.forEach(s => {
+          let sAllQ = [];
+          (s.subtopics || []).forEach(st => {
+            (st.questions || []).forEach(q => {
+              sAllQ.push({ ...q, subject_code: s.code, subject_title: s.title });
+            });
+          });
+          const countToPick = Math.max(4, Math.round(90 * (s.weight / 100)));
+          const shuffledSubj = sAllQ.sort(() => 0.5 - Math.random()).slice(0, countToPick);
+          sampled.push(...shuffledSubj);
+        });
+        mockList = sampled.sort(() => 0.5 - Math.random());
+        mockTimeRemaining = 90 * 60;
+      } else {
+        // Active subject mock (30 questions, 30 mins)
+        const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+        mockList = shuffled.slice(0, 30);
+        mockTimeRemaining = 30 * 60;
+      }
+
       mockCurr = 0;
       mockUserPicks = {};
-      mockTimeRemaining = 30 * 60;
 
       document.getElementById('mock-intro-card').classList.add('hidden');
       document.getElementById('mock-report-card').classList.add('hidden');
@@ -2257,14 +2691,15 @@
 
     function renderMockQuestionCard() {
       const q = mockList[mockCurr];
-      document.getElementById('mock-step-label').textContent = `Question ${mockCurr + 1} of ${mockList.length}`;
+      const subjPrefix = q.subject_code ? `[Subj ${q.subject_code}] ` : '';
+      document.getElementById('mock-step-label').textContent = `${subjPrefix}Question ${mockCurr + 1} of ${mockList.length}`;
       document.getElementById('mock-prompt-text').textContent = q.question;
 
       const stack = document.getElementById('mock-options-stack');
       stack.innerHTML = '';
 
       ['A', 'B', 'C', 'D'].forEach(letter => {
-        const text = q.options[letter];
+        const text = q.options ? q.options[letter] : '';
         if (!text) return;
 
         const isChosen = (mockUserPicks[mockCurr] === letter);
@@ -2311,7 +2746,7 @@
       });
 
       const pct = Math.round((score / mockList.length) * 100);
-      const passed = (pct >= 75);
+      const passed = (pct >= 70);
 
       if (passed) {
         AudioEngine.playCorrect();
@@ -2334,16 +2769,16 @@
         icon.innerHTML = '⚠️';
         document.getElementById('mock-report-headline').textContent = "Needs More Practice";
         document.getElementById('mock-report-headline').style.color = "var(--wrong-border)";
-        document.getElementById('mock-report-summary').textContent = "Score under 75%. Review missed questions in the Practice Drill or Improvement Advisor.";
+        document.getElementById('mock-report-summary').textContent = "Score under 70%. Review missed questions in the Practice Drill or Improvement Advisor.";
       }
 
       document.getElementById('mock-res-score').textContent = `${score} / ${mockList.length}`;
       document.getElementById('mock-res-accuracy').textContent = `${pct}%`;
-      const usedSec = 1800 - mockTimeRemaining;
+      const usedSec = (mockList.length > 50 ? 5400 : 1800) - mockTimeRemaining;
       const uM = Math.floor(usedSec / 60);
       const uS = usedSec % 60;
       document.getElementById('mock-res-time').textContent = `${uM}m ${uS}s`;
     }
-  </script>
+</script>
 </body>
 </html>
