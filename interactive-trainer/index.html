@@ -6,7 +6,7 @@
   <title>NSCT Prep — Subject 01: Problem Solving & Analytical Skills</title>
   <style>
     /* ==========================================================================
-       RESET & THEME VARIABLES (Dark Glass / Slate Palette)
+       NEUMORPHIC FOREST GREEN & WHITE DESIGN SYSTEM
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -15,50 +15,58 @@
     }
 
     :root {
-      --bg-base: #0A0E17;
-      --bg-surface: #111827;
-      --bg-card: #182234;
-      --bg-card-hover: #1E2D45;
-      --bg-elevated: #24324D;
+      /* Neumorphic Base Palette */
+      --bg-base: #EFF3EF;
+      --bg-surface: #F2F6F2;
+      --bg-card: #F5F8F5;
+      --bg-inset: #E7EEE7;
       
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-medium: rgba(255, 255, 255, 0.16);
-      --border-strong: rgba(255, 255, 255, 0.25);
+      /* Dark Forest Green Accents */
+      --forest-dark: #0F3520;
+      --forest-main: #14452A;
+      --forest-light: #1E633D;
+      --forest-mint: #E2ECE5;
+      --forest-border: rgba(20, 69, 42, 0.15);
 
-      --primary: #6366F1;
-      --primary-hover: #4F46E5;
-      --primary-light: rgba(99, 102, 241, 0.15);
-      --primary-glow: rgba(99, 102, 241, 0.35);
+      /* Accent Highlights */
+      --white: #FFFFFF;
+      --text-title: #0A2616;
+      --text-body: #112A1B;
+      --text-muted: #41614F;
+      --text-dim: #6B8877;
 
-      --success: #10B981;
-      --success-light: rgba(16, 185, 129, 0.15);
-      --success-border: #059669;
+      /* Status Colors */
+      --correct-bg: #E8F5E9;
+      --correct-border: #1E6B45;
+      --correct-text: #0A3D22;
+      
+      --wrong-bg: #FEECEB;
+      --wrong-border: #D32F2F;
+      --wrong-text: #7F1D1D;
 
-      --danger: #EF4444;
-      --danger-light: rgba(239, 68, 68, 0.15);
-      --danger-border: #DC2626;
+      --advice-bg: #FEF7E6;
+      --advice-border: #D97706;
+      --advice-text: #78350F;
 
-      --warning: #F59E0B;
-      --warning-light: rgba(245, 158, 11, 0.15);
-      --warning-border: #D97706;
+      /* Neumorphic Shadows (Tactile Soft UI) */
+      --neu-raised: 7px 7px 16px rgba(15, 53, 32, 0.08), -7px -7px 16px rgba(255, 255, 255, 0.95);
+      --neu-raised-sm: 4px 4px 10px rgba(15, 53, 32, 0.07), -4px -4px 10px rgba(255, 255, 255, 0.95);
+      --neu-raised-hover: 8px 8px 20px rgba(15, 53, 32, 0.12), -8px -8px 20px rgba(255, 255, 255, 1);
+      --neu-inset: inset 3px 3px 7px rgba(15, 53, 32, 0.08), inset -3px -3px 7px rgba(255, 255, 255, 0.95);
+      --neu-inset-deep: inset 4px 4px 10px rgba(15, 53, 32, 0.12), inset -4px -4px 10px rgba(255, 255, 255, 0.9);
 
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 22px;
-      --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 26px;
     }
 
     body {
       background-color: var(--bg-base);
-      color: var(--text-main);
+      color: var(--text-body);
       font-family: var(--font-sans);
       line-height: 1.6;
       height: 100vh;
@@ -68,19 +76,19 @@
     }
 
     /* Scrollbars */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: #2D3748; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #4A5568; }
+    ::-webkit-scrollbar-thumb { background: #CBD8CE; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A4B8A9; }
 
     /* ==========================================================================
-       TOP GLOBAL HEADER & APP SHELL
+       TOP GLOBAL HEADER (NEUMORPHIC WHITE & FOREST GREEN)
        ========================================================================== */
     .app-header {
-      height: 68px;
-      background: rgba(17, 24, 39, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
+      height: 72px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--forest-border);
+      box-shadow: 0 4px 14px rgba(15, 53, 32, 0.04);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -89,112 +97,110 @@
       flex-shrink: 0;
     }
 
-    .header-brand {
+    .brand-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
-    .brand-logo {
-      width: 40px;
-      height: 40px;
+    .brand-icon {
+      width: 44px;
+      height: 44px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-light));
+      color: var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 17px;
-      color: #fff;
-      box-shadow: 0 0 16px var(--primary-glow);
-    }
-    .brand-meta {
-      display: flex;
-      flex-direction: column;
+      font-size: 18px;
+      box-shadow: 3px 3px 8px rgba(15, 53, 32, 0.25);
     }
     .brand-title {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-title);
+      letter-spacing: -0.3px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .brand-tag {
+    .brand-pill {
       font-size: 11px;
       font-weight: 700;
-      background: var(--primary-light);
-      color: #818CF8;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 2px 7px;
+      background: var(--forest-main);
+      color: var(--white);
+      padding: 2px 8px;
       border-radius: 12px;
     }
     .brand-sub {
       font-size: 12px;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     /* SEGMENTED TAB SWITCHER */
     .nav-tabs {
       display: flex;
       align-items: center;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 4px;
-      border-radius: 14px;
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      padding: 5px;
+      border-radius: 16px;
       gap: 4px;
     }
     .nav-tab-btn {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
-      border-radius: 10px;
+      padding: 8px 18px;
+      border-radius: 12px;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 13.5px;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .nav-tab-btn:hover {
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-title);
     }
     .nav-tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      background: var(--forest-main);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(15, 53, 32, 0.3);
     }
     .nav-tab-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
     }
 
     /* HEADER RIGHT STATS */
     .header-stats {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
-    .stat-badge {
+    .stat-pill {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 6px 14px;
-      border-radius: 10px;
-      font-size: 12px;
+      gap: 6px;
     }
-    .stat-badge-val {
-      font-weight: 700;
+    .stat-pill-val {
       font-family: var(--font-mono);
-      color: var(--text-main);
+      font-weight: 800;
+      color: var(--forest-main);
     }
 
     /* ==========================================================================
-       MAIN APP WORKSPACE
+       APP WORKSPACE (SIDEBAR + MAIN CANVAS)
        ========================================================================== */
     .app-workspace {
       flex: 1;
@@ -202,106 +208,112 @@
       overflow: hidden;
     }
 
-    /* SIDEBAR / TOPIC NAVIGATOR */
+    /* LEFT SIDEBAR */
     .app-sidebar {
       width: 320px;
       min-width: 300px;
       background: var(--bg-surface);
-      border-right: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--forest-border);
       display: flex;
       flex-direction: column;
       height: 100%;
       overflow-y: auto;
-      padding: 20px;
+      padding: 22px 18px;
       gap: 20px;
     }
 
-    .sidebar-section-title {
+    .section-label {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-dim);
-      margin-bottom: 8px;
+      padding: 0 6px 6px;
     }
 
+    /* NEUMORPHIC TOPIC LIST */
     .topic-list {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
-    .topic-item {
+    .topic-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
+      padding: 10px 14px;
       border-radius: var(--radius-md);
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: var(--text-body);
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       text-align: left;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
     }
-    .topic-item:hover {
-      background: var(--bg-card);
-      color: var(--text-main);
+    .topic-card:hover {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
     }
-    .topic-item.active {
-      background: var(--primary-light);
-      border-color: rgba(99, 102, 241, 0.4);
-      color: #A5B4FC;
-      font-weight: 700;
+    .topic-card.active {
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      border-color: rgba(20, 69, 42, 0.15);
+      color: var(--forest-main);
+      font-weight: 800;
     }
-    .topic-item-left {
+    .topic-card-left {
       display: flex;
       align-items: center;
       gap: 10px;
       overflow: hidden;
     }
-    .topic-num {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
+    .topic-badge-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--forest-mint);
+      color: var(--forest-dark);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
       font-family: var(--font-mono);
-      font-weight: 700;
+      font-weight: 800;
       flex-shrink: 0;
     }
-    .topic-item.active .topic-num {
-      background: var(--primary);
-      color: #fff;
+    .topic-card.active .topic-badge-num {
+      background: var(--forest-main);
+      color: var(--white);
     }
-    .topic-name {
+    .topic-card-name {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .topic-badge-count {
+    .topic-count {
       font-size: 11px;
       color: var(--text-dim);
       font-family: var(--font-mono);
+      font-weight: 700;
     }
 
     /* FILTERS PILLS */
-    .filter-pills {
+    .filter-group {
       display: flex;
-      gap: 6px;
+      gap: 8px;
     }
     .filter-btn {
       flex: 1;
-      padding: 8px 10px;
+      padding: 9px 8px;
       border-radius: var(--radius-sm);
       font-size: 12px;
-      font-weight: 600;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      font-weight: 700;
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
@@ -311,28 +323,28 @@
       transition: all 0.15s;
     }
     .filter-btn:hover {
-      background: var(--bg-card-hover);
-      color: var(--text-main);
+      color: var(--text-title);
     }
     .filter-btn.active {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      color: #818CF8;
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
+      color: var(--forest-main);
+      font-weight: 800;
     }
 
-    /* MAIN STAGE CONTAINER */
+    /* MAIN VIEWPORT CANVAS */
     .main-viewport {
       flex: 1;
       height: 100%;
       overflow-y: auto;
-      padding: 36px 48px;
-      background: radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.05), transparent 50%), var(--bg-base);
+      padding: 36px 44px;
+      background: radial-gradient(circle at 90% 10%, rgba(20, 69, 42, 0.03), transparent 60%), var(--bg-base);
     }
 
     /* ==========================================================================
        VIEW 1: PRACTICE DRILL (MCQ INTERFACE)
        ========================================================================== */
-    .practice-container {
+    .practice-box {
       max-width: 900px;
       margin: 0 auto;
       display: flex;
@@ -340,81 +352,88 @@
       gap: 24px;
     }
 
+    /* NEUMORPHIC QUESTION CARD */
     .q-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 36px;
-      box-shadow: var(--shadow-card);
+      padding: 38px 42px;
       display: flex;
       flex-direction: column;
       gap: 28px;
     }
 
-    .q-header {
+    .q-meta-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: 1px solid rgba(20, 69, 42, 0.1);
       padding-bottom: 18px;
     }
     .q-subtopic-tag {
       font-size: 13px;
       font-weight: 700;
-      color: #A5B4FC;
-      background: var(--primary-light);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      padding: 4px 12px;
+      color: var(--forest-main);
+      background: var(--forest-mint);
+      padding: 5px 14px;
       border-radius: 20px;
+      box-shadow: var(--neu-raised-sm);
     }
-    .q-counter-tag {
+    .q-index-tag {
       font-size: 13px;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: var(--text-dim);
       font-family: var(--font-mono);
-      font-weight: 600;
     }
 
-    .q-statement {
-      font-size: 20px;
-      font-weight: 600;
-      color: #FFFFFF;
-      line-height: 1.6;
+    .q-statement-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--text-title);
+      line-height: 1.55;
     }
 
     /* OPTIONS */
-    .options-grid {
+    .options-stack {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
-    .option-btn {
+    .opt-card-btn {
       width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-lg);
       padding: 18px 22px;
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      color: #E2E8F0;
+      color: var(--text-body);
       font-size: 16px;
+      font-weight: 600;
       line-height: 1.5;
       text-align: left;
       cursor: pointer;
       transition: all 0.15s ease;
       outline: none;
     }
-    .option-btn:hover:not(:disabled) {
-      background: var(--bg-card-hover);
-      border-color: var(--border-medium);
+    .opt-card-btn:hover:not(:disabled) {
+      box-shadow: var(--neu-raised-hover);
       transform: translateY(-1px);
+      color: var(--forest-main);
     }
-    .opt-letter {
-      width: 34px;
-      height: 34px;
+    .opt-card-btn:active:not(:disabled) {
+      box-shadow: var(--neu-inset);
+      transform: translateY(1px);
+    }
+    .opt-badge-letter {
+      width: 36px;
+      height: 36px;
       border-radius: var(--radius-md);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-inset);
+      box-shadow: var(--neu-inset);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -424,70 +443,123 @@
       flex-shrink: 0;
       transition: all 0.15s;
     }
-    .option-btn:hover:not(:disabled) .opt-letter {
-      border-color: var(--primary);
-      color: #818CF8;
+    .opt-card-btn:hover:not(:disabled) .opt-badge-letter {
+      background: var(--forest-main);
+      color: var(--white);
     }
 
-    /* CORRECT / INCORRECT STATES */
-    .option-btn.state-correct {
-      background: var(--success-light) !important;
-      border-color: var(--success) !important;
-      color: #D1FAE5 !important;
+    /* CORRECT / WRONG STATES */
+    .opt-card-btn.state-correct {
+      background: var(--correct-bg) !important;
+      border: 2px solid var(--correct-border) !important;
+      color: var(--correct-text) !important;
+      box-shadow: var(--neu-inset) !important;
     }
-    .option-btn.state-correct .opt-letter {
-      background: var(--success) !important;
-      color: #064E3B !important;
-      border-color: var(--success) !important;
-    }
-
-    .option-btn.state-wrong {
-      background: var(--danger-light) !important;
-      border-color: var(--danger) !important;
-      color: #FEE2E2 !important;
-    }
-    .option-btn.state-wrong .opt-letter {
-      background: var(--danger) !important;
-      color: #fff !important;
-      border-color: var(--danger) !important;
+    .opt-card-btn.state-correct .opt-badge-letter {
+      background: var(--correct-border) !important;
+      color: var(--white) !important;
+      box-shadow: none !important;
     }
 
-    .option-btn.state-dimmed {
-      opacity: 0.4;
+    .opt-card-btn.state-wrong {
+      background: var(--wrong-bg) !important;
+      border: 2px solid var(--wrong-border) !important;
+      color: var(--wrong-text) !important;
+      box-shadow: var(--neu-inset) !important;
+    }
+    .opt-card-btn.state-wrong .opt-badge-letter {
+      background: var(--wrong-border) !important;
+      color: var(--white) !important;
+      box-shadow: none !important;
     }
 
-    /* EXPLANATION CARD */
-    .explanation-card {
+    .opt-card-btn.state-dimmed {
+      opacity: 0.45;
+    }
+
+    /* EXPLANATION PANEL */
+    .explanation-panel {
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 22px 26px;
       display: flex;
       gap: 18px;
       align-items: flex-start;
-      animation: slideDown 0.2s ease-out;
+      animation: fadeIn 0.2s ease-out;
     }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .explanation-card.is-correct {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+    .explanation-panel.is-correct {
+      background: var(--correct-bg);
+      border: 1px solid rgba(30, 107, 69, 0.3);
+      color: var(--correct-text);
     }
-    .explanation-card.is-wrong {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+    .explanation-panel.is-wrong {
+      background: var(--wrong-bg);
+      border: 1px solid rgba(211, 47, 47, 0.3);
+      color: var(--wrong-text);
     }
-    .expl-header-label {
-      font-size: 15px;
-      font-weight: 700;
+    .expl-headline {
+      font-size: 16px;
+      font-weight: 800;
       margin-bottom: 6px;
     }
-    .is-correct .expl-header-label { color: #34D399; }
-    .is-wrong .expl-header-label { color: #F87171; }
-    .expl-body-text {
-      font-size: 14.5px;
-      color: #E2E8F0;
+    .expl-body-copy {
+      font-size: 15px;
       line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       SPECIAL: TARGETED IMPROVEMENT & ADVICE CALLOUT
+       ========================================================================== */
+    .improvement-box {
+      background: var(--advice-bg);
+      border: 1.5px solid var(--advice-border);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--neu-raised-sm);
+      animation: fadeIn 0.25s ease-out;
+      margin-top: 14px;
+    }
+    .improvement-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--advice-text);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+    .improvement-content {
+      font-size: 14px;
+      color: #78350F;
+      line-height: 1.6;
+    }
+    .improvement-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .btn-improvement-jump {
+      background: var(--forest-main);
+      color: var(--white);
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 2px 2px 6px rgba(15, 53, 32, 0.2);
+    }
+    .btn-improvement-jump:hover {
+      background: var(--forest-light);
     }
 
     /* NAV CONTROLS */
@@ -495,68 +567,75 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 8px;
+      padding-top: 10px;
     }
-    .btn-ctrl {
+    .neu-btn-action {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 26px;
+      padding: 13px 26px;
       border-radius: var(--radius-md);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.15s;
-    }
-    .btn-ctrl-prev {
+      transition: all 0.15s ease;
       background: var(--bg-surface);
-      border-color: var(--border-medium);
-      color: var(--text-main);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      color: var(--text-body);
     }
-    .btn-ctrl-prev:hover:not(:disabled) {
-      background: var(--bg-card);
+    .neu-btn-action:hover:not(:disabled) {
+      box-shadow: var(--neu-raised-hover);
+      color: var(--forest-main);
+      transform: translateY(-1px);
     }
-    .btn-ctrl-next {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 4px 14px var(--primary-glow);
+    .neu-btn-action:active:not(:disabled) {
+      box-shadow: var(--neu-inset);
+      transform: translateY(1px);
     }
-    .btn-ctrl-next:hover:not(:disabled) {
-      background: var(--primary-hover);
-      box-shadow: 0 6px 20px var(--primary-glow);
+    .neu-btn-primary {
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-light));
+      color: var(--white);
+      box-shadow: 4px 4px 14px rgba(15, 53, 32, 0.3);
+      border: 1px solid var(--forest-main);
     }
-    .btn-ctrl:disabled {
-      opacity: 0.35;
+    .neu-btn-primary:hover:not(:disabled) {
+      box-shadow: 5px 5px 18px rgba(15, 53, 32, 0.4);
+      color: var(--white);
+    }
+    .neu-btn-action:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
-    /* PALETTE GRID */
+    /* PALETTE DRAWER */
     .palette-drawer {
       background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
     .palette-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-      gap: 6px;
-      max-height: 160px;
+      grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+      gap: 7px;
+      max-height: 180px;
       overflow-y: auto;
       padding-right: 4px;
     }
-    .palette-item {
-      height: 36px;
-      border-radius: 8px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+    .palette-btn {
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       font-family: var(--font-mono);
       display: flex;
       align-items: center;
@@ -564,173 +643,221 @@
       cursor: pointer;
       transition: all 0.1s;
     }
-    .palette-item:hover {
-      background: var(--bg-card-hover);
-      color: var(--text-main);
+    .palette-btn:hover {
+      color: var(--forest-main);
+      box-shadow: var(--neu-raised-hover);
     }
-    .palette-item.current {
-      border-color: var(--primary) !important;
-      box-shadow: 0 0 0 2px var(--primary);
-      color: #fff;
+    .palette-btn.current {
+      background: var(--bg-inset) !important;
+      box-shadow: var(--neu-inset) !important;
+      color: var(--forest-main) !important;
+      border-color: var(--forest-main) !important;
+      font-weight: 900;
     }
-    .palette-item.ans-right {
-      background: var(--success) !important;
-      color: #064E3B !important;
-      border-color: var(--success) !important;
+    .palette-btn.ans-correct {
+      background: var(--correct-border) !important;
+      color: var(--white) !important;
+      border-color: var(--correct-border) !important;
     }
-    .palette-item.ans-wrong {
-      background: var(--danger) !important;
-      color: #fff !important;
-      border-color: var(--danger) !important;
+    .palette-btn.ans-wrong {
+      background: var(--wrong-border) !important;
+      color: var(--white) !important;
+      border-color: var(--wrong-border) !important;
     }
 
     /* ==========================================================================
-       VIEW 2: THEORY & NOTES (ELEGANT STUDY GUIDE)
+       VIEW 2: THEORY & NOTES (HIGH READABILITY STUDY GUIDE)
        ========================================================================== */
-    .theory-container {
+    .theory-box {
       max-width: 1000px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 30px;
     }
 
-    .theory-hero {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(139, 92, 246, 0.08));
-      border: 1px solid rgba(99, 102, 241, 0.3);
+    .theory-hero-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 32px;
+      padding: 34px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .theory-hero-title {
       font-size: 26px;
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: -0.5px;
+      font-weight: 900;
+      color: var(--text-title);
+      letter-spacing: -0.4px;
     }
     .theory-hero-sub {
-      color: #A5B4FC;
-      font-size: 14px;
+      color: var(--forest-main);
+      font-size: 14.5px;
+      font-weight: 600;
       margin-top: 4px;
     }
 
-    /* SECTION 1: KEY CONCEPTS CARDS */
-    .concept-cards-grid {
+    /* CONCEPT CARDS */
+    .concepts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 18px;
     }
-    .concept-card {
+    .concept-neu-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      transition: all 0.2s;
     }
-    .concept-card:hover {
-      border-color: var(--border-medium);
-      transform: translateY(-2px);
-    }
-    .concept-card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #818CF8;
+    .concept-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--forest-dark);
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .concept-card-desc {
-      font-size: 14px;
-      color: #CBD5E1;
-      line-height: 1.6;
+    .concept-desc {
+      font-size: 14.5px;
+      color: var(--text-body);
+      line-height: 1.65;
     }
 
-    /* SECTION 2: EXAM TRAPS CARDS */
-    .traps-section-box {
-      background: rgba(245, 158, 11, 0.04);
-      border: 1px solid rgba(245, 158, 11, 0.25);
+    /* TRAPS SECTION */
+    .traps-container-card {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 28px;
+      padding: 32px 36px;
       display: flex;
       flex-direction: column;
       gap: 18px;
     }
-    .traps-section-header {
+    .traps-title-bar {
       display: flex;
       align-items: center;
       gap: 10px;
-      color: #FBBF24;
+      color: #B45309;
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 900;
     }
-    .trap-item-card {
+    .trap-neu-item {
       background: var(--bg-surface);
-      border: 1px solid rgba(245, 158, 11, 0.2);
+      box-shadow: var(--neu-inset);
       border-radius: var(--radius-md);
       padding: 18px 22px;
+      border: 1px solid rgba(217, 119, 6, 0.2);
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .trap-item-title {
+    .trap-name {
       font-size: 15px;
-      font-weight: 700;
-      color: #FDE68A;
+      font-weight: 800;
+      color: #92400E;
     }
-    .trap-item-body {
+    .trap-text {
       font-size: 14px;
-      color: #E2E8F0;
+      color: var(--text-body);
       line-height: 1.6;
     }
 
-    /* SECTION 3: DEEP DIVE BOX */
-    .deep-dive-box {
+    /* DEEP DIVE SECTION */
+    .deepdive-container-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 32px;
+      padding: 34px 40px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
     }
-    .deep-dive-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #C084FC;
+    .deepdive-header-bar {
       display: flex;
       align-items: center;
       gap: 10px;
+      color: var(--forest-main);
+      font-size: 18px;
+      font-weight: 900;
     }
     .deep-dive-heading {
-      font-size: 16px;
-      font-weight: 700;
-      color: #E2E8F0;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--forest-dark);
       margin-top: 14px;
       margin-bottom: 6px;
     }
     .deep-dive-text {
-      font-size: 14.5px;
-      color: #94A3B8;
+      font-size: 15px;
+      color: var(--text-body);
       line-height: 1.7;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     /* ==========================================================================
-       VIEW 3: MOCK EXAM
+       VIEW 3: ADVISOR & IMPROVEMENT DASHBOARD
        ========================================================================== */
-    .mock-box {
+    .advisor-box {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .advisor-hero-card {
+      background: linear-gradient(135deg, var(--forest-main), var(--forest-dark));
+      color: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 34px 40px;
+      box-shadow: 6px 6px 20px rgba(15, 53, 32, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .advisor-readiness-gauge {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 4px solid var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 900;
+    }
+
+    .advisor-subtopic-row {
+      background: var(--bg-surface);
+      box-shadow: var(--neu-raised-sm);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    /* MOCK EXAM */
+    .mock-start-neu {
       max-width: 800px;
       margin: 40px auto;
       background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      box-shadow: var(--neu-raised);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       border-radius: var(--radius-xl);
-      padding: 40px;
-      box-shadow: var(--shadow-card);
+      padding: 44px;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -744,241 +871,298 @@
 <body>
 
   <!-- ==========================================================================
-       TOP GLOBAL NAVIGATION HEADER
+       TOP APP HEADER
        ========================================================================== -->
   <header class="app-header">
-    <div class="header-brand">
-      <div class="brand-logo">01</div>
-      <div class="brand-meta">
+    <div class="brand-group">
+      <div class="brand-icon">01</div>
+      <div>
         <div class="brand-title">
-          <span>NSCT Master Trainer</span>
-          <span class="brand-tag">20% Weight</span>
+          <span>NSCT Master Prep</span>
+          <span class="brand-pill">20% Weight</span>
         </div>
         <div class="brand-sub">Subject 01: Problem Solving & Analytical Skills</div>
       </div>
     </div>
 
-    <!-- Mode Tabs -->
+    <!-- Navigation Tabs -->
     <div class="nav-tabs">
-      <button class="nav-tab-btn active" id="tab-btn-practice" onclick="setAppMode('practice')">
+      <button class="nav-tab-btn active" id="btn-tab-practice" onclick="switchAppTab('practice')">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span>Practice Drill (317 MCQs)</span>
+        <span>Practice Drill (317)</span>
       </button>
-      <button class="nav-tab-btn" id="tab-btn-theory" onclick="setAppMode('theory')">
+      <button class="nav-tab-btn" id="btn-tab-theory" onclick="switchAppTab('theory')">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span>Study Guide & Notes</span>
       </button>
-      <button class="nav-tab-btn" id="tab-btn-mock" onclick="setAppMode('mock')">
+      <button class="nav-tab-btn" id="btn-tab-advisor" onclick="switchAppTab('advisor')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span>Improvement Advisor</span>
+      </button>
+      <button class="nav-tab-btn" id="btn-tab-mock" onclick="switchAppTab('mock')">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <span>Timed Mock (30m)</span>
+        <span>Mock Exam (30m)</span>
       </button>
     </div>
 
-    <!-- Stats & Bookmark -->
+    <!-- Header Stats -->
     <div class="header-stats">
-      <div class="stat-badge">
+      <div class="stat-pill">
         <span style="color:var(--text-muted);">Answered:</span>
-        <span class="stat-badge-val" id="top-answered">0/317</span>
+        <span class="stat-pill-val" id="top-answered-count">0/317</span>
       </div>
-      <div class="stat-badge">
+      <div class="stat-pill">
         <span style="color:var(--text-muted);">Accuracy:</span>
-        <span class="stat-badge-val" id="top-accuracy" style="color:#10B981;">0%</span>
+        <span class="stat-pill-val" id="top-accuracy-pct" style="color:var(--forest-main);">0%</span>
       </div>
-      <button onclick="toggleActiveBookmark()" id="btn-top-bm" style="background:var(--bg-surface); border:1px solid var(--border-subtle); width:38px; height:38px; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text-muted);">
-        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+      <button onclick="toggleBookmarkActive()" id="btn-bm-header" class="stat-pill" style="cursor:pointer;" title="Bookmark current question">
+        <svg style="width:17px; height:17px; color:var(--text-dim);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
       </button>
     </div>
   </header>
 
   <!-- ==========================================================================
-       WORKSPACE LAYOUT (SIDEBAR + MAIN VIEWPORT)
-       ========================================================================== */ -->
+       APP WORKSPACE (SIDEBAR + MAIN CANVAS)
+       ========================================================================== -->
   <div class="app-workspace">
-    
-    <!-- LEFT SIDEBAR: TOPIC & FILTER SELECTOR -->
+
+    <!-- SIDEBAR: SUBTOPICS & FILTERS -->
     <aside class="app-sidebar">
       <div>
-        <div class="sidebar-section-title">Filters</div>
-        <div class="filter-pills">
-          <button class="filter-btn active" id="filter-all" onclick="setQuestionFilter('all')">All</button>
-          <button class="filter-btn" id="filter-wrong" onclick="setQuestionFilter('wrong')">Missed (<span id="count-missed">0</span>)</button>
-          <button class="filter-btn" id="filter-saved" onclick="setQuestionFilter('saved')">Saved (<span id="count-saved">0</span>)</button>
+        <div class="section-label">Filter Questions</div>
+        <div class="filter-group">
+          <button class="filter-btn active" id="f-all" onclick="filterBy('all')">All</button>
+          <button class="filter-btn" id="f-wrong" onclick="filterBy('wrong')">Missed (<span id="missed-count">0</span>)</button>
+          <button class="filter-btn" id="f-saved" onclick="filterBy('saved')">Saved (<span id="saved-count">0</span>)</button>
         </div>
       </div>
 
       <div>
-        <div class="sidebar-section-title">All 16 Subtopics</div>
-        <div class="topic-list" id="sidebar-topic-list">
-          <!-- Populated from data.js -->
+        <div class="section-label">All 16 Subtopics</div>
+        <div class="topic-list" id="sidebar-topics-box">
+          <!-- Dynamically populated -->
         </div>
       </div>
     </aside>
 
-    <!-- MAIN VIEWPORT -->
+    <!-- MAIN VIEWPORT CANVAS -->
     <main class="main-viewport">
-      
-      <!-- TAB 1: PRACTICE DRILL -->
-      <div id="view-practice" class="practice-container">
-        
+
+      <!-- ==========================================================================
+           TAB 1: PRACTICE DRILL VIEW
+           ========================================================================== -->
+      <div id="view-practice" class="practice-box">
+
+        <!-- Elevated Neumorphic Question Card -->
         <div class="q-card">
-          <div class="q-header">
-            <span class="q-subtopic-tag" id="q-subtopic-label">Subtopic 01: Introduction to Problem Solving</span>
-            <span class="q-counter-tag" id="q-counter-label">Question 1 of 317</span>
+          <div class="q-meta-bar">
+            <span class="q-subtopic-tag" id="q-subtopic-display">Subtopic 01</span>
+            <span class="q-index-tag" id="q-index-display">Question 1 of 317</span>
           </div>
 
-          <div class="q-statement" id="q-text">
+          <div class="q-statement-text" id="q-statement-text">
             Loading question...
           </div>
 
-          <div class="options-grid" id="q-options-list">
-            <!-- Buttons A, B, C, D -->
+          <div class="options-stack" id="q-options-stack">
+            <!-- Dynamically populated options A, B, C, D -->
           </div>
 
-          <!-- Explanation Reveal -->
-          <div id="q-explanation-container" class="hidden"></div>
+          <!-- Explanation Panel -->
+          <div id="q-explanation-panel" class="hidden"></div>
+
+          <!-- Targeted Improvement Advice (Shown on Mistakes) -->
+          <div id="q-improvement-panel" class="hidden"></div>
         </div>
 
-        <!-- Previous / Next Controls -->
+        <!-- Navigation Controls -->
         <div class="q-nav-bar">
-          <button class="btn-ctrl btn-ctrl-prev" id="btn-prev-q" onclick="stepQuestion(-1)">
-            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          <button class="neu-btn-action" id="btn-prev-q" onclick="navigateQuestion(-1)">
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
             <span>Previous</span>
           </button>
-          
-          <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono);">Shortcuts: Keys [1-4] or [A-D] • Arrows [← →]</span>
 
-          <button class="btn-ctrl btn-ctrl-next" id="btn-next-q" onclick="stepQuestion(1)">
+          <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono); font-weight:700;">
+            Keyboard: [1-4] or [A-D] • Arrows [← →]
+          </span>
+
+          <button class="neu-btn-action neu-btn-primary" id="btn-next-q" onclick="navigateQuestion(1)">
             <span>Next</span>
-            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
 
-        <!-- Jump Palette Drawer -->
+        <!-- Palette Drawer -->
         <div class="palette-drawer">
-          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700;">
-            <span>Question Quick-Jump</span>
-            <span style="color:var(--text-dim); font-family:var(--font-mono);" id="palette-indicator">1/317</span>
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800; color:var(--text-title);">
+            <span>Question Quick-Palette</span>
+            <span style="font-family:var(--font-mono); color:var(--text-dim);" id="palette-ratio-text">1/317</span>
           </div>
-          <div class="palette-grid" id="palette-buttons-box"></div>
+          <div class="palette-grid" id="palette-buttons-grid"></div>
         </div>
 
       </div>
 
-      <!-- TAB 2: THEORY & NOTES (CLEAN STUDY GUIDE) -->
-      <div id="view-theory" class="theory-container hidden">
-        
+      <!-- ==========================================================================
+           TAB 2: THEORY & NOTES (ELEGANT STUDY GUIDE)
+           ========================================================================== -->
+      <div id="view-theory" class="theory-box hidden">
+
         <!-- Hero Header -->
-        <div class="theory-hero">
+        <div class="theory-hero-card">
           <div>
-            <h2 class="theory-hero-title" id="theory-title">Subtopic 01: Introduction to Problem Solving</h2>
-            <p class="theory-hero-sub" id="theory-sub">Official P@SHA / HEC Syllabus Study Guide & Executive Summary</p>
+            <h2 class="theory-hero-title" id="theory-hero-title">Subtopic 01: Introduction to Problem Solving</h2>
+            <p class="theory-hero-sub">Official P@SHA / HEC Syllabus Study Guide & High-Yield Concepts</p>
           </div>
         </div>
 
-        <!-- Section 1: Key Concepts -->
+        <!-- Section 1: Core Concepts -->
         <div>
-          <h3 style="font-size:18px; font-weight:800; color:#FFFFFF; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <h3 style="font-size:18px; font-weight:900; color:var(--forest-dark); margin-bottom:14px; display:flex; align-items:center; gap:8px;">
             <span>💡 Core Concepts & Definitions</span>
           </h3>
-          <div class="concept-cards-grid" id="theory-concepts-grid"></div>
+          <div class="concepts-grid" id="theory-concepts-container"></div>
         </div>
 
         <!-- Section 2: Common Traps -->
-        <div class="traps-section-box">
-          <div class="traps-section-header">
-            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            <span>⚠️ Common Traps & Confusions (What Students Get Wrong)</span>
+        <div class="traps-container-card">
+          <div class="traps-title-bar">
+            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>⚠️ Common Traps & Confusions (What Examiners Test to Trick You)</span>
           </div>
-          <div style="display:flex; flex-direction:column; gap:12px;" id="theory-traps-list"></div>
+          <div style="display:flex; flex-direction:column; gap:12px;" id="theory-traps-container"></div>
         </div>
 
         <!-- Section 3: Deep Dive -->
-        <div class="deep-dive-box">
-          <div class="deep-dive-title">
-            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-            <span>🔬 Deep Dive Analysis & Practical Applications</span>
+        <div class="deepdive-container-card">
+          <div class="deepdive-header-bar">
+            <svg style="width:22px; height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            <span>🔬 Deep Dive Reference Tables & Practical Examples</span>
           </div>
-          <div id="theory-deepdive-content"></div>
+          <div id="theory-deepdive-container"></div>
         </div>
 
       </div>
 
-      <!-- TAB 3: TIMED MOCK EXAM -->
-      <div id="view-mock" class="practice-container hidden">
-        <div class="mock-box" id="mock-intro-box">
-          <div style="width:68px; height:68px; border-radius:20px; background:var(--primary-light); color:#818CF8; display:flex; align-items:center; justify-content:center;">
+      <!-- ==========================================================================
+           TAB 3: IMPROVEMENT ADVISOR & DIAGNOSTICS HUB
+           ========================================================================== -->
+      <div id="view-advisor" class="advisor-box hidden">
+
+        <!-- Readiness Banner -->
+        <div class="advisor-hero-card">
+          <div>
+            <h2 style="font-size:24px; font-weight:900;">Your NSCT Readiness Advisor</h2>
+            <p style="opacity:0.9; font-size:14px; margin-top:4px;">Diagnostic breakdown of your performance across all 16 subtopics with custom recovery steps.</p>
+          </div>
+          <div class="advisor-readiness-gauge">
+            <span id="advisor-gauge-val" style="font-size:24px;">0%</span>
+            <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">Ready</span>
+          </div>
+        </div>
+
+        <!-- Personalized Recommendations Card -->
+        <div class="q-card">
+          <h3 style="font-size:18px; font-weight:900; color:var(--text-title); display:flex; align-items:center; gap:8px;">
+            <span>🧠 Priority Improvement Action Plan</span>
+          </h3>
+          <div id="advisor-action-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+
+        <!-- Subtopic Mastery Progress List -->
+        <div>
+          <h3 style="font-size:17px; font-weight:900; color:var(--forest-dark); margin-bottom:12px;">
+            Subtopic-by-Subtopic Mastery Diagnostic
+          </h3>
+          <div id="advisor-subtopic-diagnostic" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+
+      </div>
+
+      <!-- ==========================================================================
+           TAB 4: TIMED MOCK EXAM VIEW
+           ========================================================================== -->
+      <div id="view-mock" class="practice-box hidden">
+
+        <div class="mock-start-neu" id="mock-intro-card">
+          <div style="width:68px; height:68px; border-radius:20px; background:var(--forest-mint); color:var(--forest-dark); display:flex; align-items:center; justify-content:center;">
             <svg style="width:36px; height:36px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <div>
-            <h2 style="font-size:24px; font-weight:800;">Timed NSCT Mock Exam</h2>
-            <p style="color:var(--text-muted); font-size:14px; margin-top:4px;">Test your readiness under true exam pressure. Immediate answers are hidden until submission.</p>
+            <h2 style="font-size:24px; font-weight:900; color:var(--text-title);">Timed Mock Simulator (Subject 01)</h2>
+            <p style="color:var(--text-muted); font-size:14px; margin-top:4px;">Experience real exam conditions. Answers are hidden until final submission.</p>
           </div>
           <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; width:100%;">
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Questions</div>
-              <div style="font-size:20px; font-weight:800; font-family:var(--font-mono); margin-top:4px;">30 MCQs</div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Questions</div>
+              <div style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);">30 MCQs</div>
             </div>
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Time Limit</div>
-              <div style="font-size:20px; font-weight:800; font-family:var(--font-mono); margin-top:4px;">30 Mins</div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Time Limit</div>
+              <div style="font-size:22px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);">30 Mins</div>
             </div>
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Passing Grade</div>
-              <div style="font-size:20px; font-weight:800; color:#10B981; font-family:var(--font-mono); margin-top:4px;">75%</div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Passing Grade</div>
+              <div style="font-size:22px; font-weight:900; color:var(--forest-light); font-family:var(--font-mono);">75%</div>
             </div>
           </div>
-          <button class="btn-ctrl btn-ctrl-next" onclick="beginMockExam()" style="width:100%; justify-content:center; padding:16px; font-size:16px;">Start Mock Exam Now</button>
+          <button class="neu-btn-action neu-btn-primary" onclick="launchMockExamNow()" style="width:100%; justify-content:center; padding:16px; font-size:16px;">
+            Start Timed Mock Exam
+          </button>
         </div>
 
-        <!-- Live Mock Session -->
-        <div id="mock-live-box" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
-          <div style="background:var(--bg-surface); padding:16px 24px; border-radius:var(--radius-lg); border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:700;" id="mock-progress-tag">Question 1 of 30</span>
-            <div style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239,68,68,0.3); color:#F87171; padding:6px 14px; border-radius:8px; font-family:var(--font-mono); font-weight:800; font-size:16px;" id="mock-clock">30:00</div>
-            <button onclick="submitMockTest()" style="background:#DC2626; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:700; cursor:pointer;">Submit Exam</button>
+        <!-- Live Mock Arena -->
+        <div id="mock-live-arena" class="hidden" style="display:flex; flex-direction:column; gap:20px;">
+          <div style="background:var(--bg-surface); box-shadow:var(--neu-raised-sm); padding:18px 26px; border-radius:var(--radius-lg); display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; color:var(--forest-dark);" id="mock-step-label">Question 1 of 30</span>
+            <div style="background:var(--bg-inset); box-shadow:var(--neu-inset); color:var(--forest-dark); padding:8px 18px; border-radius:12px; font-family:var(--font-mono); font-weight:900; font-size:17px;" id="mock-timer-clock">30:00</div>
+            <button onclick="finishMockNow()" style="background:#D32F2F; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:800; cursor:pointer;">Submit Exam</button>
           </div>
 
-          <div class="q-card" style="box-shadow:none;">
-            <div class="q-statement" id="mock-statement-text" style="font-size:18px;"></div>
-            <div class="options-grid" id="mock-options-box"></div>
+          <div class="q-card">
+            <div class="q-statement-text" id="mock-prompt-text" style="font-size:19px;"></div>
+            <div class="options-stack" id="mock-options-stack"></div>
           </div>
 
           <div style="display:flex; justify-content:space-between;">
-            <button class="btn-ctrl btn-ctrl-prev" onclick="stepMock(-1)">Previous</button>
-            <button class="btn-ctrl btn-ctrl-next" onclick="stepMock(1)">Next</button>
+            <button class="neu-btn-action" onclick="moveMockStep(-1)">Previous</button>
+            <button class="neu-btn-action neu-btn-primary" onclick="moveMockStep(1)">Next</button>
           </div>
         </div>
 
-        <!-- Mock Results -->
-        <div id="mock-report-box" class="mock-box hidden">
-          <div id="report-icon-elem" style="width:72px; height:72px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px;"></div>
-          <h2 id="report-headline" style="font-size:28px; font-weight:800;"></h2>
-          <p id="report-summary-text" style="color:var(--text-muted); font-size:14px;"></p>
+        <!-- Mock Score Report -->
+        <div id="mock-report-card" class="mock-start-neu hidden">
+          <div id="mock-badge-icon" style="width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px;"></div>
+          <h2 id="mock-report-headline" style="font-size:28px; font-weight:900;"></h2>
+          <p id="mock-report-summary" style="color:var(--text-muted); font-size:15px;"></p>
           <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; width:100%;">
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Score</div>
-              <div id="report-score-val" style="font-size:22px; font-weight:800; font-family:var(--font-mono); margin-top:4px;"></div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Score</div>
+              <div id="mock-res-score" style="font-size:24px; font-weight:900; font-family:var(--font-mono); color:var(--forest-dark);"></div>
             </div>
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Accuracy</div>
-              <div id="report-acc-val" style="font-size:22px; font-weight:800; color:#10B981; font-family:var(--font-mono); margin-top:4px;"></div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Accuracy</div>
+              <div id="mock-res-accuracy" style="font-size:24px; font-weight:900; color:var(--forest-main); font-family:var(--font-mono);"></div>
             </div>
-            <div style="background:var(--bg-card); padding:16px; border-radius:12px; border:1px solid var(--border-subtle);">
-              <div style="font-size:12px; color:var(--text-dim);">Time Used</div>
-              <div id="report-time-val" style="font-size:22px; font-weight:800; color:#818CF8; font-family:var(--font-mono); margin-top:4px;"></div>
+            <div style="background:var(--bg-surface); box-shadow:var(--neu-inset); padding:16px; border-radius:12px;">
+              <div style="font-size:12px; color:var(--text-dim); font-weight:700;">Time Taken</div>
+              <div id="mock-res-time" style="font-size:24px; font-weight:900; color:var(--forest-light); font-family:var(--font-mono);"></div>
             </div>
           </div>
-          <button class="btn-ctrl btn-ctrl-next" onclick="beginMockExam()" style="width:100%; justify-content:center; padding:14px;">Retake Mock Exam</button>
+          <button class="neu-btn-action neu-btn-primary" onclick="launchMockExamNow()" style="width:100%; justify-content:center; padding:15px; font-size:15px;">
+            Retake Timed Mock Exam
+          </button>
         </div>
+
       </div>
 
     </main>
   </div>
 
-  <!-- LOAD DATASET -->
+  <!-- DATA SCRIPT -->
   <script src="data.js"></script>
 
-  <!-- APPLICATION CONTROLLER -->
+  <!-- APP CONTROLLER SCRIPT -->
   <script>
     const subtopics = window.NSCT_SUBJECT_01 || [];
     let allQuestions = [];
@@ -992,146 +1176,147 @@
       });
     });
 
-    let currentMode = 'practice'; // 'practice', 'theory', 'mock'
-    let currentFilter = 'all';    // 'all', 'wrong', 'saved', or integer subtopic_id
+    let currentTab = 'practice';
+    let currentFilter = 'all';
     let activeQuestions = [...allQuestions];
     let activeIndex = 0;
-    let selectedTopicId = 1; // for Theory view
+    let selectedTopicId = 1;
 
-    // User Progress
+    // Persistent storage
     let userAnswers = JSON.parse(localStorage.getItem('nsct_app_answers') || '{}');
     let userBookmarks = JSON.parse(localStorage.getItem('nsct_app_bookmarks') || '{}');
 
     window.onload = function() {
-      buildSidebarTopicList();
-      applyQuestionFilter('all');
-      renderTheoryForTopic(1);
+      buildSidebarTopics();
+      filterBy('all');
+      renderTheoryContent(1);
     };
 
-    // Mode Switcher
-    function setAppMode(mode) {
-      currentMode = mode;
+    // Tab Switcher
+    function switchAppTab(tabId) {
+      currentTab = tabId;
       document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById('tab-btn-' + mode).classList.add('active');
+      document.getElementById('btn-tab-' + tabId).classList.add('active');
 
-      document.getElementById('view-practice').classList.add('hidden');
-      document.getElementById('view-theory').classList.add('hidden');
-      document.getElementById('view-mock').classList.add('hidden');
+      ['practice', 'theory', 'advisor', 'mock'].forEach(t => {
+        const el = document.getElementById('view-' + t);
+        if (el) el.classList.add('hidden');
+      });
 
-      document.getElementById('view-' + mode).classList.remove('hidden');
+      const activeView = document.getElementById('view-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
 
-      if (mode === 'theory') {
-        renderTheoryForTopic(selectedTopicId);
+      if (tabId === 'theory') {
+        renderTheoryContent(selectedTopicId);
+      } else if (tabId === 'advisor') {
+        renderAdvisorView();
       }
     }
 
     // Populate Sidebar Topics
-    function buildSidebarTopicList() {
-      const list = document.getElementById('sidebar-topic-list');
-      list.innerHTML = '';
+    function buildSidebarTopics() {
+      const box = document.getElementById('sidebar-topics-box');
+      box.innerHTML = '';
 
       subtopics.forEach(st => {
-        const item = document.createElement('button');
-        item.className = 'topic-item' + (st.id === selectedTopicId ? ' active' : '');
-        item.id = 'topic-item-' + st.id;
-        item.onclick = () => onSelectSidebarTopic(st.id);
+        const btn = document.createElement('button');
+        btn.className = 'topic-card' + (st.id === selectedTopicId ? ' active' : '');
+        btn.id = 'st-btn-' + st.id;
+        btn.onclick = () => onSelectTopic(st.id);
 
-        item.innerHTML = `
-          <div class="topic-item-left">
-            <span class="topic-num">${String(st.id).padStart(2,'0')}</span>
-            <span class="topic-name">${st.title}</span>
+        btn.innerHTML = `
+          <div class="topic-card-left">
+            <span class="topic-badge-num">${String(st.id).padStart(2,'0')}</span>
+            <span class="topic-card-name">${st.title}</span>
           </div>
-          <span class="topic-badge-count">${st.questions.length}</span>
+          <span class="topic-count">${st.questions.length}</span>
         `;
-        list.appendChild(item);
+        box.appendChild(btn);
       });
     }
 
-    function onSelectSidebarTopic(stId) {
+    function onSelectTopic(stId) {
       selectedTopicId = stId;
-      document.querySelectorAll('.topic-item').forEach(el => el.classList.remove('active'));
-      const activeEl = document.getElementById('topic-item-' + stId);
-      if (activeEl) activeEl.classList.add('active');
+      document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('active'));
+      const activeC = document.getElementById('st-btn-' + stId);
+      if (activeC) activeC.classList.add('active');
 
-      if (currentMode === 'theory') {
-        renderTheoryForTopic(stId);
+      if (currentTab === 'theory') {
+        renderTheoryContent(stId);
       } else {
-        applyQuestionFilter(stId);
+        filterBy(stId);
       }
     }
 
-    function setQuestionFilter(filter) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('filter-' + filter).classList.add('active');
-      applyQuestionFilter(filter);
-    }
-
-    function applyQuestionFilter(filterVal) {
+    function filterBy(filterVal) {
       currentFilter = filterVal;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
 
       if (filterVal === 'all') {
+        document.getElementById('f-all').classList.add('active');
         activeQuestions = [...allQuestions];
       } else if (filterVal === 'wrong') {
+        document.getElementById('f-wrong').classList.add('active');
         activeQuestions = allQuestions.filter(q => {
           const key = `${q.subtopic_id}_${q.q_num}`;
           return userAnswers[key] && userAnswers[key].selected !== q.correct;
         });
       } else if (filterVal === 'saved') {
+        document.getElementById('f-saved').classList.add('active');
         activeQuestions = allQuestions.filter(q => {
           const key = `${q.subtopic_id}_${q.q_num}`;
           return userBookmarks[key];
         });
       } else {
-        const sId = parseInt(filterVal);
-        activeQuestions = allQuestions.filter(q => q.subtopic_id === sId);
+        const sid = parseInt(filterVal);
+        activeQuestions = allQuestions.filter(q => q.subtopic_id === sid);
       }
 
       if (activeQuestions.length === 0) {
-        alert("No questions in this filter view!");
-        setQuestionFilter('all');
+        alert("No questions found under this filter!");
+        filterBy('all');
         return;
       }
 
       activeIndex = 0;
-      renderActiveQuestion();
+      renderCurrentQuestion();
       buildPalette();
-      refreshDashboardNumbers();
+      refreshTopStats();
     }
 
-    // Render Question
-    function renderActiveQuestion() {
+    // Render Question & Options
+    function renderCurrentQuestion() {
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       const saved = userAnswers[qKey];
 
-      document.getElementById('q-subtopic-label').textContent = `Subtopic ${String(q.subtopic_id).padStart(2, '0')}: ${q.subtopic_title}`;
-      document.getElementById('q-counter-label').textContent = `Question ${activeIndex + 1} of ${activeQuestions.length} (ID: Q${q.q_num})`;
-      document.getElementById('palette-indicator').textContent = `${activeIndex + 1} / ${activeQuestions.length}`;
+      document.getElementById('q-subtopic-display').textContent = `Subtopic ${String(q.subtopic_id).padStart(2, '0')}: ${q.subtopic_title}`;
+      document.getElementById('q-index-display').textContent = `Question ${activeIndex + 1} of ${activeQuestions.length} (ID: Q${q.q_num})`;
+      document.getElementById('palette-ratio-text').textContent = `${activeIndex + 1} / ${activeQuestions.length}`;
 
-      // Bookmark state
-      const topBmBtn = document.getElementById('btn-top-bm');
+      // Bookmark Button Highlight
+      const bmBtn = document.getElementById('btn-bm-header');
       if (userBookmarks[qKey]) {
-        topBmBtn.style.color = '#F59E0B';
-        topBmBtn.style.borderColor = 'rgba(245, 158, 11, 0.4)';
-        topBmBtn.style.background = 'rgba(245, 158, 11, 0.1)';
+        bmBtn.style.background = 'var(--forest-mint)';
+        bmBtn.style.color = 'var(--forest-dark)';
       } else {
-        topBmBtn.style.color = 'var(--text-muted)';
-        topBmBtn.style.borderColor = 'var(--border-subtle)';
-        topBmBtn.style.background = 'var(--bg-surface)';
+        bmBtn.style.background = 'var(--bg-surface)';
+        bmBtn.style.color = 'var(--text-dim)';
       }
 
-      document.getElementById('q-text').textContent = q.question;
+      // Question Statement
+      document.getElementById('q-statement-text').textContent = q.question;
 
       // Options
-      const optContainer = document.getElementById('q-options-list');
-      optContainer.innerHTML = '';
+      const stack = document.getElementById('q-options-stack');
+      stack.innerHTML = '';
 
       ['A', 'B', 'C', 'D'].forEach(letter => {
         const text = q.options[letter];
         if (!text) return;
 
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
+        btn.className = 'opt-card-btn';
 
         if (saved) {
           btn.disabled = true;
@@ -1143,46 +1328,114 @@
             btn.classList.add('state-dimmed');
           }
         } else {
-          btn.onclick = () => chooseAnswer(letter);
+          btn.onclick = () => selectOption(letter);
         }
 
         btn.innerHTML = `
-          <div class="opt-letter">${letter}</div>
+          <div class="opt-badge-letter">${letter}</div>
           <div style="flex:1;">${text}</div>
-          ${saved && letter === q.correct ? '<svg style="width:22px; height:22px; color:#10B981; flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
-          ${saved && saved.selected === letter && letter !== q.correct ? '<svg style="width:22px; height:22px; color:#EF4444; flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>' : ''}
+          ${saved && letter === q.correct ? '<svg style="width:22px; height:22px; color:var(--correct-border); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+          ${saved && saved.selected === letter && letter !== q.correct ? '<svg style="width:22px; height:22px; color:var(--wrong-border); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>' : ''}
         `;
 
-        optContainer.appendChild(btn);
+        stack.appendChild(btn);
       });
 
-      // Explanation
-      const explBox = document.getElementById('q-explanation-container');
+      // Explanation Box
+      const explPanel = document.getElementById('q-explanation-panel');
+      const imprvPanel = document.getElementById('q-improvement-panel');
+
       if (saved) {
-        explBox.classList.remove('hidden');
-        const isRight = saved.selected === q.correct;
-        explBox.innerHTML = `
-          <div class="explanation-card ${isRight ? 'is-correct' : 'is-wrong'}">
-            <svg style="width:26px; height:26px; flex-shrink:0; color:${isRight ? '#10B981' : '#EF4444'};" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-              ${isRight ? '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' : '<path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
-            </svg>
-            <div>
-              <div class="expl-header-label">${isRight ? 'Correct! (Option ' + q.correct + ')' : 'Incorrect! Correct answer is Option ' + q.correct}</div>
-              <div class="expl-body-text">${q.explanation || 'No explanation found.'}</div>
-            </div>
+        explPanel.classList.remove('hidden');
+        const isRight = (saved.selected === q.correct);
+        explPanel.className = `explanation-panel ${isRight ? 'is-correct' : 'is-wrong'}`;
+        explPanel.innerHTML = `
+          <svg style="width:28px; height:28px; flex-shrink:0; color:${isRight ? 'var(--correct-border)' : 'var(--wrong-border)'};" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            ${isRight ? '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' : '<path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+          </svg>
+          <div>
+            <div class="expl-headline">${isRight ? 'Correct! (Option ' + q.correct + ')' : 'Incorrect! Correct answer is Option ' + q.correct}</div>
+            <div class="expl-body-copy">${q.explanation || 'No detailed explanation found.'}</div>
           </div>
         `;
+
+        // TARGETED IMPROVEMENT ADVISOR IF WRONG
+        if (!isRight) {
+          imprvPanel.classList.remove('hidden');
+          const adviceInfo = getTargetedImprovementAdvice(q);
+          imprvPanel.className = 'improvement-box';
+          imprvPanel.innerHTML = `
+            <div class="improvement-header">
+              <svg style="width:20px; height:20px; color:var(--advice-border);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Targeted Improvement Advice: How to Never Miss This Again</span>
+            </div>
+            <div class="improvement-content">
+              <strong>Conceptual Gap:</strong> ${adviceInfo.gap}<br>
+              <strong>Mental Model:</strong> ${adviceInfo.mentalModel}
+            </div>
+            <div class="improvement-actions">
+              <button class="btn-improvement-jump" onclick="jumpToStudyGuideTopic(${q.subtopic_id})">
+                <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>Revise Subtopic ${q.subtopic_id} in Study Guide</span>
+              </button>
+            </div>
+          `;
+        } else {
+          imprvPanel.classList.add('hidden');
+        }
       } else {
-        explBox.classList.add('hidden');
+        explPanel.classList.add('hidden');
+        imprvPanel.classList.add('hidden');
       }
 
       document.getElementById('btn-prev-q').disabled = (activeIndex === 0);
       document.getElementById('btn-next-q').disabled = (activeIndex === activeQuestions.length - 1);
 
-      highlightPaletteCurrent();
+      updatePaletteSelection();
     }
 
-    function chooseAnswer(letter) {
+    // Generate Targeted Improvement Advice for any Question
+    function getTargetedImprovementAdvice(q) {
+      const title = q.subtopic_title.toLowerCase();
+      if (title.includes('understanding') || title.includes('analysis')) {
+        return {
+          gap: "Distinguishing between implicit/explicit requirements and understanding boundary edge cases (e.g. negative values, empty inputs, or off-by-one bounds).",
+          mentalModel: "Always ask: 'What is the absolute extreme value this function could receive?' and verify if requirements specify handling it."
+        };
+      } else if (title.includes('logical') || title.includes('flow')) {
+        return {
+          gap: "Applying Contrapositive laws (P → Q ⟺ ¬Q → ¬P) or tracing nested boolean conditionals without getting trapped by inverse/converse fallacies.",
+          mentalModel: "Write down truth values for each conditional clause independently before evaluating the full expression."
+        };
+      } else if (title.includes('abstraction') || title.includes('representation')) {
+        return {
+          gap: "Conflating Decomposition (breaking into chunks) with Abstraction (hiding details to reduce complexity).",
+          mentalModel: "Decomposition asks: 'What are the pieces?' Abstraction asks: 'What details can I safely ignore?'"
+        };
+      } else if (title.includes('algorithmic') || title.includes('complexity')) {
+        return {
+          gap: "Confusing worst-case asymptotic upper bounds O(N) with heuristic trade-offs or memory cache effects.",
+          mentalModel: "Drop all constant multipliers and lower-order terms. Remember: Contiguous arrays often beat trees in wall-clock time due to CPU cache lines."
+        };
+      } else if (title.includes('debugging') || title.includes('error')) {
+        return {
+          gap: "Treating superficial symptoms (e.g. server timeout) rather than isolating the root cause (e.g. DB connection leak).",
+          mentalModel: "Apply the '5 Whys' rule. Never patch a symptom by increasing memory or CPU without fixing the leak first."
+        };
+      } else {
+        return {
+          gap: "Standard misconception on foundational CS definitions or trap distractors designed to look mathematically plausible.",
+          mentalModel: "Eliminate extreme absolute words ('always', 'never') and look for the option that describes trade-offs and constraints."
+        };
+      }
+    }
+
+    function jumpToStudyGuideTopic(stId) {
+      onSelectTopic(stId);
+      switchAppTab('theory');
+    }
+
+    function selectOption(letter) {
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       userAnswers[qKey] = {
@@ -1190,20 +1443,20 @@
         time: Date.now()
       };
       localStorage.setItem('nsct_app_answers', JSON.stringify(userAnswers));
-      renderActiveQuestion();
+      renderCurrentQuestion();
       buildPalette();
-      refreshDashboardNumbers();
+      refreshTopStats();
     }
 
-    function stepQuestion(delta) {
+    function navigateQuestion(delta) {
       const nextIdx = activeIndex + delta;
       if (nextIdx >= 0 && nextIdx < activeQuestions.length) {
         activeIndex = nextIdx;
-        renderActiveQuestion();
+        renderCurrentQuestion();
       }
     }
 
-    function toggleActiveBookmark() {
+    function toggleBookmarkActive() {
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       if (userBookmarks[qKey]) {
@@ -1212,53 +1465,53 @@
         userBookmarks[qKey] = true;
       }
       localStorage.setItem('nsct_app_bookmarks', JSON.stringify(userBookmarks));
-      renderActiveQuestion();
-      refreshDashboardNumbers();
+      renderCurrentQuestion();
+      refreshTopStats();
     }
 
-    // Palette management
+    // Palette Grid
     function buildPalette() {
-      const box = document.getElementById('palette-buttons-box');
+      const box = document.getElementById('palette-buttons-grid');
       box.innerHTML = '';
 
       activeQuestions.forEach((q, idx) => {
-        const item = document.createElement('button');
-        item.className = 'palette-item';
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
         const qKey = `${q.subtopic_id}_${q.q_num}`;
         const ans = userAnswers[qKey];
 
         if (ans) {
           if (ans.selected === q.correct) {
-            item.classList.add('ans-right');
+            btn.classList.add('ans-correct');
           } else {
-            item.classList.add('ans-wrong');
+            btn.classList.add('ans-wrong');
           }
         }
         if (idx === activeIndex) {
-          item.classList.add('current');
+          btn.classList.add('current');
         }
 
-        item.textContent = idx + 1;
-        item.onclick = () => {
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
           activeIndex = idx;
-          renderActiveQuestion();
+          renderCurrentQuestion();
         };
-        box.appendChild(item);
+        box.appendChild(btn);
       });
     }
 
-    function highlightPaletteCurrent() {
-      const items = document.querySelectorAll('.palette-item');
-      items.forEach((it, i) => {
+    function updatePaletteSelection() {
+      const btns = document.querySelectorAll('.palette-btn');
+      btns.forEach((b, i) => {
         if (i === activeIndex) {
-          it.classList.add('current');
+          b.classList.add('current');
         } else {
-          it.classList.remove('current');
+          b.classList.remove('current');
         }
       });
     }
 
-    function refreshDashboardNumbers() {
+    function refreshTopStats() {
       const totalAnswered = Object.keys(userAnswers).length;
       let totalCorrect = 0;
 
@@ -1270,196 +1523,301 @@
       });
 
       const acc = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
-      document.getElementById('top-answered').textContent = `${totalAnswered}/${allQuestions.length}`;
-      document.getElementById('top-accuracy').textContent = `${acc}%`;
+      document.getElementById('top-answered-count').textContent = `${totalAnswered}/${allQuestions.length}`;
+      document.getElementById('top-accuracy-pct').textContent = `${acc}%`;
 
-      document.getElementById('count-missed').textContent = totalAnswered - totalCorrect;
-      document.getElementById('count-saved').textContent = Object.keys(userBookmarks).length;
+      document.getElementById('missed-count').textContent = totalAnswered - totalCorrect;
+      document.getElementById('saved-count').textContent = Object.keys(userBookmarks).length;
     }
 
-    // Keyboard controls
+    // Keyboard bindings
     window.addEventListener('keydown', e => {
-      if (currentMode !== 'practice') return;
-      if (e.key === 'ArrowLeft') stepQuestion(-1);
-      if (e.key === 'ArrowRight') stepQuestion(1);
+      if (currentTab !== 'practice') return;
+      if (e.key === 'ArrowLeft') navigateQuestion(-1);
+      if (e.key === 'ArrowRight') navigateQuestion(1);
 
       const q = activeQuestions[activeIndex];
       const qKey = `${q.subtopic_id}_${q.q_num}`;
       if (!userAnswers[qKey]) {
-        if (e.key === '1' || e.key.toLowerCase() === 'a') chooseAnswer('A');
-        if (e.key === '2' || e.key.toLowerCase() === 'b') chooseAnswer('B');
-        if (e.key === '3' || e.key.toLowerCase() === 'c') chooseAnswer('C');
-        if (e.key === '4' || e.key.toLowerCase() === 'd') chooseAnswer('D');
+        if (e.key === '1' || e.key.toLowerCase() === 'a') selectOption('A');
+        if (e.key === '2' || e.key.toLowerCase() === 'b') selectOption('B');
+        if (e.key === '3' || e.key.toLowerCase() === 'c') selectOption('C');
+        if (e.key === '4' || e.key.toLowerCase() === 'd') selectOption('D');
       }
     });
 
     // ==========================================================================
-    // RENDER THEORY & NOTES VIEW (BEAUTIFULLY STRUCTURED)
+    // RENDER THEORY & NOTES VIEW
     // ==========================================================================
-    function renderTheoryForTopic(stId) {
+    function renderTheoryContent(stId) {
       const st = subtopics.find(s => s.id === stId) || subtopics[0];
-      document.getElementById('theory-title').textContent = `Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}`;
+      document.getElementById('theory-hero-title').textContent = `Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}`;
 
       // Section 1: Concept Cards
-      const conceptBox = document.getElementById('theory-concepts-grid');
-      conceptBox.innerHTML = '';
-
+      const cBox = document.getElementById('theory-concepts-container');
+      cBox.innerHTML = '';
       const qnList = st.formatted_quick_notes || [];
       if (qnList.length > 0) {
         qnList.forEach(item => {
           const card = document.createElement('div');
-          card.className = 'concept-card';
+          card.className = 'concept-neu-card';
           card.innerHTML = `
-            <div class="concept-card-title">
-              <svg style="width:16px; height:16px; color:#818CF8; flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="concept-title">
+              <svg style="width:16px; height:16px; color:var(--forest-main);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               <span>${item.title}</span>
             </div>
-            <div class="concept-card-desc">${item.desc}</div>
+            <div class="concept-desc">${item.desc}</div>
           `;
-          conceptBox.appendChild(card);
+          cBox.appendChild(card);
         });
       } else {
-        conceptBox.innerHTML = `<div style="color:var(--text-dim); font-size:14px;">No quick notes found.</div>`;
+        cBox.innerHTML = '<div style="color:var(--text-dim); font-size:14px;">No quick notes found.</div>';
       }
 
-      // Section 2: Traps Cards
-      const trapsBox = document.getElementById('theory-traps-list');
-      trapsBox.innerHTML = '';
-      const trapList = st.formatted_traps || [];
-      if (trapList.length > 0) {
-        trapList.forEach(t => {
-          const tCard = document.createElement('div');
-          tCard.className = 'trap-item-card';
-          tCard.innerHTML = `
-            <div class="trap-item-title">${t.title}</div>
-            <div class="trap-item-body">${t.explanation}</div>
+      // Section 2: Traps
+      const tBox = document.getElementById('theory-traps-container');
+      tBox.innerHTML = '';
+      const tList = st.formatted_traps || [];
+      if (tList.length > 0) {
+        tList.forEach(t => {
+          const item = document.createElement('div');
+          item.className = 'trap-neu-item';
+          item.innerHTML = `
+            <div class="trap-name">${t.title}</div>
+            <div class="trap-text">${t.explanation}</div>
           `;
-          trapsBox.appendChild(tCard);
+          tBox.appendChild(item);
         });
       } else {
-        trapsBox.innerHTML = `<div style="color:var(--text-dim); font-size:14px;">No specific traps noted for this subtopic.</div>`;
+        tBox.innerHTML = '<div style="color:var(--text-dim); font-size:14px;">No traps listed for this subtopic.</div>';
       }
 
       // Section 3: Deep Dive
-      const ddBox = document.getElementById('theory-deepdive-content');
-      ddBox.innerHTML = st.formatted_deep_dive || `<div style="color:var(--text-dim); font-size:14px;">No deep dive analysis for this subtopic.</div>`;
+      const ddBox = document.getElementById('theory-deepdive-container');
+      ddBox.innerHTML = st.formatted_deep_dive || '<div style="color:var(--text-dim); font-size:14px;">No deep dive analysis for this subtopic.</div>';
+    }
+
+    // ==========================================================================
+    // RENDER ADVISOR & DIAGNOSTICS VIEW
+    // ==========================================================================
+    function renderAdvisorView() {
+      const answeredKeys = Object.keys(userAnswers);
+      const totalAnswered = answeredKeys.length;
+      let totalCorrect = 0;
+
+      // Group by subtopic
+      const subtopicStats = {};
+      subtopics.forEach(st => {
+        subtopicStats[st.id] = { title: st.title, total: st.questions.length, answered: 0, correct: 0 };
+      });
+
+      allQuestions.forEach(q => {
+        const key = `${q.subtopic_id}_${q.q_num}`;
+        if (userAnswers[key]) {
+          subtopicStats[q.subtopic_id].answered++;
+          if (userAnswers[key].selected === q.correct) {
+            totalCorrect++;
+            subtopicStats[q.subtopic_id].correct++;
+          }
+        }
+      });
+
+      const overallAccuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+      const coveragePct = Math.round((totalAnswered / allQuestions.length) * 100);
+      const readinessScore = Math.round((overallAccuracy * 0.7) + (coveragePct * 0.3));
+
+      document.getElementById('advisor-gauge-val').textContent = `${readinessScore}%`;
+
+      // Priority Action List
+      const actionBox = document.getElementById('advisor-action-list');
+      actionBox.innerHTML = '';
+
+      const weakSubtopics = [];
+      Object.keys(subtopicStats).forEach(sid => {
+        const s = subtopicStats[sid];
+        const acc = s.answered > 0 ? Math.round((s.correct / s.answered) * 100) : 0;
+        if (s.answered >= 2 && acc < 75) {
+          weakSubtopics.push({ id: parseInt(sid), title: s.title, acc, missed: (s.answered - s.correct) });
+        }
+      });
+
+      if (weakSubtopics.length === 0) {
+        if (totalAnswered < 10) {
+          actionBox.innerHTML = `
+            <div style="background:var(--forest-mint); padding:16px; border-radius:12px; color:var(--forest-dark); font-size:14px; line-height:1.6;">
+              <strong>Keep Practicing:</strong> Solve at least 20 questions in the Practice Drill to unlock personalized diagnostic recommendations.
+            </div>
+          `;
+        } else {
+          actionBox.innerHTML = `
+            <div style="background:var(--correct-bg); border:1px solid var(--correct-border); padding:16px; border-radius:12px; color:var(--correct-text); font-size:14px; line-height:1.6;">
+              <strong>Outstanding Performance:</strong> All your active subtopics have $\ge 75\%$ accuracy! You are on track for top-tier national accreditation. Try the Timed Mock Exam to test your speed under pressure.
+            </div>
+          `;
+        }
+      } else {
+        weakSubtopics.sort((a, b) => a.acc - b.acc);
+        weakSubtopics.forEach(w => {
+          const item = document.createElement('div');
+          item.style.cssText = "background:var(--wrong-bg); border:1px solid var(--wrong-border); padding:16px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;";
+          item.innerHTML = `
+            <div>
+              <div style="font-weight:800; color:var(--wrong-text); font-size:14.5px;">Subtopic ${w.id}: ${w.title}</div>
+              <div style="font-size:13px; color:#7F1D1D; margin-top:2px;">Accuracy: ${w.acc}% • ${w.missed} questions missed</div>
+            </div>
+            <button class="btn-improvement-jump" onclick="jumpToStudyGuideTopic(${w.id})">
+              Revise Notes & Retry
+            </button>
+          `;
+          actionBox.appendChild(item);
+        });
+      }
+
+      // Subtopic Diagnostic List
+      const diagBox = document.getElementById('advisor-subtopic-diagnostic');
+      diagBox.innerHTML = '';
+
+      subtopics.forEach(st => {
+        const s = subtopicStats[st.id];
+        const acc = s.answered > 0 ? Math.round((s.correct / s.answered) * 100) : 0;
+        let badgeColor = '#6B8877';
+        let badgeText = 'Untested';
+
+        if (s.answered > 0) {
+          if (acc >= 85) { badgeColor = '#1E6B45'; badgeText = 'Mastered (' + acc + '%)'; }
+          else if (acc >= 70) { badgeColor = '#D97706'; badgeText = 'Good (' + acc + '%)'; }
+          else { badgeColor = '#D32F2F'; badgeText = 'Needs Work (' + acc + '%)'; }
+        }
+
+        const row = document.createElement('div');
+        row.className = 'advisor-subtopic-row';
+        row.innerHTML = `
+          <div>
+            <div style="font-weight:800; font-size:14px; color:var(--text-title);">Subtopic ${String(st.id).padStart(2,'0')}: ${st.title}</div>
+            <div style="font-size:12.5px; color:var(--text-dim); margin-top:2px;">${s.answered}/${s.total} questions attempted • ${s.correct} correct</div>
+          </div>
+          <span style="background:${badgeColor}15; color:${badgeColor}; font-weight:800; font-size:12px; padding:4px 10px; border-radius:8px; border:1px solid ${badgeColor}30;">${badgeText}</span>
+        `;
+        diagBox.appendChild(row);
+      });
     }
 
     // ==========================================================================
     // TIMED MOCK EXAM ENGINE
     // ==========================================================================
-    let mockQuestions = [];
-    let mockIdx = 0;
-    let mockPicks = {};
-    let mockTimerHandle = null;
-    let mockSeconds = 1800;
+    let mockList = [];
+    let mockCurr = 0;
+    let mockUserPicks = {};
+    let mockTimerId = null;
+    let mockTimeRemaining = 1800;
 
-    function beginMockExam() {
+    function launchMockExamNow() {
       const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
-      mockQuestions = shuffled.slice(0, 30);
-      mockIdx = 0;
-      mockPicks = {};
-      mockSeconds = 30 * 60;
+      mockList = shuffled.slice(0, 30);
+      mockCurr = 0;
+      mockUserPicks = {};
+      mockTimeRemaining = 30 * 60;
 
-      document.getElementById('mock-intro-box').classList.add('hidden');
-      document.getElementById('mock-report-box').classList.add('hidden');
-      document.getElementById('mock-live-box').classList.remove('hidden');
+      document.getElementById('mock-intro-card').classList.add('hidden');
+      document.getElementById('mock-report-card').classList.add('hidden');
+      document.getElementById('mock-live-arena').classList.remove('hidden');
 
-      renderMockCard();
-      clearInterval(mockTimerHandle);
-      mockTimerHandle = setInterval(tickMockClock, 1000);
+      renderMockQuestionCard();
+      clearInterval(mockTimerId);
+      mockTimerId = setInterval(tickMockClockTimer, 1000);
     }
 
-    function tickMockClock() {
-      mockSeconds--;
-      const m = Math.floor(mockSeconds / 60);
-      const s = mockSeconds % 60;
-      document.getElementById('mock-clock').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    function tickMockClockTimer() {
+      mockTimeRemaining--;
+      const m = Math.floor(mockTimeRemaining / 60);
+      const s = mockTimeRemaining % 60;
+      document.getElementById('mock-timer-clock').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 
-      if (mockSeconds <= 0) {
-        clearInterval(mockTimerHandle);
-        submitMockTest();
+      if (mockTimeRemaining <= 0) {
+        clearInterval(mockTimerId);
+        finishMockNow();
       }
     }
 
-    function renderMockCard() {
-      const q = mockQuestions[mockIdx];
-      document.getElementById('mock-progress-tag').textContent = `Question ${mockIdx + 1} of ${mockQuestions.length}`;
-      document.getElementById('mock-statement-text').textContent = q.question;
+    function renderMockQuestionCard() {
+      const q = mockList[mockCurr];
+      document.getElementById('mock-step-label').textContent = `Question ${mockCurr + 1} of ${mockList.length}`;
+      document.getElementById('mock-prompt-text').textContent = q.question;
 
-      const box = document.getElementById('mock-options-box');
-      box.innerHTML = '';
+      const stack = document.getElementById('mock-options-stack');
+      stack.innerHTML = '';
 
       ['A', 'B', 'C', 'D'].forEach(letter => {
         const text = q.options[letter];
         if (!text) return;
 
-        const isChosen = (mockPicks[mockIdx] === letter);
+        const isChosen = (mockUserPicks[mockCurr] === letter);
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
+        btn.className = 'opt-card-btn';
         if (isChosen) {
-          btn.style.borderColor = 'var(--primary)';
-          btn.style.background = 'var(--primary-light)';
+          btn.style.background = 'var(--forest-mint)';
+          btn.style.borderColor = 'var(--forest-main)';
+          btn.style.color = 'var(--forest-dark)';
         }
 
         btn.innerHTML = `
-          <div class="opt-letter" style="${isChosen ? 'background:var(--primary); color:#fff; border-color:var(--primary);' : ''}">${letter}</div>
+          <div class="opt-badge-letter" style="${isChosen ? 'background:var(--forest-main); color:#fff;' : ''}">${letter}</div>
           <div style="flex:1;">${text}</div>
         `;
 
         btn.onclick = () => {
-          mockPicks[mockIdx] = letter;
-          renderMockCard();
+          mockUserPicks[mockCurr] = letter;
+          renderMockQuestionCard();
         };
 
-        box.appendChild(btn);
+        stack.appendChild(btn);
       });
     }
 
-    function stepMock(delta) {
-      const next = mockIdx + delta;
-      if (next >= 0 && next < mockQuestions.length) {
-        mockIdx = next;
-        renderMockCard();
+    function moveMockStep(delta) {
+      const next = mockCurr + delta;
+      if (next >= 0 && next < mockList.length) {
+        mockCurr = next;
+        renderMockQuestionCard();
       }
     }
 
-    function submitMockTest() {
-      clearInterval(mockTimerHandle);
-      document.getElementById('mock-live-box').classList.add('hidden');
-      document.getElementById('mock-report-box').classList.remove('hidden');
+    function finishMockNow() {
+      clearInterval(mockTimerId);
+      document.getElementById('mock-live-arena').classList.add('hidden');
+      document.getElementById('mock-report-card').classList.remove('hidden');
 
       let score = 0;
-      mockQuestions.forEach((q, idx) => {
-        if (mockPicks[idx] === q.correct) score++;
+      mockList.forEach((q, idx) => {
+        if (mockUserPicks[idx] === q.correct) score++;
       });
 
-      const pct = Math.round((score / mockQuestions.length) * 100);
+      const pct = Math.round((score / mockList.length) * 100);
       const passed = (pct >= 75);
 
-      const icon = document.getElementById('report-icon-elem');
+      const icon = document.getElementById('mock-badge-icon');
       if (passed) {
-        icon.style.background = 'rgba(16, 185, 129, 0.2)';
-        icon.style.color = '#10B981';
+        icon.style.background = 'var(--correct-bg)';
+        icon.style.color = 'var(--correct-border)';
         icon.innerHTML = '🏆';
-        document.getElementById('report-headline').textContent = "Passed! Top Tier Performance";
-        document.getElementById('report-headline').style.color = "#10B981";
-        document.getElementById('report-summary-text').textContent = "You met the target threshold for high-percentile NSCT accreditation.";
+        document.getElementById('mock-report-headline').textContent = "Passed! Top Tier Performance";
+        document.getElementById('mock-report-headline').style.color = "var(--forest-dark)";
+        document.getElementById('mock-report-summary').textContent = "You met the target threshold for high-percentile NSCT accreditation.";
       } else {
-        icon.style.background = 'rgba(239, 68, 68, 0.2)';
-        icon.style.color = '#EF4444';
+        icon.style.background = 'var(--wrong-bg)';
+        icon.style.color = 'var(--wrong-border)';
         icon.innerHTML = '⚠️';
-        document.getElementById('report-headline').textContent = "Needs More Practice";
-        document.getElementById('report-headline').style.color = "#EF4444";
-        document.getElementById('report-summary-text').textContent = "Score under 75%. Review missed questions in the Practice Drill mode.";
+        document.getElementById('mock-report-headline').textContent = "Needs More Practice";
+        document.getElementById('mock-report-headline').style.color = "var(--wrong-border)";
+        document.getElementById('mock-report-summary').textContent = "Score under 75%. Review missed questions in the Practice Drill or Improvement Advisor.";
       }
 
-      document.getElementById('report-score-val').textContent = `${score} / ${mockQuestions.length}`;
-      document.getElementById('report-acc-val').textContent = `${pct}%`;
-      const usedSec = 1800 - mockSeconds;
+      document.getElementById('mock-res-score').textContent = `${score} / ${mockList.length}`;
+      document.getElementById('mock-res-accuracy').textContent = `${pct}%`;
+      const usedSec = 1800 - mockTimeRemaining;
       const uM = Math.floor(usedSec / 60);
       const uS = usedSec % 60;
-      document.getElementById('report-time-val').textContent = `${uM}m ${uS}s`;
+      document.getElementById('mock-res-time').textContent = `${uM}m ${uS}s`;
     }
   </script>
 </body>
